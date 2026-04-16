@@ -1,0 +1,28 @@
+# Local environment
+.venv/
+.codex/
+__pycache__/
+*.pyc
+
+# Nested repo metadata
+official_qos/.git/
+
+# Cached datasets and local downloads
+official_qos/real_datasets/data_cache/
+
+# Generated run artifacts
+*.json
+*.jsonl
+*.png
+*.pdf
+*.npz
+*.log
+*.prev
+tmp_*
+*progress*
+*stdout*
+
+# Local export clutter
+repomix-*
+*.xml
+
