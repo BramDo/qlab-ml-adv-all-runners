@@ -33,6 +33,8 @@ What is intentionally excluded:
   Markdown package for the IBM Runtime payload issue.
 - `Q40_WORKING_CHAIN_2026-04-16.md`
   The currently working bounded `q=40` IBM hardware chain.
+- `docs/repo_overview_en.md`
+  English orientation guide for this exported workspace.
 - `OFFICIAL_QOS_REPRO_STATUS_2026-04-15.md`
   Status notebook for the reproduction track.
 - `RUNNERS.md`
