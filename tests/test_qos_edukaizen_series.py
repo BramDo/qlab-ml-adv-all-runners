@@ -38,3 +38,4 @@ def test_builder_produces_hub_and_seven_navigable_articles(tmp_path: Path) -> No
         assert article.count("qos-series-nav") == 2
         assert "https://arxiv.org/abs/2604.07639" in article
         assert "](" not in article
+        assert "</strong>*" not in article

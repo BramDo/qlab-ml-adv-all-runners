@@ -36,7 +36,7 @@ def normalize_link(target: str) -> str:
 
 def render_inline(text: str) -> str:
     pattern = re.compile(
-        r"`([^`]+)`|\[([^\]]+)\]\(([^)]+)\)|(\$[^$]+\$)|\*\*([^*]+)\*|\*([^*]+)\*"
+        r"`([^`]+)`|\[([^\]]+)\]\(([^)]+)\)|(\$[^$]+\$)|\*\*([^*]+)\*\*|\*([^*]+)\*"
     )
     out: list[str] = []
     pos = 0
