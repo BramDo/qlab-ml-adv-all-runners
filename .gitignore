@@ -16,6 +16,7 @@ data_cache/
 Untitled*.ipynb
 *_qasm2.json.gz
 output/wordpress_qos_series/
+output/wordpress_qos_series_en/
 output/pytest-*/
 
 # Generated run artifacts

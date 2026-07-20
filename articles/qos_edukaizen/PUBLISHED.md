@@ -4,6 +4,7 @@ Gepubliceerd op 20 juli 2026 als een pagina-hub met acht onderliggende
 artikelen:
 
 - Seriehub: https://edukaizen.nl/quantum-oracle-sketching-qml-genexpressie/
+- Engelse spiegel: https://edukaizen.nl/quantum-oracle-sketching-qml-gene-expression/
 - WordPress-hubpagina: `498`
 - WordPress-artikelpagina's: `499` tot en met `505`, plus `516`
 - Hoofdmenu-item `QOS QML`: `506`
@@ -25,3 +26,5 @@ De seriemarkeringen, vorige/volgende-navigatie, de kerngetallen `16/32` en
 `17/32`, de actieve MathJax-verwerking en de nieuwe hoofdnavigatie zijn live
 geverifieerd. Hoofdstuk 8 is als uitgesteld onderzoeksvoorstel gepubliceerd:
 er is hiervoor geen nieuwe lokale 60-qubitsweep of Fire Opal-job uitgevoerd.
+Op dezelfde datum is een volledige Engelse spiegel gepubliceerd. Iedere hub en
+ieder hoofdstuk bevat een directe taalwissel naar de overeenkomstige pagina.

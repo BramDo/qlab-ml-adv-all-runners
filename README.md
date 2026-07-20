@@ -58,9 +58,11 @@ Generated provider payloads and result JSON remain local and are intentionally
 excluded from Git. The repository tracks the runners, validation logic, tests,
 and the numerical result summary above.
 
-The Dutch theory and hardware article series is published on Edukaizen:
-[Van genexpressie naar 40 qubits](https://edukaizen.nl/quantum-oracle-sketching-qml-genexpressie/).
-The Markdown sources and publication record live in `articles/qos_edukaizen/`.
+The theory and hardware article series is published on Edukaizen in
+[Dutch](https://edukaizen.nl/quantum-oracle-sketching-qml-genexpressie/) and
+[English](https://edukaizen.nl/quantum-oracle-sketching-qml-gene-expression/).
+The Markdown sources and publication records live in `articles/qos_edukaizen/`
+and `articles/qos_edukaizen_en/`.
 
 The synthetic datasets are deliberately block-structured: the raw feature dimension can be much larger than the qubit count, but the useful signal lives in a small number of coarse modes. That keeps the toy honest to the "small machine on large classical data" story without pretending to prove the paper's separation.
 

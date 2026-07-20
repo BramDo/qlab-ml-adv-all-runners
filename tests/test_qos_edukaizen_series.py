@@ -8,8 +8,13 @@ import docs.build_wordpress_qos_series as series
 
 def test_series_sources_and_claim_boundary() -> None:
     sources = sorted(series.SOURCE_DIR.glob("[0-9][0-9]_*.md"))
+    english_sources = sorted(series.SOURCE_DIR_EN.glob("[0-9][0-9]_*.md"))
     assert len(sources) == 9
+    assert len(english_sources) == 9
     combined = "\n".join(path.read_text(encoding="utf-8") for path in sources)
+    combined_english = "\n".join(
+        path.read_text(encoding="utf-8") for path in english_sources
+    )
     assert "32.738" in combined
     assert "24.576" in combined
     assert "0,50000" in combined
@@ -18,25 +23,51 @@ def test_series_sources_and_claim_boundary() -> None:
     assert "QOS-geïnspireerde" in combined
     assert "genenzoekmachine" in combined
     assert "het voorstel vastleggen, maar de studie nog niet uitvoeren" in combined
+    assert "we are not building a gene-search engine" in combined_english
+    assert "record the proposal, but do not execute the study yet" in combined_english
+    assert "no held-out predictive quantum advantage" in combined_english
 
 
 def test_builder_produces_hub_and_eight_navigable_articles(tmp_path: Path) -> None:
     original_out = series.OUT
+    original_out_en = series.OUT_EN
     try:
-        series.OUT = tmp_path
+        series.OUT = tmp_path / "nl"
+        series.OUT_EN = tmp_path / "en"
         series.main()
     finally:
         series.OUT = original_out
-    manifest = json.loads((tmp_path / "manifest.json").read_text(encoding="utf-8"))
+        series.OUT_EN = original_out_en
+    manifest = json.loads(
+        (tmp_path / "nl" / "manifest.json").read_text(encoding="utf-8")
+    )
+    manifest_en = json.loads(
+        (tmp_path / "en" / "manifest.json").read_text(encoding="utf-8")
+    )
     assert manifest["hub"]["slug"] == "quantum-oracle-sketching-qml-genexpressie"
+    assert manifest_en["hub"]["slug"] == "quantum-oracle-sketching-qml-gene-expression"
     assert len(manifest["articles"]) == 8
-    hub = (tmp_path / "series_page.html").read_text(encoding="utf-8")
+    assert len(manifest_en["articles"]) == 8
+    hub = (tmp_path / "nl" / "series_page.html").read_text(encoding="utf-8")
+    hub_en = (tmp_path / "en" / "series_page.html").read_text(encoding="utf-8")
     assert "qos-series-nav" in hub
+    assert "quantum-oracle-sketching-qml-gene-expression" in hub
+    assert "qos-series-nav" in hub_en
+    assert "quantum-oracle-sketching-qml-genexpressie" in hub_en
     for index in range(1, 9):
-        article = (tmp_path / "articles" / f"{index:02d}.html").read_text(
+        article = (tmp_path / "nl" / "articles" / f"{index:02d}.html").read_text(
+            encoding="utf-8"
+        )
+        article_en = (
+            tmp_path / "en" / "articles" / f"{index:02d}.html"
+        ).read_text(
             encoding="utf-8"
         )
         assert article.count("qos-series-nav") == 2
+        assert article_en.count("qos-series-nav") == 2
         assert "https://arxiv.org/abs/2604.07639" in article
+        assert "https://arxiv.org/abs/2604.07639" in article_en
         assert "](" not in article
+        assert "](" not in article_en
         assert "</strong>*" not in article
+        assert "</strong>*" not in article_en

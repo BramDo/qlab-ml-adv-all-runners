@@ -8,9 +8,12 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE_DIR = ROOT / "articles" / "qos_edukaizen"
+SOURCE_DIR_EN = ROOT / "articles" / "qos_edukaizen_en"
 OUT = ROOT / "output" / "wordpress_qos_series"
+OUT_EN = ROOT / "output" / "wordpress_qos_series_en"
 SITE = "https://edukaizen.nl"
 HUB_SLUG = "quantum-oracle-sketching-qml-genexpressie"
+HUB_SLUG_EN = "quantum-oracle-sketching-qml-gene-expression"
 GITHUB_BASE = "https://github.com/BramDo/qlab-ml-adv-all-runners"
 
 ARTICLES = [
@@ -24,9 +27,20 @@ ARTICLES = [
     (8, "08_VOORSTEL_60Q_VERVOLGSTUDIE.md", "voorstel-60-qubit-qml-vervolgstudie", "Voorstel: een 60-qubit QML-vervolgstudie"),
 ]
 
+ARTICLES_EN = [
+    (1, "01_WHAT_IS_THE_QML_TASK.md", "what-is-the-qml-task-cell-classification", "What is the QML task? Classifying cells, not looking up genes"),
+    (2, "02_QUANTUM_ORACLE_SKETCHING_THEORY.md", "quantum-oracle-sketching-theory", "The theory of Quantum Oracle Sketching"),
+    (3, "03_FROM_GENE_EXPRESSION_TO_QUBITS.md", "pbmc68k-from-gene-expression-to-qubits", "From PBMC68k gene expression to 40 qubits"),
+    (4, "04_FROM_JAX_TO_HARDWARE.md", "qos-to-40-qubit-hardware-fire-opal", "From JAX to a 40-qubit hardware circuit"),
+    (5, "05_READOUT_AND_CLASSIFIER.md", "quantum-readout-405-observables-classifier", "405 observables and a leakage-free classifier"),
+    (6, "06_HARDWARE_RESULT.md", "result-hardware-versus-classical", "The result: hardware 16, classical 17"),
+    (7, "07_ROUTE_TO_QUANTUM_ADVANTAGE.md", "route-to-quantum-advantage-qml", "What is still required for quantum advantage?"),
+    (8, "08_PROPOSAL_60Q_FOLLOW_UP.md", "proposal-60-qubit-qml-follow-up-study", "Proposal: a 60-qubit QML follow-up study"),
+]
 
-def public_url(slug: str) -> str:
-    return f"{SITE}/{HUB_SLUG}/{slug}/"
+
+def public_url(slug: str, hub_slug: str = HUB_SLUG) -> str:
+    return f"{SITE}/{hub_slug}/{slug}/"
 
 
 def normalize_link(target: str) -> str:
@@ -177,17 +191,40 @@ def render_markdown(lines: list[str], *, skip_h1: bool = True) -> str:
     return "".join(out)
 
 
-def nav_html(part: int | None) -> str:
-    links = [f'<a href="{SITE}/{HUB_SLUG}/">Seriehub</a>']
+def nav_html(part: int | None, language: str) -> str:
+    english = language == "en"
+    articles = ARTICLES_EN if english else ARTICLES
+    other_articles = ARTICLES if english else ARTICLES_EN
+    hub_slug = HUB_SLUG_EN if english else HUB_SLUG
+    other_hub_slug = HUB_SLUG if english else HUB_SLUG_EN
+    links = [
+        f'<a href="{SITE}/{hub_slug}/">{"Series hub" if english else "Seriehub"}</a>'
+    ]
     if part is not None and part > 1:
-        links.append(f'<a href="{public_url(ARTICLES[part - 2][2])}">Vorig deel</a>')
-    if part is not None and part < len(ARTICLES):
-        links.append(f'<a href="{public_url(ARTICLES[part][2])}">Volgend deel</a>')
+        links.append(
+            f'<a href="{public_url(articles[part - 2][2], hub_slug)}">'
+            f'{"Previous part" if english else "Vorig deel"}</a>'
+        )
+    if part is not None and part < len(articles):
+        links.append(
+            f'<a href="{public_url(articles[part][2], hub_slug)}">'
+            f'{"Next part" if english else "Volgend deel"}</a>'
+        )
+    language_url = (
+        f"{SITE}/{other_hub_slug}/"
+        if part is None
+        else public_url(other_articles[part - 1][2], other_hub_slug)
+    )
+    links.append(
+        f'<a href="{language_url}">{"Nederlands" if english else "English"}</a>'
+    )
     links.extend(
         [
-            '<a href="https://arxiv.org/abs/2604.07639">QOS-paper</a>',
-            '<a href="https://github.com/haimengzhao/quantum-oracle-sketching">Officiële code</a>',
-            f'<a href="{GITHUB_BASE}">Hardwarecode</a>',
+            '<a href="https://arxiv.org/abs/2604.07639">QOS paper</a>',
+            '<a href="https://github.com/haimengzhao/quantum-oracle-sketching">'
+            + ("Official code" if english else "Officiële code")
+            + "</a>",
+            f'<a href="{GITHUB_BASE}">{"Hardware code" if english else "Hardwarecode"}</a>',
         ]
     )
     return (
@@ -198,22 +235,35 @@ def nav_html(part: int | None) -> str:
     )
 
 
-def main() -> None:
-    article_dir = OUT / "articles"
+def build_series(
+    *,
+    source_dir: Path,
+    out: Path,
+    hub_slug: str,
+    articles: list[tuple[int, str, str, str]],
+    language: str,
+    hub_title: str,
+) -> None:
+    article_dir = out / "articles"
     article_dir.mkdir(parents=True, exist_ok=True)
-    hub_source = SOURCE_DIR / "00_SERIEHUB.md"
-    hub_output = OUT / "series_page.html"
+    hub_filename = "00_SERIES_HUB.md" if language == "en" else "00_SERIEHUB.md"
+    hub_source = source_dir / hub_filename
+    hub_output = out / "series_page.html"
     hub_output.write_text(
-        nav_html(None)
+        nav_html(None, language)
         + render_markdown(hub_source.read_text(encoding="utf-8").splitlines()),
         encoding="utf-8",
     )
 
     manifest_articles: list[dict[str, object]] = []
-    for part, filename, slug, title in ARTICLES:
-        source = SOURCE_DIR / filename
+    for part, filename, slug, title in articles:
+        source = source_dir / filename
         lines = source.read_text(encoding="utf-8").splitlines()
-        content = nav_html(part) + render_markdown(lines) + nav_html(part)
+        content = (
+            nav_html(part, language)
+            + render_markdown(lines)
+            + nav_html(part, language)
+        )
         output = article_dir / f"{part:02d}.html"
         output.write_text(content, encoding="utf-8")
         paragraphs = [
@@ -228,26 +278,46 @@ def main() -> None:
                 "slug": slug,
                 "post_type": "page",
                 "source": source.relative_to(ROOT).as_posix(),
-                "file": output.relative_to(OUT).as_posix(),
-                "url": public_url(slug),
+                "file": output.relative_to(out).as_posix(),
+                "url": public_url(slug, hub_slug),
                 "excerpt": " ".join(paragraphs[:2])[:300],
             }
         )
     manifest = {
         "site": SITE,
+        "language": language,
         "hub": {
-            "title": "Van genexpressie naar 40 qubits",
-            "slug": HUB_SLUG,
+            "title": hub_title,
+            "slug": hub_slug,
             "post_type": "page",
-            "file": hub_output.relative_to(OUT).as_posix(),
-            "url": f"{SITE}/{HUB_SLUG}/",
+            "file": hub_output.relative_to(out).as_posix(),
+            "url": f"{SITE}/{hub_slug}/",
         },
         "articles": manifest_articles,
     }
-    (OUT / "manifest.json").write_text(
+    (out / "manifest.json").write_text(
         json.dumps(manifest, indent=2, ensure_ascii=False), encoding="utf-8"
     )
-    print(OUT / "manifest.json")
+    print(out / "manifest.json")
+
+
+def main() -> None:
+    build_series(
+        source_dir=SOURCE_DIR,
+        out=OUT,
+        hub_slug=HUB_SLUG,
+        articles=ARTICLES,
+        language="nl",
+        hub_title="Van genexpressie naar 40 qubits",
+    )
+    build_series(
+        source_dir=SOURCE_DIR_EN,
+        out=OUT_EN,
+        hub_slug=HUB_SLUG_EN,
+        articles=ARTICLES_EN,
+        language="en",
+        hub_title="From gene expression to 40 qubits",
+    )
 
 
 if __name__ == "__main__":
