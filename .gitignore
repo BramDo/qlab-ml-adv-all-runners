@@ -15,6 +15,7 @@ data_cache/
 # Scratch notebooks and generated circuit bundles
 Untitled*.ipynb
 *_qasm2.json.gz
+output/wordpress_qos_series/
 
 # Generated run artifacts
 *.json
