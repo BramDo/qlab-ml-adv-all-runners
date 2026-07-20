@@ -8,7 +8,7 @@ import docs.build_wordpress_qos_series as series
 
 def test_series_sources_and_claim_boundary() -> None:
     sources = sorted(series.SOURCE_DIR.glob("[0-9][0-9]_*.md"))
-    assert len(sources) == 8
+    assert len(sources) == 9
     combined = "\n".join(path.read_text(encoding="utf-8") for path in sources)
     assert "32.738" in combined
     assert "24.576" in combined
@@ -17,9 +17,10 @@ def test_series_sources_and_claim_boundary() -> None:
     assert "geen empirisch quantumvoordeel" in combined
     assert "QOS-geïnspireerde" in combined
     assert "genenzoekmachine" in combined
+    assert "het voorstel vastleggen, maar de studie nog niet uitvoeren" in combined
 
 
-def test_builder_produces_hub_and_seven_navigable_articles(tmp_path: Path) -> None:
+def test_builder_produces_hub_and_eight_navigable_articles(tmp_path: Path) -> None:
     original_out = series.OUT
     try:
         series.OUT = tmp_path
@@ -28,10 +29,10 @@ def test_builder_produces_hub_and_seven_navigable_articles(tmp_path: Path) -> No
         series.OUT = original_out
     manifest = json.loads((tmp_path / "manifest.json").read_text(encoding="utf-8"))
     assert manifest["hub"]["slug"] == "quantum-oracle-sketching-qml-genexpressie"
-    assert len(manifest["articles"]) == 7
+    assert len(manifest["articles"]) == 8
     hub = (tmp_path / "series_page.html").read_text(encoding="utf-8")
     assert "qos-series-nav" in hub
-    for index in range(1, 8):
+    for index in range(1, 9):
         article = (tmp_path / "articles" / f"{index:02d}.html").read_text(
             encoding="utf-8"
         )

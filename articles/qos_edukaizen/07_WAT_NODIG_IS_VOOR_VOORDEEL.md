@@ -86,7 +86,7 @@ De huidige serie eindigt met een bescheiden maar concrete conclusie:
 
 > De QOS-theorie heeft een route naar exponentieel ruimtevoordeel voor leren uit enorme klassieke datastromen. De officiële resultaten zijn numeriek. Onze 40-qubitpilot brengt een QOS-geïnspireerde single-cell featuremap voor het eerst in onze werkbank volledig naar echte hardware. Die uitvoering werkt technisch, maar levert op de vaste 32-cellentest nog geen generalisatie- of resourcevoordeel op.
 
-Dat is geen eindpunt. Het is een scherp gedefinieerd startpunt voor de volgende experimenten.
+Dat is geen eindpunt. Het is een scherp gedefinieerd startpunt voor de volgende experimenten. In [deel 8](https://edukaizen.nl/quantum-oracle-sketching-qml-genexpressie/voorstel-60-qubit-qml-vervolgstudie/) werken we één mogelijke 60-qubitvervolgstudie uit als voorstel. Die studie wordt nu nog niet uitgevoerd.
 
 ## Bronnen en code
 
@@ -94,4 +94,3 @@ Dat is geen eindpunt. Het is een scherp gedefinieerd startpunt voor de volgende 
 - [Officiële QOS-repository](https://github.com/haimengzhao/quantum-oracle-sketching)
 - [Onze Qiskit/Fire Opal-repository](https://github.com/BramDo/qlab-ml-adv-all-runners)
 - [40-qubit milestone pull request](https://github.com/BramDo/qlab-ml-adv-all-runners/pull/1)
-

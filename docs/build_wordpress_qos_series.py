@@ -21,6 +21,7 @@ ARTICLES = [
     (5, "05_READOUT_EN_CLASSIFIER.md", "quantum-readout-405-observabelen-classifier", "405 observabelen en een lekvrije classifier"),
     (6, "06_HET_HARDWARERESULTAAT.md", "resultaat-hardware-versus-klassiek", "Het resultaat: hardware 16, klassiek 17"),
     (7, "07_WAT_NODIG_IS_VOOR_VOORDEEL.md", "route-naar-quantumvoordeel-qml", "Wat is nog nodig voor quantumvoordeel?"),
+    (8, "08_VOORSTEL_60Q_VERVOLGSTUDIE.md", "voorstel-60-qubit-qml-vervolgstudie", "Voorstel: een 60-qubit QML-vervolgstudie"),
 ]
 
 

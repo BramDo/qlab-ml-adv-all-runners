@@ -2,7 +2,7 @@
 
 Quantum machine learning klinkt vaak alsof een quantumcomputer een complete database in één keer doorzoekt. Ons experiment doet iets preciezers en interessanters: het probeert **het celtype van één cel te voorspellen uit haar genexpressieprofiel**. De invoer is een lange, dunbezette vector met RNA-tellingen; de uitvoer is een van twee immuuncelklassen.
 
-Deze zevendelige reeks verbindt drie lagen die gemakkelijk door elkaar raken. De eerste laag is de theorie van *Quantum Oracle Sketching* (QOS), gepubliceerd in april 2026. Die theorie gaat over een klein quantummodel dat enorme klassieke datastromen verwerkt zonder de hele matrix te bewaren. De tweede laag is de officiële JAX-code en de numerieke PBMC68k-experimenten. De derde laag is onze eigen, ondiepe en QOS-geïnspireerde vertaling naar een circuit dat werkelijk op 40 fysieke qubits van IBM Fez is uitgevoerd via Fire Opal.
+Deze achtdelige reeks verbindt drie lagen die gemakkelijk door elkaar raken. De eerste laag is de theorie van *Quantum Oracle Sketching* (QOS), gepubliceerd in april 2026. Die theorie gaat over een klein quantummodel dat enorme klassieke datastromen verwerkt zonder de hele matrix te bewaren. De tweede laag is de officiële JAX-code en de numerieke PBMC68k-experimenten. De derde laag is onze eigen, ondiepe en QOS-geïnspireerde vertaling naar een circuit dat werkelijk op 40 fysieke qubits van IBM Fez is uitgevoerd via Fire Opal. Het extra achtste deel beschrijft een mogelijke 60-qubitvervolgstudie, maar stelt die uitvoering bewust uit.
 
 ## De reeks
 
@@ -13,6 +13,7 @@ Deze zevendelige reeks verbindt drie lagen die gemakkelijk door elkaar raken. De
 5. [405 observabelen en een lekvrije classifier](https://edukaizen.nl/quantum-oracle-sketching-qml-genexpressie/quantum-readout-405-observabelen-classifier/)
 6. [Het resultaat: hardware 16, klassiek 17](https://edukaizen.nl/quantum-oracle-sketching-qml-genexpressie/resultaat-hardware-versus-klassiek/)
 7. [Wat is nog nodig voor quantumvoordeel?](https://edukaizen.nl/quantum-oracle-sketching-qml-genexpressie/route-naar-quantumvoordeel-qml/)
+8. [Voorstel: een 60-qubit QML-vervolgstudie](https://edukaizen.nl/quantum-oracle-sketching-qml-genexpressie/voorstel-60-qubit-qml-vervolgstudie/)
 
 ## Het experiment in één tabel
 
@@ -43,4 +44,3 @@ Juist daardoor is de reeks nuttig. Zij laat niet alleen zien hoe de theorie werk
 - [Officiële Quantum Oracle Sketching-code](https://github.com/haimengzhao/quantum-oracle-sketching)
 - [Onze Qiskit- en Fire Opal-runners](https://github.com/BramDo/qlab-ml-adv-all-runners)
 - [10x PBMC68k-dataset](https://www.10xgenomics.com/datasets/fresh-68-k-pbm-cs-donor-a-1-standard-1-1-0)
-
