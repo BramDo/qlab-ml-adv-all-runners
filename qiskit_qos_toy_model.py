@@ -667,7 +667,10 @@ def expectation_from_counts(
     mapping: dict[int, str],
     num_qubits: int,
 ) -> float:
-    total = float(sum(int(round(float(value))) for value in counts.values()))
+    weights = [float(value) for value in counts.values()]
+    if any(not np.isfinite(value) or value < 0.0 for value in weights):
+        raise ValueError("counts/probabilities must be finite and non-negative")
+    total = float(sum(weights))
     if total <= 0.0:
         return 0.0
 

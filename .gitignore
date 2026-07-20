@@ -1,5 +1,6 @@
 # Local environment
 .venv/
+.codex
 .codex/
 __pycache__/
 *.pyc
@@ -9,6 +10,11 @@ official_qos/.git/
 
 # Cached datasets and local downloads
 official_qos/real_datasets/data_cache/
+data_cache/
+
+# Scratch notebooks and generated circuit bundles
+Untitled*.ipynb
+*_qasm2.json.gz
 
 # Generated run artifacts
 *.json
