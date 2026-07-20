@@ -3,12 +3,12 @@
 Gepubliceerd op 20 juli 2026 als een pagina-hub met acht onderliggende
 artikelen:
 
-- Seriehub: https://edukaizen.nl/quantum-oracle-sketching-qml-genexpressie/
+- Gecombineerde projectpagina: https://edukaizen.nl/quantum-oracle-sketching-qml-genexpressie/
 - Engelse spiegel: https://edukaizen.nl/quantum-oracle-sketching-qml-gene-expression/
 - WordPress-hubpagina: `498`
 - WordPress-artikelpagina's: `499` tot en met `505`, plus `516`
 - Hoofdmenu-item `QOS QML`: `506`
-- Onderliggende menu-items: `507` tot en met `513`, plus `517`
+- Taalkeuzes onder het menu-item: `Nederlands` (`563`) en `English` (`564`)
 
 De artikelen staan in deze volgorde:
 
@@ -28,3 +28,7 @@ geverifieerd. Hoofdstuk 8 is als uitgesteld onderzoeksvoorstel gepubliceerd:
 er is hiervoor geen nieuwe lokale 60-qubitsweep of Fire Opal-job uitgevoerd.
 Op dezelfde datum is een volledige Engelse spiegel gepubliceerd. Iedere hub en
 ieder hoofdstuk bevat een directe taalwissel naar de overeenkomstige pagina.
+De projectpagina is daarna samengevoegd tot één tweetalige pagina met twee
+keuzeknoppen en beide artikellijsten. De losse Nederlandse artikelmenu-items
+`507`–`513` en `517` en de Engelse menutak `527`–`535` zijn verwijderd; de
+bijbehorende artikelpagina's zijn behouden.

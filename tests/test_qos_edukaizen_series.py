@@ -50,7 +50,9 @@ def test_builder_produces_hub_and_eight_navigable_articles(tmp_path: Path) -> No
     assert len(manifest_en["articles"]) == 8
     hub = (tmp_path / "nl" / "series_page.html").read_text(encoding="utf-8")
     hub_en = (tmp_path / "en" / "series_page.html").read_text(encoding="utf-8")
-    assert "qos-series-nav" in hub
+    assert "qos-language-choice" in hub
+    assert 'href="#nederlands"' in hub
+    assert 'href="#english"' in hub
     assert "quantum-oracle-sketching-qml-gene-expression" in hub
     assert "qos-series-nav" in hub_en
     assert "quantum-oracle-sketching-qml-genexpressie" in hub_en
@@ -65,6 +67,10 @@ def test_builder_produces_hub_and_eight_navigable_articles(tmp_path: Path) -> No
         )
         assert article.count("qos-series-nav") == 2
         assert article_en.count("qos-series-nav") == 2
+        assert "<strong>Nederlands</strong>" in article
+        assert ">Projectpagina</a>" in article
+        assert "<strong>English</strong>" in article_en
+        assert ">Project page</a>" in article_en
         assert "https://arxiv.org/abs/2604.07639" in article
         assert "https://arxiv.org/abs/2604.07639" in article_en
         assert "](" not in article

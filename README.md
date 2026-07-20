@@ -58,9 +58,11 @@ Generated provider payloads and result JSON remain local and are intentionally
 excluded from Git. The repository tracks the runners, validation logic, tests,
 and the numerical result summary above.
 
-The theory and hardware article series is published on Edukaizen in
-[Dutch](https://edukaizen.nl/quantum-oracle-sketching-qml-genexpressie/) and
-[English](https://edukaizen.nl/quantum-oracle-sketching-qml-gene-expression/).
+The theory and hardware article series has one combined
+[Edukaizen project page](https://edukaizen.nl/quantum-oracle-sketching-qml-genexpressie/)
+with Dutch and English language buttons. The language-specific article URLs,
+including the existing [English index](https://edukaizen.nl/quantum-oracle-sketching-qml-gene-expression/),
+remain available.
 The Markdown sources and publication records live in `articles/qos_edukaizen/`
 and `articles/qos_edukaizen_en/`.
 

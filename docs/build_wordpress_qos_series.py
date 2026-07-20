@@ -197,9 +197,22 @@ def nav_html(part: int | None, language: str) -> str:
     other_articles = ARTICLES if english else ARTICLES_EN
     hub_slug = HUB_SLUG_EN if english else HUB_SLUG
     other_hub_slug = HUB_SLUG if english else HUB_SLUG_EN
-    links = [
-        f'<a href="{SITE}/{hub_slug}/">{"Series hub" if english else "Seriehub"}</a>'
-    ]
+    links: list[str] = []
+    if part is None:
+        links.append(
+            f'<a href="{SITE}/{hub_slug}/">'
+            f'{"Series hub" if english else "Seriehub"}</a>'
+        )
+    else:
+        links.append(f'<strong>{"English" if english else "Nederlands"}</strong>')
+        links.append(
+            f'<a href="{public_url(other_articles[part - 1][2], other_hub_slug)}">'
+            f'{"Nederlands" if english else "English"}</a>'
+        )
+        links.append(
+            f'<a href="{SITE}/{HUB_SLUG}/">'
+            f'{"Project page" if english else "Projectpagina"}</a>'
+        )
     if part is not None and part > 1:
         links.append(
             f'<a href="{public_url(articles[part - 2][2], hub_slug)}">'
@@ -210,14 +223,11 @@ def nav_html(part: int | None, language: str) -> str:
             f'<a href="{public_url(articles[part][2], hub_slug)}">'
             f'{"Next part" if english else "Volgend deel"}</a>'
         )
-    language_url = (
-        f"{SITE}/{other_hub_slug}/"
-        if part is None
-        else public_url(other_articles[part - 1][2], other_hub_slug)
-    )
-    links.append(
-        f'<a href="{language_url}">{"Nederlands" if english else "English"}</a>'
-    )
+    if part is None:
+        links.append(
+            f'<a href="{SITE}/{other_hub_slug}/">'
+            f'{"Nederlands" if english else "English"}</a>'
+        )
     links.extend(
         [
             '<a href="https://arxiv.org/abs/2604.07639">QOS paper</a>',
@@ -233,6 +243,41 @@ def nav_html(part: int | None, language: str) -> str:
         + " | ".join(links)
         + "</nav>\n"
     )
+
+
+def build_combined_project_page() -> None:
+    dutch = render_markdown(
+        (SOURCE_DIR / "00_SERIEHUB.md").read_text(encoding="utf-8").splitlines()
+    )
+    english = render_markdown(
+        (SOURCE_DIR_EN / "00_SERIES_HUB.md").read_text(encoding="utf-8").splitlines()
+    )
+    choice = (
+        '<style>.qos-language-choice{display:flex;flex-wrap:wrap;gap:1rem;'
+        'margin:1.5rem 0 2rem}.qos-language-choice a{display:inline-block;'
+        'padding:.85rem 1.4rem;border:2px solid #3157a4;border-radius:.45rem;'
+        'background:#3157a4;color:#fff!important;text-decoration:none;font-weight:700}'
+        '.qos-language-choice a:hover{background:#fff;color:#3157a4!important}'
+        '.qos-language-section{scroll-margin-top:2rem;margin-top:2rem;'
+        'padding-top:.5rem;border-top:1px solid #ddd}</style>\n'
+        '<p><strong>Kies een taal / Choose a language</strong></p>\n'
+        '<div class="qos-language-choice">'
+        '<a href="#nederlands">Nederlands</a>'
+        '<a href="#english">English</a>'
+        '</div>\n'
+    )
+    content = (
+        choice
+        + '<section id="nederlands" class="qos-language-section">'
+        + '<h2>Nederlands</h2>\n'
+        + dutch
+        + '</section>\n'
+        + '<section id="english" class="qos-language-section">'
+        + '<h2>English</h2>\n'
+        + english
+        + '</section>\n'
+    )
+    (OUT / "series_page.html").write_text(content, encoding="utf-8")
 
 
 def build_series(
@@ -308,7 +353,7 @@ def main() -> None:
         hub_slug=HUB_SLUG,
         articles=ARTICLES,
         language="nl",
-        hub_title="Van genexpressie naar 40 qubits",
+        hub_title="Quantum Oracle Sketching QML",
     )
     build_series(
         source_dir=SOURCE_DIR_EN,
@@ -318,6 +363,7 @@ def main() -> None:
         language="en",
         hub_title="From gene expression to 40 qubits",
     )
+    build_combined_project_page()
 
 
 if __name__ == "__main__":

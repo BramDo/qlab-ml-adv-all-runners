@@ -2,12 +2,12 @@
 
 Published on 20 July 2026 as an English series hub with eight child pages:
 
-- Series hub: https://edukaizen.nl/quantum-oracle-sketching-qml-gene-expression/
-- Dutch version: https://edukaizen.nl/quantum-oracle-sketching-qml-genexpressie/
+- Combined project page: https://edukaizen.nl/quantum-oracle-sketching-qml-genexpressie/
+- Existing English index: https://edukaizen.nl/quantum-oracle-sketching-qml-gene-expression/
 - WordPress hub page: `518`
 - WordPress article pages: `519` through `526`
-- Top-level menu item `QOS QML EN`: `527`
-- Child menu items: `528` through `535`
+- Shared top-level menu item `QOS QML`: `506`
+- Language choices: `Nederlands` (`563`) and `English` (`564`)
 
 The articles appear in this order:
 
@@ -25,3 +25,8 @@ publication. Series navigation, reciprocal language links, MathJax processing,
 the values `16/32` and `17/32`, the claim boundary and both top-level menu
 branches were checked live. Part 8 remains a postponed proposal; its
 translation did not trigger a new local 60-qubit sweep or Fire Opal job.
+
+The two language hubs were subsequently combined on project page `498`. It
+contains styled Dutch and English choice buttons and both article lists. The
+standalone English index remains published for compatibility, but its former
+top-level menu branch `527`–`535` was removed. No article pages were deleted.
