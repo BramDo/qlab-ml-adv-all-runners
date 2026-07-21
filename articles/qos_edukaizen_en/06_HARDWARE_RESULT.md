@@ -2,7 +2,7 @@
 
 ## Update of 21 July 2026: 60-qubit hardware finishes ahead of both baselines
 
-The new shallow 60-qubit route with label-free gene modules scored **17/32** on the same held-out test size, compared with **16/32** for the linear baseline and **14/32** for RBF. The Fire Opal dashboard reported only **26 quantum seconds**. The complete result was available after approximately 8 minutes and 33 seconds; a local MPS simulation of the same quantum representation had not converged after 42 minutes and 57 seconds. [Read the complete 60-qubit result in part 8](https://edukaizen.nl/quantum-oracle-sketching-qml-gene-expression/proposal-60-qubit-qml-follow-up-study/).
+The new shallow 60-qubit route with label-free gene modules scored **17/32** on the same held-out test size, compared with **16/32** for the linear baseline and **14/32** for RBF. The Fire Opal dashboard reported only **26 quantum seconds**. The local MPS attempt for the same feature target had not converged after 42 minutes and 57 seconds: a local kernel-time separation greater than **99.1x**. Even the complete 8-minute-33-second route through retrieval is more than **5.0x** shorter. [Read the complete 60-qubit result in part 8](https://edukaizen.nl/quantum-oracle-sketching-qml-gene-expression/proposal-60-qubit-qml-follow-up-study/).
 
 The chapter below remains the historical, pre-frozen 40-qubit result.
 

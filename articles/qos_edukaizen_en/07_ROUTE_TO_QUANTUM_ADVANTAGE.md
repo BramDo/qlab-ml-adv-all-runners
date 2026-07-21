@@ -82,9 +82,9 @@ Only when the quantum route performs better on the final blind test, or matches 
 
 ## What can we already say?
 
-The current series now ends with a more positive but still bounded intermediate result:
+The current series now ends with a locally measured but still bounded advantage:
 
-> Our 60-qubit QOS-inspired feature map ran on real hardware, scored one cell above the strongest predeclared classical baseline on the fixed 32-cell test and produced complete features faster than our incomplete MPS simulation of the same representation. This is a task-specific practical indication, not a general quantum-advantage claim.
+> Our 60-qubit QOS-inspired feature map ran on real hardware, scored one cell above the strongest predeclared classical baseline on the fixed 32-cell test and reached the same specified feature target in 26 quantum seconds. The MPS attempt remained incomplete after 2,577 seconds: a local kernel-time separation greater than 99.1x. This is a task-specific time-to-feature-generation advantage under the declared resources, not a general quantum-advantage claim.
 
 [Part 8](https://edukaizen.nl/quantum-oracle-sketching-qml-gene-expression/proposal-60-qubit-qml-follow-up-study/) gives the executed 60-qubit protocol, the 17/32 outcome, timing and statistical boundary in full.
 

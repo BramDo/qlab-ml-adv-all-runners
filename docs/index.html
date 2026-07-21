@@ -13,6 +13,7 @@
       <a class="brand" href="https://github.com/BramDo/qlab-ml-adv-all-runners">QOS · PBMC68k</a>
       <div class="toplinks">
         <a href="https://edukaizen.nl/quantum-oracle-sketching-qml-genexpressie/">Edukaizen</a>
+        <a href="https://edukaizen.nl/pro-student-quantum-advantage-list/">Advantage List</a>
         <a href="https://github.com/BramDo/qlab-ml-adv-all-runners">Code</a>
       </div>
     </nav>
@@ -24,14 +25,14 @@
 
     <section class="language-panel is-active" data-panel="nl">
       <p class="eyebrow">Hardwaremijlpaal · 21 juli 2026</p>
-      <h1>Zestig qubits, een positief hardwarepuntresultaat</h1>
+      <h1>Zestig qubits, lokale featuregeneratie-advantage</h1>
       <p class="lede">Een ondiepe QOS-geïnspireerde featuremap voor echte PBMC68k-genexpressie draaide via Fire Opal op IBM Fez. Op de vaste testset eindigde hardware vóór beide vooraf gekozen klassieke baselines; het dashboard rapporteerde slechts 26 quantumseconden.</p>
       <a class="primary-action" href="https://edukaizen.nl/quantum-oracle-sketching-qml-genexpressie/voorstel-60-qubit-qml-vervolgstudie/">Lees het volledige resultaat</a>
     </section>
 
     <section class="language-panel" data-panel="en" hidden>
       <p class="eyebrow">Hardware milestone · 21 July 2026</p>
-      <h1>Sixty qubits, a positive hardware point result</h1>
+      <h1>Sixty qubits, a local feature-generation advantage</h1>
       <p class="lede">A shallow QOS-inspired feature map for real PBMC68k gene expression ran through Fire Opal on IBM Fez. On the fixed test, hardware finished ahead of both preselected classical baselines; the dashboard reported only 26 quantum seconds.</p>
       <a class="primary-action" href="https://edukaizen.nl/quantum-oracle-sketching-qml-gene-expression/proposal-60-qubit-qml-follow-up-study/">Read the complete result</a>
     </section>
@@ -74,7 +75,7 @@
         <div>
           <p class="eyebrow">Praktische timing</p>
           <h2>De quantumtaak zelf: slechts 26 seconden</h2>
-          <p>Het Fire Opal-dashboard rapporteerde 0:26 quantumtijd; het complete resultaat was na circa 8:33 opgehaald. De lokale MPS-controle van dezelfde 60-qubitrepresentatie was na 42:57 nog niet geconvergeerd. Dat is een nuttige aanwijzing voor quantumfeaturegeneratie, maar geen end-to-end speedup boven gewone klassieke ML.</p>
+          <p>Het Fire Opal-dashboard rapporteerde 0:26 quantumtijd; het complete resultaat was na circa 8:33 opgehaald. De lokale MPS-controle van dezelfde 60-qubitfeaturetarget was na 42:57 nog niet geconvergeerd. Dat geeft een lokale ondergrens van meer dan 99,1× op kerneltijd en meer dan 5,0× inclusief retrieval.</p>
         </div>
         <div class="timeline" aria-label="Timing comparison">
           <div><span>Quantumtaak, dashboard</span><i style="--width:3%"></i><b>0:26</b></div>
@@ -85,7 +86,7 @@
 
       <aside class="claim-boundary">
         <h2>De eerlijke claim</h2>
-        <p>Dit is een taakgebonden, empirische aanwijzing voor praktisch gedeeltelijk quantumvoordeel: de hoogste held-out puntenscore en snellere featuregeneratie dan onze klassieke simulatiepoging van hetzelfde circuit. Met slechts 32 testcellen, McNemar <code>p=1,0</code> en een breed bootstrapinterval is het geen algemene of asymptotische quantum-advantageclaim.</p>
+        <p>Dit is een taakgebonden lokale time-to-feature-generation advantage binnen de gedeclareerde resources, plus de hoogste held-out puntenscore. MPS convergeerde niet, dus de tijdverhouding is een ondergrens en geen gematchte numerieke-foutvergelijking. Met slechts 32 testcellen, McNemar <code>p=1,0</code> en een breed bootstrapinterval is het geen algemene of asymptotische quantum-advantageclaim.</p>
       </aside>
     </section>
 
@@ -107,7 +108,7 @@
         <div>
           <p class="eyebrow">Practical timing</p>
           <h2>The quantum task itself: only 26 seconds</h2>
-          <p>The Fire Opal dashboard reported 0:26 of quantum time; the complete result was retrieved after about 8:33. The local MPS check of the same 60-qubit representation had not converged after 42:57. This is useful evidence about quantum feature generation, but not an end-to-end speedup over ordinary classical ML.</p>
+          <p>The Fire Opal dashboard reported 0:26 of quantum time; the complete result was retrieved after about 8:33. The local MPS check of the same 60-qubit feature target had not converged after 42:57. This gives a local lower bound greater than 99.1x at kernel scope and greater than 5.0x including retrieval.</p>
         </div>
         <div class="timeline" aria-label="Timing comparison">
           <div><span>Quantum task, dashboard</span><i style="--width:3%"></i><b>0:26</b></div>
@@ -118,7 +119,7 @@
 
       <aside class="claim-boundary">
         <h2>The fair claim</h2>
-        <p>This is a task-specific empirical indication of practical partial quantum advantage: the highest held-out point score and faster feature generation than our attempted classical simulation of the same circuit. With only 32 test cells, McNemar <code>p=1.0</code> and a wide bootstrap interval, it is not a general or asymptotic quantum-advantage claim.</p>
+        <p>This is a task-specific local time-to-feature-generation advantage under the declared resources, plus the highest held-out point score. MPS did not converge, so the timing ratio is a lower bound rather than a matched numerical-error comparison. With only 32 test cells, McNemar <code>p=1.0</code> and a wide bootstrap interval, it is not a general or asymptotic quantum-advantage claim.</p>
       </aside>
     </section>
   </main>

@@ -28,10 +28,17 @@ the values `16/32` and `17/32`, the claim boundary and both top-level menu
 branches were checked live. On 21 July, part 8 was replaced by the executed
 60-qubit experiment: hardware `17/32`, linear `16/32`, RBF `14/32`, Fire Opal
 action `2335848`, 26 quantum seconds reported by the dashboard and about 8
-minutes 33 seconds from submission to retrieval. The eight updated Dutch and
+minutes 33 seconds from submission to retrieval. Against the incomplete
+2,577-second MPS attempt, this is a local lower bound of 99.1x at kernel scope
+and 5.0x including retrieval. The eight updated Dutch and
 English URLs subsequently returned HTTP status `200`; every required result
 marker and navigation element was publicly present, with no raw Markdown
 links.
+
+On 21 July the QML result was also added as `local_runtime_lower_bound` to the
+existing [Pro Student Quantum Advantage List](https://edukaizen.nl/pro-student-quantum-advantage-list/),
+WordPress page `451`. The public page records the 99.1x kernel lower bound, the
+5.0x end-to-end lower bound, and every predictive and MPS limitation.
 
 The two language hubs were subsequently combined on project page `498`. It
 contains styled Dutch and English choice buttons and both article lists. The

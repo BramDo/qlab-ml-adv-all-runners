@@ -82,9 +82,9 @@ Pas wanneer de quantumroute op de finale blindtest beter scoort of dezelfde scor
 
 ## Wat kunnen we nu al zeggen?
 
-De huidige serie eindigt nu met een positiever maar nog steeds afgebakend tussenresultaat:
+De huidige serie eindigt nu met een lokaal gemeten, maar nog steeds afgebakend voordeel:
 
-> Onze 60-qubit QOS-geïnspireerde featuremap was uitvoerbaar op echte hardware, scoorde op de vaste 32-cellentest één cel beter dan de sterkste vooraf gekozen klassieke baseline en leverde de complete features sneller dan onze onvoltooide MPS-simulatie van dezelfde representatie. Dit is een taakgebonden praktische aanwijzing, geen algemene quantum-advantageclaim.
+> Onze 60-qubit QOS-geïnspireerde featuremap was uitvoerbaar op echte hardware, scoorde op de vaste 32-cellentest één cel beter dan de sterkste vooraf gekozen klassieke baseline en bereikte dezelfde gespecificeerde featuretarget in 26 quantumseconden. De MPS-poging was na 2.577 seconden nog onvoltooid: een lokale kernel-tijdseparatie groter dan 99,1×. Dit is een task-specific time-to-feature-generation advantage binnen de gedeclareerde resources, geen algemene quantum-advantageclaim.
 
 In [deel 8](https://edukaizen.nl/quantum-oracle-sketching-qml-genexpressie/voorstel-60-qubit-qml-vervolgstudie/) staan het uitgevoerde 60-qubitprotocol, de 17/32-uitkomst, de timing en de statistische grens volledig beschreven.
 

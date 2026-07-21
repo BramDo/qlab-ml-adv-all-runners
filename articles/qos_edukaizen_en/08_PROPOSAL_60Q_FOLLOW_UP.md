@@ -10,7 +10,7 @@ The fixed held-out test produced the strongest hardware point result in this ser
 | classical linear baseline | 0.50000 | 16/32 |
 | classical RBF baseline | 0.43750 | 14/32 |
 
-This is a positive intermediate result: on this test, the frozen hardware classifier finished ahead of both predeclared classical references. Because the test set is small and the uncertainty is wide, it is not a general or asymptotic quantum-advantage claim.
+This is a positive result on two axes: on this test, the frozen hardware classifier finished ahead of both predeclared classical references, and quantum feature computation showed a clear local time separation from MPS. Because the test set is small and MPS did not converge, it is not a general or asymptotic quantum-advantage claim.
 
 ## Why the first 60-qubit route failed
 
@@ -51,15 +51,15 @@ On that test, hardware scored 17/32, the linear baseline 16/32 and the RBF basel
 
 According to the Fire Opal dashboard, the quantum task itself took only 26 seconds. Submission to fully retrieved results took approximately 8 minutes and 33 seconds, including orchestration, compilation, queueing and retrieval. The local MPS check of exactly the same 60-qubit representation ran for 42 minutes and 57 seconds without converging: bond dimension 64 had completed, while at 128 only one of eight required parts had finished.
 
-This is a relevant practical indication: for generating these particular wide quantum features, hardware produced a complete result faster than our attempted classical MPS simulation.
+For the same specified 627-feature target, 2,577 seconds divided by 26 seconds equals 99.1. Because MPS was still incomplete, **greater than 99.1x** is a measured local lower bound on the kernel-time separation. Using the complete 513-second Fire Opal route still leaves a lower bound **greater than 5.0x**.
 
-It is explicitly not an end-to-end time advantage over ordinary classical ML. The linear and RBF models can train directly on classically prepared data without simulating the 60-qubit circuit. The fair claim is narrower: **the quantum feature generator was executable, achieved the highest held-out point score and became available faster than our incomplete classical simulation of that same quantum representation**.
+This is therefore a **local time-to-feature-generation advantage under the declared resources**. It is explicitly not an end-to-end time advantage over ordinary classical ML: the linear and RBF models can train directly on classically prepared data without simulating the 60-qubit circuit. MPS also did not converge, so no matched numerical feature error is available.
 
 ## Statistical boundary
 
 With 32 test cells, one prediction equals 3.125 percentage points. The exact two-sided McNemar p-value against the stronger linear baseline is 1.0. The 95% bootstrap interval for `hardware minus linear` ranges from -0.1875 to +0.25. A classical lead, a tie and a hardware lead all remain compatible with this small sample.
 
-We therefore report a **task-specific empirical indication of practical partial quantum advantage**, not proven general quantum advantage.
+We therefore report the timing result as a **task-specific local quantum advantage for feature generation**, with a measured lower bound of 99.1x at kernel scope and 5.0x including retrieval. The predictive 17/32 score remains an empirical indication because of the small test, not proven general quantum advantage.
 
 ## The next decision gate
 
@@ -70,5 +70,6 @@ The next scientific step is not to spend more quantum time automatically. First,
 - [60-qubit module pipeline](qiskit_qos_pbmc68k_q60_module_pipeline.py)
 - [Fire Opal pilot runner](qiskit_qos_pbmc68k_q60_module_fireopal_pilot.py)
 - [60-qubit runbook](Q60_MODULE_B4_RUNBOOK.md)
+- [Entry in the Pro Student Quantum Advantage List](https://edukaizen.nl/pro-student-quantum-advantage-list/)
 - [QOS paper](https://arxiv.org/abs/2604.07639)
 - [Complete repository](https://github.com/BramDo/qlab-ml-adv-all-runners)

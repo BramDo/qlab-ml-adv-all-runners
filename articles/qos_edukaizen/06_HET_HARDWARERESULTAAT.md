@@ -2,7 +2,7 @@
 
 ## Update van 21 juli 2026: 60-qubithardware eindigt vóór beide baselines
 
-De nieuwe ondiepe 60-qubitroute met labelvrije genmodules scoorde op dezelfde omvang van de held-out test **17/32**, tegenover **16/32** voor de lineaire en **14/32** voor de RBF-baseline. Het Fire Opal-dashboard rapporteerde slechts **26 quantumseconden**. Het volledige resultaat was na ongeveer 8 minuten en 33 seconden beschikbaar; een lokale MPS-simulatie van dezelfde quantumrepresentatie was na 42 minuten en 57 seconden nog niet geconvergeerd. [Lees het volledige 60-qubitresultaat in deel 8](https://edukaizen.nl/quantum-oracle-sketching-qml-genexpressie/voorstel-60-qubit-qml-vervolgstudie/).
+De nieuwe ondiepe 60-qubitroute met labelvrije genmodules scoorde op dezelfde omvang van de held-out test **17/32**, tegenover **16/32** voor de lineaire en **14/32** voor de RBF-baseline. Het Fire Opal-dashboard rapporteerde slechts **26 quantumseconden**. De lokale MPS-poging voor dezelfde featuretarget was na 42 minuten en 57 seconden nog niet geconvergeerd: een lokale kernel-tijdseparatie van meer dan **99,1×**. Zelfs de volledige 8 minuten 33 seconden tot retrieval is meer dan **5,0×** korter. [Lees het volledige 60-qubitresultaat in deel 8](https://edukaizen.nl/quantum-oracle-sketching-qml-genexpressie/voorstel-60-qubit-qml-vervolgstudie/).
 
 Onderstaand hoofdstuk blijft het historische, vooraf bevroren 40-qubitresultaat beschrijven.
 

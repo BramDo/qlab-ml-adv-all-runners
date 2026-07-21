@@ -28,10 +28,17 @@ De seriemarkeringen, vorige/volgende-navigatie, de kerngetallen `16/32` en
 geverifieerd. Op 21 juli is hoofdstuk 8 vervangen door het daadwerkelijk
 uitgevoerde 60-qubitexperiment: hardware `17/32`, lineair `16/32`, RBF `14/32`,
 Fire Opal-action `2335848`, 26 quantumseconden volgens het dashboard en circa
-8 minuten 33 seconden van indiening tot retrieval. De acht bijgewerkte
+8 minuten 33 seconden van indiening tot retrieval. Tegenover de onvoltooide
+MPS-poging van 2.577 seconden is dit een lokale ondergrens van 99,1× op
+kerneltijd en 5,0× inclusief retrieval. De acht bijgewerkte
 Nederlandse en Engelse URL's gaven daarna HTTP-status `200`; alle vereiste
 resultaatmarkeringen en navigatie waren publiek aanwezig, zonder ruwe
 Markdown-links.
+
+Het QML-resultaat is op 21 juli tevens als `local_runtime_lower_bound` toegevoegd
+aan de bestaande [Pro Student Quantum Advantage List](https://edukaizen.nl/pro-student-quantum-advantage-list/),
+WordPress-pagina `451`. De publieke pagina vermeldt de 99,1× kernelondergrens,
+de 5,0× end-to-endondergrens en alle voorspellende en MPS-beperkingen.
 Op dezelfde datum is een volledige Engelse spiegel gepubliceerd. Iedere hub en
 ieder hoofdstuk bevat een directe taalwissel naar de overeenkomstige pagina.
 De projectpagina is daarna samengevoegd tot één tweetalige pagina met twee

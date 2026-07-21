@@ -53,13 +53,15 @@ completing only the `chi=64` probe and one `chi=128` sample. The archived
 `get_result` payload omitted the quantum-seconds field, so the 26-second value
 is explicitly attributed to the dashboard rather than the retrieval JSON.
 
-This is a strong practical and partial advantage indication: on this frozen
-sentinel the measured quantum features gave the best held-out point score, and
-the hardware feature-generation route completed much faster than our attempted
-classical simulation of the same 60q quantum representation. It is not an
-end-to-end computational advantage over the classical classifiers themselves,
-which remain inexpensive, and the 32-cell test is too small for a general
-predictive or asymptotic quantum-advantage claim.
+This is a measured **local time-to-feature-generation advantage** for the
+declared resources and target. The 26-second quantum task is more than `99.1x`
+faster than the incomplete 2,577-second MPS attempt; even the complete
+513-second submission-to-retrieval route is more than `5.0x` faster. The
+measured quantum features also gave the best held-out point score. The MPS
+route did not converge, so these ratios are lower bounds for producing the same
+specified 60q feature target, not a matched-numerical-error comparison. This is
+not an end-to-end advantage over the inexpensive classical classifiers, and
+the 32-cell test is too small for a general predictive or asymptotic claim.
 
 The earlier 40q milestone remains the historical anchor: hardware scored
 `16/32` versus `17/32` for its matched classical frontier and used 26
@@ -84,6 +86,9 @@ The theory and hardware article series has one combined
 with Dutch and English language buttons. The language-specific article URLs,
 including the existing [English index](https://edukaizen.nl/quantum-oracle-sketching-qml-gene-expression/),
 remain available.
+
+The 60q result is also registered as a local runtime lower bound in the
+[Pro Student Quantum Advantage List](https://edukaizen.nl/pro-student-quantum-advantage-list/).
 The Markdown sources and publication records live in `articles/qos_edukaizen/`
 and `articles/qos_edukaizen_en/`.
 

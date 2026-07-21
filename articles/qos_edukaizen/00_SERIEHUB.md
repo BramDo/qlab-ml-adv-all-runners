@@ -36,12 +36,13 @@ De nieuwste 60-qubitrun is het sterkste resultaat in de reeks. Op de vooraf afge
 | Quantumtijd volgens Fire Opal-dashboard | 26 seconden |
 | Submit tot retrieval | ongeveer 8 minuten 33 seconden |
 | Klassieke MPS-poging | na 42 minuten 57 seconden zonder convergente referentie gestopt |
+| Lokale tijdseparatie voor dezelfde featuretarget | meer dan 99,1× op kerneltijd; meer dan 5,0× inclusief retrieval |
 
 ## Wat deze reeks wel en niet claimt
 
 De uitvoering laat zien dat de volledige route—van echte single-cell RNA-data, via labelvrij geleerde genmodules en een compacte quantumfeaturemap, naar gemeten hardwarefeatures en een vooraf vastgelegde classifier—technisch uitvoerbaar is. Bovendien had de 60-qubitroute op deze vaste testset de beste puntenscore van de drie vooraf gekozen modellen.
 
-Dat is een sterke praktische, partiële quantum-advantage-indicatie: betere held-out accuracy én veel snellere featuregeneratie dan onze poging om hetzelfde 60q-quantumcircuit klassiek te simuleren. Het is nog geen algemene of asymptotische quantumvoordeelclaim. De klassieke lineaire en RBF-classifiers zelf zijn goedkoop, de test bevat slechts 32 cellen en het onzekerheidsinterval is breed. De 26 quantumseconden komen uit het Fire Opal-dashboard; het gearchiveerde API-resultaat liet dat veld leeg. Ook is onze ondiepe featuremap een hardwaregerichte benadering, niet het volledige QOS/QSVT-algoritme.
+Dat is binnen de gedeclareerde lokale resources een gemeten **time-to-feature-generation advantage**. De 26-seconden-quantumtaak is meer dan 99,1× sneller dan de na 2.577 seconden nog onvoltooide MPS-poging; zelfs de volledige 513-secondenroute tot retrieval is meer dan 5,0× sneller. De featuretarget was dezelfde, maar MPS convergeerde niet en leverde dus geen gematchte numerieke fout op. Het is daarom geen algemene of asymptotische quantumvoordeelclaim. De klassieke lineaire en RBF-classifiers zelf zijn goedkoop, de test bevat slechts 32 cellen en het onzekerheidsinterval is breed. De 26 quantumseconden komen uit het Fire Opal-dashboard; het gearchiveerde API-resultaat liet dat veld leeg. Ook is onze ondiepe featuremap een hardwaregerichte benadering, niet het volledige QOS/QSVT-algoritme.
 
 Juist daardoor is de reeks nuttig. Zij laat niet alleen zien hoe de theorie werkt, maar ook waar de moeilijke overgang naar echte hardware zit: datatoegang, circuitdiepte, readout, shotruis, generalisatie en een eerlijke klassieke vergelijking.
 
@@ -50,4 +51,5 @@ Juist daardoor is de reeks nuttig. Zij laat niet alleen zien hoe de theorie werk
 - [Exponential quantum advantage in processing massive classical data](https://arxiv.org/abs/2604.07639)
 - [Officiële Quantum Oracle Sketching-code](https://github.com/haimengzhao/quantum-oracle-sketching)
 - [Onze Qiskit- en Fire Opal-runners](https://github.com/BramDo/qlab-ml-adv-all-runners)
+- [Pro Student Quantum Advantage List](https://edukaizen.nl/pro-student-quantum-advantage-list/)
 - [10x PBMC68k-dataset](https://www.10xgenomics.com/datasets/fresh-68-k-pbm-cs-donor-a-1-standard-1-1-0)

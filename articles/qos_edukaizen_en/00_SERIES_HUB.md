@@ -36,12 +36,13 @@ The new 60-qubit run is the strongest result in the series. On the predeclared h
 | Quantum time reported by the Fire Opal dashboard | 26 seconds |
 | Submission to retrieval | about 8 minutes 33 seconds |
 | Classical MPS attempt | stopped after 42 minutes 57 seconds without a converged reference |
+| Local time separation for the same feature target | greater than 99.1x at kernel scope; greater than 5.0x including retrieval |
 
 ## What this series does and does not claim
 
 The execution shows that the complete route—from real single-cell RNA data, through label-free gene modules and a compact quantum feature map, to measured hardware features and a predeclared classifier—is technically executable. The 60-qubit route also had the best held-out point score of the three preselected models.
 
-This is a strong practical, partial quantum-advantage indication: higher held-out accuracy together with much faster feature generation than our attempt to classically simulate the same 60q quantum circuit. It is not a general or asymptotic quantum-advantage claim. The linear and RBF classifiers themselves remain inexpensive, the test contains only 32 cells, and the uncertainty interval is wide. The 26 quantum seconds come from the Fire Opal dashboard; the archived API result left that field empty. Our shallow feature map is also a hardware-oriented approximation rather than the complete QOS/QSVT algorithm.
+Under the declared local resources, this is a measured **time-to-feature-generation advantage**. The 26-second quantum task is more than 99.1x faster than the MPS attempt that remained incomplete after 2,577 seconds; even the complete 513-second route through retrieval is more than 5.0x faster. The feature target was the same, but MPS did not converge and therefore produced no matched numerical error. This is not a general or asymptotic quantum-advantage claim. The linear and RBF classifiers themselves remain inexpensive, the test contains only 32 cells, and the uncertainty interval is wide. The 26 quantum seconds come from the Fire Opal dashboard; the archived API result left that field empty. Our shallow feature map is also a hardware-oriented approximation rather than the complete QOS/QSVT algorithm.
 
 That is exactly why the series is useful. It explains not only how the theory works, but also where the difficult transition to real hardware lies: data access, circuit depth, readout, shot noise, generalisation, and a fair classical comparison.
 
@@ -50,4 +51,5 @@ That is exactly why the series is useful. It explains not only how the theory wo
 - [Exponential quantum advantage in processing massive classical data](https://arxiv.org/abs/2604.07639)
 - [Official Quantum Oracle Sketching code](https://github.com/haimengzhao/quantum-oracle-sketching)
 - [Our Qiskit and Fire Opal runners](https://github.com/BramDo/qlab-ml-adv-all-runners)
+- [Pro Student Quantum Advantage List](https://edukaizen.nl/pro-student-quantum-advantage-list/)
 - [10x PBMC68k dataset](https://www.10xgenomics.com/datasets/fresh-68-k-pbm-cs-donor-a-1-standard-1-1-0)

@@ -65,11 +65,13 @@ The archived `get_result` payload omitted the quantum-seconds field, so the
 attempt was stopped after 42 minutes 57 seconds after completing the `chi=64`
 probe and one of eight `chi=128` samples; it did not establish convergence.
 
-This is a positive, task-specific practical indication: the hardware point
-score exceeds both predeclared baselines and the quantum features arrived much
-faster than the incomplete MPS simulation of the same representation. It is
-not a statistically significant, end-to-end, general, or asymptotic advantage
-claim.
+This is a task-specific local time-to-feature-generation advantage under the
+declared resources. The 26-second quantum task is more than 99.1x faster than
+the incomplete 2,577-second MPS attempt; the complete 513-second route through
+retrieval is still more than 5.0x faster. The hardware point score also exceeds
+both predeclared baselines. MPS did not converge, so the timing ratios are lower
+bounds rather than a matched-numerical-error result. This is not an end-to-end,
+general, or asymptotic advantage claim.
 
 ## Fire Opal boundary
 

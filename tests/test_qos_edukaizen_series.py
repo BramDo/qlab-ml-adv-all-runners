@@ -24,12 +24,14 @@ def test_series_sources_and_claim_boundary() -> None:
     assert "26 quantumseconden" in combined
     assert "QOS-geïnspireerde" in combined
     assert "genenzoekmachine" in combined
-    assert "taakgebonden, empirische aanwijzing" in combined
+    assert "time-to-feature-generation advantage" in combined
+    assert "99,1" in combined
     assert "we are not building a gene-search engine" in combined_english
     assert "17/32" in combined_english
     assert "0.43750" in combined_english
     assert "26 quantum seconds" in combined_english
-    assert "task-specific empirical indication" in combined_english
+    assert "time-to-feature-generation advantage" in combined_english
+    assert "99.1" in combined_english
     assert "no held-out predictive quantum advantage" in combined_english
 
 
@@ -94,5 +96,7 @@ def test_github_pages_landing_page_contains_bilingual_result() -> None:
     assert "14/32" in page
     assert "26 quantumseconden" in page
     assert "26 quantum seconds" in page
+    assert "99,1" in page
+    assert "99.1" in page
     assert "2335848" in page
     assert "@media (max-width: 720px)" in stylesheet

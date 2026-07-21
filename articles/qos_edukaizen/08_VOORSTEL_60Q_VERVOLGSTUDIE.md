@@ -10,7 +10,7 @@ De vaste held-out test gaf het beste hardwarepuntresultaat in deze reeks:
 | klassieke lineaire baseline | 0,50000 | 16/32 |
 | klassieke RBF-baseline | 0,43750 | 14/32 |
 
-Dit is een positief tussenresultaat: de bevroren hardwareclassifier eindigde op deze test vóór beide vooraf vastgelegde klassieke referenties. Door de kleine testset en de brede onzekerheid is het nog geen algemene of asymptotische quantum-advantageclaim.
+Dit is een positief resultaat op twee assen: de bevroren hardwareclassifier eindigde op deze test vóór beide vooraf vastgelegde klassieke referenties, en de quantumfeatureberekening gaf lokaal een duidelijke tijdseparatie tegenover MPS. Door de kleine testset en de ontbrekende MPS-convergentie is het geen algemene of asymptotische quantum-advantageclaim.
 
 ## Waarom de eerste 60-qubitroute niet werkte
 
@@ -51,15 +51,15 @@ Op die test scoorde hardware 17/32, de lineaire baseline 16/32 en de RBF-baselin
 
 De eigenlijke quantumtaak duurde volgens het Fire Opal-dashboard slechts 26 seconden. Van indiening tot volledig opgehaald resultaat verstreken ongeveer 8 minuten en 33 seconden; daarin zitten ook orchestratie, compilatie, wachttijd en retrieval. De lokale MPS-controle van exact dezelfde 60-qubitrepresentatie liep 42 minuten en 57 seconden en was toen nog niet geconvergeerd: bond dimension 64 was voltooid, maar bij 128 was slechts één van acht benodigde delen klaar.
 
-Dat is een relevante praktische aanwijzing: voor het genereren van deze specifieke brede quantumfeatures leverde hardware sneller een compleet resultaat dan onze poging tot klassieke MPS-simulatie.
+Voor dezelfde gespecificeerde 627-featuretarget is 2.577 seconden gedeeld door 26 seconden gelijk aan 99,1. Omdat MPS toen nog niet klaar was, is **meer dan 99,1×** een gemeten lokale ondergrens voor de kernel-tijdseparatie. Als we de volledige Fire Opal-route van 513 seconden gebruiken, blijft de ondergrens **meer dan 5,0×**.
 
-Het is nadrukkelijk geen end-to-end tijdvoordeel tegenover gewone klassieke ML. De lineaire en RBF-modellen kunnen rechtstreeks op klassiek voorbereide data worden getraind zonder het 60-qubitcircuit te simuleren. De eerlijke claim is daarom smaller: **de quantumfeaturegenerator was uitvoerbaar, gaf de hoogste held-out puntenscore en was sneller beschikbaar dan onze onvoltooide klassieke simulatie van diezelfde quantumrepresentatie**.
+Dit is dus een **lokale time-to-feature-generation advantage binnen de gedeclareerde resources**. Het is nadrukkelijk geen end-to-end tijdvoordeel tegenover gewone klassieke ML: de lineaire en RBF-modellen kunnen rechtstreeks op klassiek voorbereide data worden getraind zonder het 60-qubitcircuit te simuleren. Ook convergeerde MPS niet, zodat geen gematchte numerieke featurefout beschikbaar is.
 
 ## Statistische grens van dit resultaat
 
 Met 32 testcellen is één fout gelijk aan 3,125 procentpunt. De tweezijdige exacte McNemar-p-waarde tegenover de sterkste lineaire baseline is 1,0. Het 95%-bootstrapinterval voor `hardware minus lineair` loopt van -0,1875 tot +0,25. Een klassiek voordeel, gelijkspel en hardwarevoordeel blijven dus allemaal verenigbaar met deze kleine steekproef.
 
-We melden dit daarom als een **taakgebonden, empirische aanwijzing voor praktisch gedeeltelijk quantumvoordeel**, niet als bewezen algemene quantum advantage.
+We melden het tijdresultaat daarom als een **taakgebonden lokale quantum advantage voor featuregeneratie**, met een gemeten ondergrens van 99,1× op kerneltijd en 5,0× inclusief retrieval. De voorspellende 17/32-score blijft door de kleine test een empirische aanwijzing, niet bewezen algemene quantum advantage.
 
 ## De volgende beslispoort
 
@@ -70,5 +70,6 @@ De volgende wetenschappelijke stap is niet automatisch meer quantumtijd gebruike
 - [60-qubit modulepipeline](qiskit_qos_pbmc68k_q60_module_pipeline.py)
 - [Fire Opal-pilotrunner](qiskit_qos_pbmc68k_q60_module_fireopal_pilot.py)
 - [60-qubit runbook](Q60_MODULE_B4_RUNBOOK.md)
+- [Vermelding in de Pro Student Quantum Advantage List](https://edukaizen.nl/pro-student-quantum-advantage-list/)
 - [QOS-paper](https://arxiv.org/abs/2604.07639)
 - [Volledige repository](https://github.com/BramDo/qlab-ml-adv-all-runners)
