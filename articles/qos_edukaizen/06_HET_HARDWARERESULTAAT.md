@@ -1,4 +1,10 @@
-# Het resultaat: hardware 16, klassiek 17
+# Het 40-qubitresultaat: hardware 16, klassiek 17
+
+## Update van 21 juli 2026: 60-qubithardware eindigt vóór beide baselines
+
+De nieuwe ondiepe 60-qubitroute met labelvrije genmodules scoorde op dezelfde omvang van de held-out test **17/32**, tegenover **16/32** voor de lineaire en **14/32** voor de RBF-baseline. Het Fire Opal-dashboard rapporteerde slechts **26 quantumseconden**. Het volledige resultaat was na ongeveer 8 minuten en 33 seconden beschikbaar; een lokale MPS-simulatie van dezelfde quantumrepresentatie was na 42 minuten en 57 seconden nog niet geconvergeerd. [Lees het volledige 60-qubitresultaat in deel 8](https://edukaizen.nl/quantum-oracle-sketching-qml-genexpressie/voorstel-60-qubit-qml-vervolgstudie/).
+
+Onderstaand hoofdstuk blijft het historische, vooraf bevroren 40-qubitresultaat beschrijven.
 
 Na dagen van dataselectie, representatietests, circuitvalidatie, Fire Opal-uitvoering en lokale analyse komt de vaste test neer op één eenvoudig getalverschil:
 
@@ -80,6 +86,5 @@ In [deel 7](https://edukaizen.nl/quantum-oracle-sketching-qml-genexpressie/route
 
 ## Reproduceerbaarheid
 
-- [Hardware-analyserunner](https://github.com/BramDo/qlab-ml-adv-all-runners/blob/agent/add-q40-fire-opal-hardware-milestone/qiskit_qos_pbmc_q40_sqrtq_b4_hardware_analysis.py)
+- [Hardware-analyserunner](https://github.com/BramDo/qlab-ml-adv-all-runners/blob/main/qiskit_qos_pbmc_q40_sqrtq_b4_hardware_analysis.py)
 - [GitHub pull request met volledige runner- en testsuite](https://github.com/BramDo/qlab-ml-adv-all-runners/pull/1)
-

@@ -29,6 +29,15 @@ This file is a quick entrypoint map for the exported `ML_adv` runner surface.
   PBMC pair screen.
 - `qiskit_qos_pbmc10x_subcluster_screen.py`
   PBMC10x subcluster screen.
+- `qiskit_qos_pbmc68k_q60_module_pipeline.py`
+  Frozen 60-module PBMC68k data allocation, five-split MPS gate, and matched
+  local/hardware analysis. Contains no provider calls.
+- `qiskit_qos_pbmc68k_q60_module_fireopal_validate.py`
+  Numeric QASM export and Fire Opal validate-only path for the 32/32 sentinel
+  and gated 256/256 phase. Cannot submit hardware.
+- `qiskit_qos_pbmc68k_q60_module_fireopal_pilot.py`
+  Separately confirmed sentinel/large submission and retrieval boundary with a
+  declared 450-quantum-second full-study cap and no automatic resubmission.
 - `qiskit_qos_gse132080_guide_screen.py`
   GSE132080 guide screen.
 - `qiskit_qos_gse132080_semisynth_quantum_runner.py`
@@ -89,4 +98,6 @@ This file is a quick entrypoint map for the exported `ML_adv` runner surface.
 - `official_qos/data_generation.py`
 - `official_qos/real_datasets/*.py`
 
-Use the root `README.md` for environment and scope, and `Q40_WORKING_CHAIN_2026-04-16.md` for the current stable bounded hardware path.
+Use the root `README.md` for environment and scope,
+`Q40_WORKING_CHAIN_2026-04-16.md` for the stable bounded 40q hardware path, and
+`Q60_MODULE_B4_RUNBOOK.md` for the leakage-safe 60q follow-up.

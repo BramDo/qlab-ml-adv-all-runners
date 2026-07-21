@@ -1,6 +1,6 @@
 # Wat is nog nodig voor quantumvoordeel?
 
-De 40-qubitpilot bewijst uitvoerbaarheid, niet voordeel. Om een geloofwaardige quantum-ML-claim te maken moeten drie verschillende vragen tegelijk positief worden beantwoord: generaliseert het model, is de quantumroute aantoonbaar moeilijk te evenaren binnen de gekozen klassieke resourcegrens, en klopt de end-to-end resourceboekhouding?
+De 60-qubitpilot van 21 juli 2026 geeft voor het eerst een positief hardwarepuntresultaat: 17/32 tegenover 16/32 lineair en 14/32 RBF. Dat is een serieuze aanwijzing om verder te testen, maar nog geen bewezen voordeel. Voor een geloofwaardige quantum-ML-claim moeten drie verschillende vragen tegelijk positief worden beantwoord: generaliseert het model, is de quantumroute aantoonbaar moeilijk te evenaren binnen de gekozen klassieke resourcegrens, en klopt de end-to-end resourceboekhouding?
 
 ## 1. Eerst aantoonbare generalisatie
 
@@ -17,7 +17,7 @@ Met 32 testcellen kan één cel de conclusie omdraaien. Met honderden testcellen
 
 ## 2. Meer hardwaredata, niet alleen meer qubits
 
-Veertig of zestig qubits klinkt indrukwekkend, maar breedte alleen lost samplearmoede niet op. Onze huidige 405 features tegenover 32 trainingscellen is statistisch ongunstig. Mogelijke verbeteringen zijn:
+Veertig of zestig qubits klinkt indrukwekkend, maar breedte alleen lost samplearmoede niet op. Zowel 405 features in de 40-qubitroute als 627 observabelen in de nieuwe 60-qubitroute staan tegenover slechts 32 trainingscellen. Dat blijft statistisch ongunstig. Mogelijke verbeteringen zijn:
 
 - meer trainingscellen op hardware uitvoeren;
 - het observablepaneel training-only verkleinen;
@@ -26,7 +26,7 @@ Veertig of zestig qubits klinkt indrukwekkend, maar breedte alleen lost samplear
 - shotbudgetten vergelijken;
 - onzekerheid van de quantumfeatures meenemen in de classifier.
 
-Een zestig-qubitcircuit kan minder diep worden gehouden, maar vraagt nog steeds een zorgvuldig readout- en batchontwerp. Fire Opal-budget moet daarom pas worden besteed nadat lokale simulatie en training-only stabiliteit voldoende sterk zijn.
+Een zestig-qubitcircuit kan minder diep worden gehouden, maar vraagt nog steeds een zorgvuldig readout- en batchontwerp. De kleine sentinel mocht als feasibility-test door toen de geplande MPS-convergentiecontrole niet binnen de beschikbare tijd kon worden voltooid. Voor een grote hardwarefase blijven training-only stabiliteit, een bevroren ontwerp en afzonderlijke toestemming verplicht.
 
 ## 3. Dichter bij het volledige QOS-algoritme
 
@@ -70,27 +70,27 @@ De QOS-theorie richt zich vooral op machinegrootte en in dynamische gevallen sam
 
 ## Een realistische experimentele ladder
 
-De veiligste route vooruit bestaat uit vijf poorten:
+Na de geslaagde 60-qubitsentinel bestaat de route vooruit uit vijf nieuwe poorten:
 
-1. **Lokale stabiliteit:** een ideale of MPS-route moet op bijna alle vooraf gekozen splits boven een brede klassieke frontier liggen.
-2. **Representatiecontrole:** verwijder observabelen die alleen trainingsruis vangen en test hash-seedstabiliteit.
-3. **Kleine hardwarebevestiging:** herhaal de huidige 40-qubitroute met onafhankelijke shots en meer cellen.
-4. **Breedtescaling:** vergelijk 20, 40 en 60 qubits met dezelfde taak, accuracydoelstelling en resourceboekhouding.
-5. **Finale blindtest:** bevries alles en evalueer één nog nooit bekeken cohort.
+1. **Bevries de representatie:** behoud de zestig labelvrije genmodules, 627 observabelen en classifierselectie zonder testfeedback.
+2. **Verbreed de klassieke frontier:** voeg sparse lineaire, kernel-, marker-, JL- en streamingbaselines toe met gemeten tijd en geheugen.
+3. **Grotere lokale splits:** test 256/256 en meerdere vooraf gekozen seeds voordat nieuwe hardwaretijd wordt ingezet.
+4. **Grote hardwarebevestiging:** voer alleen na afzonderlijke toestemming het bevroren ontwerp uit op meer cellen en registreer alle batchkosten.
+5. **Finale blindtest:** evalueer één nog nooit bekeken cohort en publiceer ook een nul- of negatief resultaat.
 
 Pas wanneer de quantumroute op de finale blindtest beter scoort of dezelfde score met een overtuigend lagere gemeten resource bereikt, ontstaat een empirische advantage-claim.
 
 ## Wat kunnen we nu al zeggen?
 
-De huidige serie eindigt met een bescheiden maar concrete conclusie:
+De huidige serie eindigt nu met een positiever maar nog steeds afgebakend tussenresultaat:
 
-> De QOS-theorie heeft een route naar exponentieel ruimtevoordeel voor leren uit enorme klassieke datastromen. De officiële resultaten zijn numeriek. Onze 40-qubitpilot brengt een QOS-geïnspireerde single-cell featuremap voor het eerst in onze werkbank volledig naar echte hardware. Die uitvoering werkt technisch, maar levert op de vaste 32-cellentest nog geen generalisatie- of resourcevoordeel op.
+> Onze 60-qubit QOS-geïnspireerde featuremap was uitvoerbaar op echte hardware, scoorde op de vaste 32-cellentest één cel beter dan de sterkste vooraf gekozen klassieke baseline en leverde de complete features sneller dan onze onvoltooide MPS-simulatie van dezelfde representatie. Dit is een taakgebonden praktische aanwijzing, geen algemene quantum-advantageclaim.
 
-Dat is geen eindpunt. Het is een scherp gedefinieerd startpunt voor de volgende experimenten. In [deel 8](https://edukaizen.nl/quantum-oracle-sketching-qml-genexpressie/voorstel-60-qubit-qml-vervolgstudie/) werken we één mogelijke 60-qubitvervolgstudie uit als voorstel. Die studie wordt nu nog niet uitgevoerd.
+In [deel 8](https://edukaizen.nl/quantum-oracle-sketching-qml-genexpressie/voorstel-60-qubit-qml-vervolgstudie/) staan het uitgevoerde 60-qubitprotocol, de 17/32-uitkomst, de timing en de statistische grens volledig beschreven.
 
 ## Bronnen en code
 
 - [QOS-paper](https://arxiv.org/abs/2604.07639)
 - [Officiële QOS-repository](https://github.com/haimengzhao/quantum-oracle-sketching)
 - [Onze Qiskit/Fire Opal-repository](https://github.com/BramDo/qlab-ml-adv-all-runners)
-- [40-qubit milestone pull request](https://github.com/BramDo/qlab-ml-adv-all-runners/pull/1)
+- [Hardware milestone pull request](https://github.com/BramDo/qlab-ml-adv-all-runners/pull/1)

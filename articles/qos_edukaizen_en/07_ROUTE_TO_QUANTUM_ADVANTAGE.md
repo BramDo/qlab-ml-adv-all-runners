@@ -1,6 +1,6 @@
 # What is still required for quantum advantage?
 
-The 40-qubit pilot demonstrates feasibility, not advantage. A credible quantum-ML claim requires positive answers to three different questions at once: does the model generalise, is the quantum route demonstrably hard to match within the selected classical resource bound, and is the end-to-end resource accounting correct?
+The 60-qubit pilot of 21 July 2026 provides the first positive hardware point result: 17/32 versus 16/32 for linear and 14/32 for RBF. This is a serious reason to continue testing, but not proven advantage. A credible quantum-ML claim still requires positive answers to three different questions at once: does the model generalise, is the quantum route demonstrably hard to match within the selected classical resource bound, and is the end-to-end resource accounting correct?
 
 ## 1. Demonstrate generalisation first
 
@@ -17,7 +17,7 @@ With 32 test cells, one cell can reverse the conclusion. With hundreds of test c
 
 ## 2. More hardware data, not merely more qubits
 
-Forty or sixty qubits sound impressive, but width alone does not solve sample scarcity. Our current ratio of 405 features to 32 training cells is statistically unfavourable. Possible improvements include:
+Forty or sixty qubits sound impressive, but width alone does not solve sample scarcity. Both 405 features in the 40-qubit route and 627 observables in the new 60-qubit route face only 32 training cells. This remains statistically unfavourable. Possible improvements include:
 
 - run more training cells on hardware;
 - reduce the observable panel using training data only;
@@ -26,7 +26,7 @@ Forty or sixty qubits sound impressive, but width alone does not solve sample sc
 - compare shot budgets;
 - incorporate uncertainty in quantum features into the classifier.
 
-A sixty-qubit circuit can be kept shallower, but it still requires careful readout and batch design. Fire Opal budget should therefore be used only after local simulation and training-only stability are sufficiently strong.
+A sixty-qubit circuit can be kept shallower, but it still requires careful readout and batch design. The small sentinel was allowed as a feasibility test when the planned MPS convergence check could not be completed within the available time. A large hardware phase still requires training-only stability, a frozen design and separate approval.
 
 ## 3. Move closer to the complete QOS algorithm
 
@@ -70,27 +70,27 @@ QOS theory mainly concerns machine size and, in dynamic cases, sample complexity
 
 ## A realistic experimental ladder
 
-The safest route forward consists of five gates:
+After the successful 60-qubit sentinel, the route forward has five new gates:
 
-1. **Local stability:** an ideal or MPS route should beat a broad classical frontier on nearly all preselected splits.
-2. **Representation control:** remove observables that capture only training noise and test stability across hash seeds.
-3. **Small hardware confirmation:** repeat the current 40-qubit route using independent shots and more cells.
-4. **Width scaling:** compare 20, 40 and 60 qubits on the same task, accuracy target and resource accounting.
-5. **Final blind test:** freeze everything and evaluate one cohort that has never been examined.
+1. **Freeze the representation:** retain the sixty label-free gene modules, 627 observables and classifier selection without test feedback.
+2. **Broaden the classical frontier:** add sparse linear, kernel, marker, JL and streaming baselines with measured time and memory.
+3. **Larger local splits:** test 256/256 and several preselected seeds before using more hardware time.
+4. **Large hardware confirmation:** execute the frozen design on more cells only after separate approval and record every batch cost.
+5. **Final blind test:** evaluate one untouched cohort and publish a null or negative outcome as well.
 
 Only when the quantum route performs better on the final blind test, or matches performance with convincingly lower measured resources, does an empirical advantage claim emerge.
 
 ## What can we already say?
 
-The current series ends with a modest but concrete conclusion:
+The current series now ends with a more positive but still bounded intermediate result:
 
-> QOS theory provides a route to exponential space advantage for learning from massive classical data streams. The official results are numerical. In our workbench, our 40-qubit pilot takes a QOS-inspired single-cell feature map all the way to real hardware. The execution works technically, but on the fixed 32-cell test it does not yet provide generalisation or resource advantage.
+> Our 60-qubit QOS-inspired feature map ran on real hardware, scored one cell above the strongest predeclared classical baseline on the fixed 32-cell test and produced complete features faster than our incomplete MPS simulation of the same representation. This is a task-specific practical indication, not a general quantum-advantage claim.
 
-This is not the end. It is a sharply defined starting point for further experiments. In [part 8](https://edukaizen.nl/quantum-oracle-sketching-qml-gene-expression/proposal-60-qubit-qml-follow-up-study/) we formulate one possible 60-qubit follow-up as a proposal. That study is not being executed now.
+[Part 8](https://edukaizen.nl/quantum-oracle-sketching-qml-gene-expression/proposal-60-qubit-qml-follow-up-study/) gives the executed 60-qubit protocol, the 17/32 outcome, timing and statistical boundary in full.
 
 ## Sources and code
 
 - [QOS paper](https://arxiv.org/abs/2604.07639)
 - [Official QOS repository](https://github.com/haimengzhao/quantum-oracle-sketching)
 - [Our Qiskit/Fire Opal repository](https://github.com/BramDo/qlab-ml-adv-all-runners)
-- [40-qubit milestone pull request](https://github.com/BramDo/qlab-ml-adv-all-runners/pull/1)
+- [Hardware milestone pull request](https://github.com/BramDo/qlab-ml-adv-all-runners/pull/1)

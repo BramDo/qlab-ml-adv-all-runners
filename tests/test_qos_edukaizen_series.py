@@ -19,12 +19,17 @@ def test_series_sources_and_claim_boundary() -> None:
     assert "24.576" in combined
     assert "0,50000" in combined
     assert "0,53125" in combined
-    assert "geen empirisch quantumvoordeel" in combined
+    assert "17/32" in combined
+    assert "0,43750" in combined
+    assert "26 quantumseconden" in combined
     assert "QOS-geïnspireerde" in combined
     assert "genenzoekmachine" in combined
-    assert "het voorstel vastleggen, maar de studie nog niet uitvoeren" in combined
+    assert "taakgebonden, empirische aanwijzing" in combined
     assert "we are not building a gene-search engine" in combined_english
-    assert "record the proposal, but do not execute the study yet" in combined_english
+    assert "17/32" in combined_english
+    assert "0.43750" in combined_english
+    assert "26 quantum seconds" in combined_english
+    assert "task-specific empirical indication" in combined_english
     assert "no held-out predictive quantum advantage" in combined_english
 
 
@@ -77,3 +82,17 @@ def test_builder_produces_hub_and_eight_navigable_articles(tmp_path: Path) -> No
         assert "](" not in article_en
         assert "</strong>*" not in article
         assert "</strong>*" not in article_en
+
+
+def test_github_pages_landing_page_contains_bilingual_result() -> None:
+    page = (series.ROOT / "docs" / "index.html").read_text(encoding="utf-8")
+    stylesheet = (series.ROOT / "docs" / "pages.css").read_text(encoding="utf-8")
+    assert 'data-language="nl"' in page
+    assert 'data-language="en"' in page
+    assert "17/32" in page
+    assert "16/32" in page
+    assert "14/32" in page
+    assert "26 quantumseconden" in page
+    assert "26 quantum seconds" in page
+    assert "2335848" in page
+    assert "@media (max-width: 720px)" in stylesheet

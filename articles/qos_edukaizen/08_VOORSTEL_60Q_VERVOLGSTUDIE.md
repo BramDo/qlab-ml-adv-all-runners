@@ -1,72 +1,74 @@
-# Voorstel: een 60-qubit QML-vervolgstudie
+# Het 60-qubitresultaat: hardware 17, lineair 16, RBF 14
 
-Zestig qubits kunnen meer van een genexpressieprofiel tegelijk dragen dan veertig qubits. Dat betekent nog niet dat een 60-qubitmodel automatisch beter classificeert. Extra breedte kan ook meer ruis, meer observabelen en meer mogelijkheden tot overfitting opleveren. Daarom is dit hoofdstuk **een onderzoeksvoorstel, geen aangekondigde uitvoering**. We dienen nu geen nieuwe circuits in bij Fire Opal en starten geen grote klassieke sweep.
+Op 21 juli 2026 is de eerder voorgestelde 60-qubitpilot daadwerkelijk uitgevoerd via Fire Opal op `ibm_fez`. Ditmaal betekende meer breedte niet simpelweg een grotere hash. We vervingen de oude invoer door zestig labelvrije coexpressiemodules en hielden het circuit bewust ondiep.
 
-## Wat de bestaande 60-qubitproef ons al leerde
-
-We hebben al een verkennende 60-qubitroute op dezelfde PBMC68k-taak uitgevoerd. Op de vaste kleine testset waren de uitkomsten:
+De vaste held-out test gaf het beste hardwarepuntresultaat in deze reeks:
 
 | Route | Balanced accuracy | Correct |
 | --- | ---: | ---: |
-| 60-qubit hardware | 0,46875 | 15/32 |
-| ideale 60-qubitrepresentatie | 0,53125 | 17/32 |
-| klassieke referentie | 0,59375 | 19/32 |
+| 60-qubit hardware | 0,53125 | 17/32 |
+| klassieke lineaire baseline | 0,50000 | 16/32 |
+| klassieke RBF-baseline | 0,43750 | 14/32 |
 
-Meer qubits waren hier dus geen verbetering. Ook in een latere lokale blindtest met 256 trainings- en 256 testcellen bleef de ideale 60-qubitrepresentatie op 0,53125, tegenover 0,55859 voor een lineair model en 0,54688 voor een RBF-model op dezelfde gehashte invoer. Dat is nuttige negatieve informatie: het huidige 60-qubitontwerp hoeft niet nogmaals ongewijzigd naar hardware.
+Dit is een positief tussenresultaat: de bevroren hardwareclassifier eindigde op deze test vóór beide vooraf vastgelegde klassieke referenties. Door de kleine testset en de brede onzekerheid is het nog geen algemene of asymptotische quantum-advantageclaim.
 
-## Het echte knelpunt: voorbereiding vóór hardware
+## Waarom de eerste 60-qubitroute niet werkte
 
-De meeste onderzoekstijd zit niet in de quantumseconden. Zij zit in het vastzetten van data, splits, genrepresentaties, klassieke referenties, observablekeuze en statistische toetsen. Iedere nieuwe dataset kan die keten opnieuw openen. Een verstandig 60-qubitproject moet daarom zoveel mogelijk van de bestaande PBMC68k-infrastructuur hergebruiken:
+Onze eerdere 60-qubitroute haalde 15/32 op hardware, tegenover 17/32 ideaal en 19/32 klassiek. De extra qubits droegen toen vooral meer gehashte invoerkanalen. Dat voegde breedte toe, maar niet noodzakelijk stabielere biologische structuur.
 
-- dezelfde twee CD4-T-celklassen;
-- dezelfde gecontroleerde datalader en normalisatie;
-- vooraf vastgelegde grotere splits;
-- de al geïmplementeerde lineaire en RBF-referenties;
-- dezelfde balanced-accuracy- en paired-testcode;
-- dezelfde Fire Opal-validatie- en retrievalroute.
+De nieuwe pilot veranderde daarom de representatie, niet alleen het aantal qubits:
 
-We stellen dus geen nieuwe biologische dataset voor. Het onderzoeksvraagstuk blijft celclassificatie; alleen de quantumrepresentatie verandert.
+- zestig coexpressiemodules, geleerd uit een vaste en labelvrije pool van 512 cellen;
+- 1.200 variabele genen met detectiefrequentie tussen 1% en 95%;
+- deterministische KMeans met `random_state=6110` en `n_init=20`;
+- per module vier samenvattingen: gemiddeld `log1p`, detectiefractie, RMS en het gemiddelde van het bovenste kwartiel;
+- mediaan/IQR-schaling uitsluitend geleerd op de trainingscellen;
+- `tanh(z/3)` en L2-normalisatie per blok.
 
-## Wat zestig qubits inhoudelijk moeten toevoegen
+De modulepool, training en test zijn onderling gescheiden. De testlabels speelden geen rol bij modulevorming, schaling, modelkeuze of hyperparameterkeuze.
 
-Een nieuwe route is alleen zinvol als de twintig extra qubits nieuwe informatie bewaren. Het voorstel is om de breedte te gebruiken voor stabiele genmodules of aanvullende hashkanalen, niet voor een simpele uitrekking van het 40-qubitcircuit. Vier blokken van zestig qubits kunnen bijvoorbeeld 240 compacte invoerkanalen dragen in plaats van 160. Een ondiepe interactielaag kan vervolgens correlaties tussen die modules mengen.
+## Het 60-qubitcircuit
 
-De ontwerpgrenzen blijven bewust streng:
+De zestig qubits liggen in een logische `6×10`-topologie. De featuremap gebruikt vier invoerblokken, een multiplier van `sqrt(60)`, een logische diepte van 20 en 134 tweequbitinteracties. X-, Y- en Z-metingen leveren samen 627 geordende observabelen per cel.
 
-- maximaal zestig fysieke qubits;
-- geringe circuitdiepte en hardwarevriendelijke koppelingen;
-- een klein, training-only gekozen observablepaneel;
-- geen testsetgebruik voor feature-, model- of hyperparameterkeuze;
-- een shotruisprojectie voordat hardware wordt overwogen.
+Voor 32 trainings- en 32 testcellen zijn drie meetcircuits per cel gemaakt:
 
-Meer meetbare correlaties zijn niet vanzelf beter. Met honderden mogelijke observabelen en weinig trainingscellen leert de klassieke eindclassifier gemakkelijk toeval. Het voorstel beperkt daarom de readout liever tot enkele tientallen stabiele observabelen dan alle mogelijke qubitparen te gebruiken.
+- 192 circuits;
+- 128 shots per circuit;
+- 24.576 shots totaal;
+- backend `ibm_fez`;
+- Fire Opal action `2335848`.
 
-## Een korte go/no-go-ladder
+Het Fire Opal-dashboard rapporteerde **26 quantumseconden** voor deze taak. Dat is opvallend kort voor 192 circuits op zestig qubits. Het gearchiveerde `get_result`-antwoord bevatte dit veld niet; daarom vermelden we expliciet dat 26 seconden de dashboardmeting is.
 
-Om de klassieke voorbereiding begrensd te houden, krijgt de studie vier opeenvolgende poorten:
+## Training-only selectie en blinde test
 
-1. **Bevries de taak.** Hergebruik PBMC68k, de bestaande labels en vijf vooraf gekozen grotere splits. Geen nieuwe datasetzoektocht.
-2. **Vergelijk representaties.** Test lokaal alleen het huidige 40-qubitanker en één nieuw 60-qubitontwerp tegen de bestaande lineaire en RBF-frontier.
-3. **Projecteer hardware-effecten.** Voeg 128-shotruis en een realistische beperkte readout toe. Stop als het voordeel dan verdwijnt.
-4. **Beslis over Fire Opal.** Alleen wanneer de ideale 60-qubitroute op minstens vier van vijf splits boven beide klassieke referenties ligt, wordt een kleine bevroren hardwarepilot voorgesteld.
+Binnen de trainingsset koos de quantumroute via cross-validation een RBF-SVC met `C=10` en `gamma=0,1`. De gemiddelde training-only CV-score was 0,59375; de slechtste fold bleef op 0,50000. Pas daarna is één keer op de 32 afgeschermde testcellen geëvalueerd.
 
-Deze poorten zijn geen bewijs van quantumvoordeel. Ze voorkomen vooral dat quantumtijd wordt besteed aan een representatie die lokaal al geen kans maakt.
+Op die test scoorde hardware 17/32, de lineaire baseline 16/32 en de RBF-baseline 14/32. Dat verschil van één cel ten opzichte van de sterkste baseline is klein, maar de richting is voor het eerst positief op echte hardware.
 
-## Wat een latere hardwarepilot zou meten
+## Waarom ook de doorlooptijd interessant is
 
-Als de lokale poorten ooit slagen, is de eerste hardwarevraag bescheiden: blijft het lokale 60-qubitsignaal na transpilation, ruis en eindige shots zichtbaar? De pilot hoeft nog geen definitieve advantage-test te zijn. Wel moeten circuit, observabelen, classifier en testcellen vóór indiening vaststaan. De rapportage vergelijkt dan vier niveaus: ideaal quantum, geprojecteerde shotruis, Fire Opal-hardware en de bevroren klassieke frontier.
+De eigenlijke quantumtaak duurde volgens het Fire Opal-dashboard slechts 26 seconden. Van indiening tot volledig opgehaald resultaat verstreken ongeveer 8 minuten en 33 seconden; daarin zitten ook orchestratie, compilatie, wachttijd en retrieval. De lokale MPS-controle van exact dezelfde 60-qubitrepresentatie liep 42 minuten en 57 seconden en was toen nog niet geconvergeerd: bond dimension 64 was voltooid, maar bij 128 was slechts één van acht benodigde delen klaar.
 
-Pas een veel grotere onafhankelijke blindtest kan daarna iets zeggen over voorspellend voordeel. Een claim over computationeel of ruimtevoordeel vraagt bovendien afzonderlijke resourceboekhouding; een hogere accuracy alleen bewijst dat niet.
+Dat is een relevante praktische aanwijzing: voor het genereren van deze specifieke brede quantumfeatures leverde hardware sneller een compleet resultaat dan onze poging tot klassieke MPS-simulatie.
 
-## Besluit: documenteren en uitstellen
+Het is nadrukkelijk geen end-to-end tijdvoordeel tegenover gewone klassieke ML. De lineaire en RBF-modellen kunnen rechtstreeks op klassiek voorbereide data worden getraind zonder het 60-qubitcircuit te simuleren. De eerlijke claim is daarom smaller: **de quantumfeaturegenerator was uitvoerbaar, gaf de hoogste held-out puntenscore en was sneller beschikbaar dan onze onvoltooide klassieke simulatie van diezelfde quantumrepresentatie**.
 
-Een opnieuw ontworpen 60-qubitroute kan beter worden dan onze 40-qubitpilot, omdat zij meer relevante geninformatie en interacties kan bewaren. De bestaande resultaten tonen echter dat breedte alleen niet genoeg is. De grootste verwachte winst moet eerst uit representatie en voldoende trainingsdata komen.
+## Statistische grens van dit resultaat
 
-Daarom is de huidige beslissing: **het voorstel vastleggen, maar de studie nog niet uitvoeren**. Zo blijft de route beschikbaar voor een later moment waarop klassieke voorbereidingstijd en Fire Opal-budget bewust kunnen worden vrijgemaakt.
+Met 32 testcellen is één fout gelijk aan 3,125 procentpunt. De tweezijdige exacte McNemar-p-waarde tegenover de sterkste lineaire baseline is 1,0. Het 95%-bootstrapinterval voor `hardware minus lineair` loopt van -0,1875 tot +0,25. Een klassiek voordeel, gelijkspel en hardwarevoordeel blijven dus allemaal verenigbaar met deze kleine steekproef.
 
-## Bronnen en resultaten
+We melden dit daarom als een **taakgebonden, empirische aanwijzing voor praktisch gedeeltelijk quantumvoordeel**, niet als bewezen algemene quantum advantage.
 
+## De volgende beslispoort
+
+De volgende wetenschappelijke stap is niet automatisch meer quantumtijd gebruiken. Eerst moeten we het ontwerp bevriezen en de volledige klassieke frontier voor een grotere 256/256-split vastleggen. Een grote hardwarefase zou 1.536 circuits van 128 shots vergen en krijgt alleen afzonderlijke toestemming wanneer de extra informatiewaarde opweegt tegen het Fire Opal-budget.
+
+## Bronnen en reproduceerbaarheid
+
+- [60-qubit modulepipeline](qiskit_qos_pbmc68k_q60_module_pipeline.py)
+- [Fire Opal-pilotrunner](qiskit_qos_pbmc68k_q60_module_fireopal_pilot.py)
+- [60-qubit runbook](Q60_MODULE_B4_RUNBOOK.md)
 - [QOS-paper](https://arxiv.org/abs/2604.07639)
-- [Officiële QOS-repository](https://github.com/haimengzhao/quantum-oracle-sketching)
-- [Onze Qiskit/Fire Opal-repository](https://github.com/BramDo/qlab-ml-adv-all-runners)
-- [Het gepubliceerde 40-qubitresultaat](https://edukaizen.nl/quantum-oracle-sketching-qml-genexpressie/resultaat-hardware-versus-klassiek/)
+- [Volledige repository](https://github.com/BramDo/qlab-ml-adv-all-runners)

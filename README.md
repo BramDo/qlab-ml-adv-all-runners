@@ -18,45 +18,66 @@ What it does not demonstrate:
 
 The point is to make the paper's streaming-memory idea tangible in the existing qlab Qiskit venv.
 
-## 40-Qubit Fire Opal Hardware Milestone
+## 60-Qubit Fire Opal Hardware Milestone
 
-The current hardware milestone is a real, end-to-end execution of the
-QOS-inspired coherent-streaming feature route on 40 physical qubits. The
-frozen seed-11 pilot used:
+The latest milestone, retrieved on 21 July 2026, is a real end-to-end run of a
+new 60-qubit PBMC68k feature map on `ibm_fez` through Fire Opal. Unlike the
+earlier 60-qubit hash experiment, this route uses 60 label-free coexpression
+modules learned from a separate 512-cell pool. Four statistics per module are
+scaled on training rows only and encoded into a shallow `6 x 10` circuit.
+
+The frozen seed-11 sentinel used:
 
 - PBMC68k, `CD4+/CD25 T Reg` versus `CD4+/CD45RO+ Memory`
 - a `32` train / `32` held-out test split
-- four coherent feature blocks and the frozen `sqrt(q)` interaction scaling
+- logical depth `20` with `134` two-qubit interactions per base circuit
 - `192` measured circuits on `ibm_fez` through Fire Opal
-- `128` shots per circuit (`24,576` shots total; `26` QPU seconds)
-- `405` recovered one- and two-qubit Pauli features per cell
+- `128` shots per circuit (`24,576` requested shots total)
+- `627` recovered one- and two-qubit Pauli features per cell
+- Fire Opal action `2335848`
 
 The predeclared training-only analysis produced:
 
-- hardware training-CV balanced accuracy: `0.59375`
-- hardware held-out balanced accuracy: `0.50000` (`16/32`)
-- matched classical frontier: `0.53125` (`17/32`)
-- hardware-minus-classical: `-0.03125`
-- exact McNemar `p=1.0`
-- stratified paired-bootstrap 95% interval: `[-0.25, 0.1875]`
+- 60q hardware training-CV balanced accuracy: `0.59375`
+- 60q hardware held-out balanced accuracy: `0.53125` (`17/32`)
+- matched raw-gene linear SVC: `0.50000` (`16/32`)
+- matched raw-gene RBF SVC: `0.43750` (`14/32`)
+- exact McNemar `p=1.0` against the stronger linear baseline
+- stratified paired-bootstrap 95% interval: `[-0.1875, 0.25]`
 
-This is a hardware-feasibility result, not evidence of predictive or
-computational quantum advantage. It shows that the complete 40-qubit feature
-pipeline is executable and yields an exploratory training signal, while
-held-out generalization was not demonstrated on this small split.
+The full Fire Opal submission-to-retrieval interval was about 8 minutes 33
+seconds. The Fire Opal dashboard reported only **26 quantum seconds**, an
+especially short QPU task for 192 circuits on 60 qubits. By comparison, the
+local MPS convergence attempt was stopped after 42 minutes 57 seconds after
+completing only the `chi=64` probe and one `chi=128` sample. The archived
+`get_result` payload omitted the quantum-seconds field, so the 26-second value
+is explicitly attributed to the dashboard rather than the retrieval JSON.
 
-Relevant entry points:
+This is a strong practical and partial advantage indication: on this frozen
+sentinel the measured quantum features gave the best held-out point score, and
+the hardware feature-generation route completed much faster than our attempted
+classical simulation of the same 60q quantum representation. It is not an
+end-to-end computational advantage over the classical classifiers themselves,
+which remain inexpensive, and the 32-cell test is too small for a general
+predictive or asymptotic quantum-advantage claim.
 
-- `qiskit_qos_pbmc_q40_sqrtq_b4_fireopal_validate.py`: frozen local and
-  provider validate-only gate
-- `qiskit_qos_pbmc_q40_sqrtq_b4_fireopal_pilot.py`: guarded plan, submit, and
-  retrieval workflow
-- `qiskit_qos_pbmc_q40_sqrtq_b4_hardware_analysis.py`: provider-free,
-  training-only classifier analysis and matched classical comparison
+The earlier 40q milestone remains the historical anchor: hardware scored
+`16/32` versus `17/32` for its matched classical frontier and used 26
+provider-reported QPU seconds.
 
-Generated provider payloads and result JSON remain local and are intentionally
-excluded from Git. The repository tracks the runners, validation logic, tests,
-and the numerical result summary above.
+Relevant 60q entry points:
+
+- `qiskit_qos_pbmc68k_q60_module_pipeline.py`: label-free modules, frozen
+  splits, local simulation gate, and hardware analysis
+- `qiskit_qos_pbmc68k_q60_module_fireopal_validate.py`: local and provider
+  validate-only gate
+- `qiskit_qos_pbmc68k_q60_module_fireopal_pilot.py`: guarded plan, one-shot
+  submission, retrieval, ordering checks, and quantum-time accounting
+- `Q60_MODULE_B4_RUNBOOK.md`: exact study protocol and claim boundaries
+
+Generated provider payloads and raw result JSON remain local and are
+intentionally excluded from Git. The repository tracks the runners, validation
+logic, tests, and the numerical result summary above.
 
 The theory and hardware article series has one combined
 [Edukaizen project page](https://edukaizen.nl/quantum-oracle-sketching-qml-genexpressie/)

@@ -1,72 +1,74 @@
-# Proposal: a 60-qubit QML follow-up study
+# The 60-qubit result: hardware 17, linear 16, RBF 14
 
-Sixty qubits can carry more of a gene-expression profile at once than forty qubits. This does not mean that a 60-qubit model automatically classifies better. Extra width can also create more noise, more observables and more opportunities for overfitting. This chapter is therefore **a research proposal, not an announced execution**. We are not submitting new circuits to Fire Opal now and are not starting a large classical sweep.
+On 21 July 2026, the previously proposed 60-qubit pilot was executed through Fire Opal on `ibm_fez`. This time, adding width did not merely mean using a larger hash. We replaced the old input with sixty label-free coexpression modules and deliberately kept the circuit shallow.
 
-## What the existing 60-qubit pilot already taught us
-
-We have already executed an exploratory 60-qubit route on the same PBMC68k task. On the fixed small test set, the results were:
+The fixed held-out test produced the strongest hardware point result in this series:
 
 | Route | Balanced accuracy | Correct |
 | --- | ---: | ---: |
-| 60-qubit hardware | 0.46875 | 15/32 |
-| ideal 60-qubit representation | 0.53125 | 17/32 |
-| classical reference | 0.59375 | 19/32 |
+| 60-qubit hardware | 0.53125 | 17/32 |
+| classical linear baseline | 0.50000 | 16/32 |
+| classical RBF baseline | 0.43750 | 14/32 |
 
-More qubits did not improve performance here. In a later local blind test with 256 training and 256 test cells, the ideal 60-qubit representation remained at 0.53125, compared with 0.55859 for a linear model and 0.54688 for an RBF model on the same hashed input. This is useful negative information: the current 60-qubit design should not be sent to hardware again without modification.
+This is a positive intermediate result: on this test, the frozen hardware classifier finished ahead of both predeclared classical references. Because the test set is small and the uncertainty is wide, it is not a general or asymptotic quantum-advantage claim.
 
-## The real bottleneck: preparation before hardware
+## Why the first 60-qubit route failed
 
-Most research time is not spent in quantum seconds. It is spent freezing data, splits, gene representations, classical references, observable selection and statistical tests. Every new dataset can reopen that chain. A sensible 60-qubit project should therefore reuse as much of the existing PBMC68k infrastructure as possible:
+Our earlier 60-qubit route obtained 15/32 on hardware, compared with 17/32 ideally and 19/32 classically. The extra qubits mainly carried more hashed input channels. That added width, but not necessarily more stable biological structure.
 
-- the same two CD4 T-cell classes;
-- the same controlled data loader and normalisation;
-- predeclared larger splits;
-- the already implemented linear and RBF references;
-- the same balanced-accuracy and paired-test code;
-- the same Fire Opal validation and retrieval route.
+The new pilot therefore changed the representation, not just the number of qubits:
 
-We are therefore not proposing a new biological dataset. The research task remains cell classification; only the quantum representation changes.
+- sixty coexpression modules learned from a fixed, label-free pool of 512 cells;
+- 1,200 variable genes with detection frequencies between 1% and 95%;
+- deterministic KMeans with `random_state=6110` and `n_init=20`;
+- four summaries per module: mean `log1p`, detection fraction, RMS and top-quartile mean;
+- median/IQR scaling learned from training cells only;
+- `tanh(z/3)` and per-block L2 normalisation.
 
-## What sixty qubits must add
+The module pool, training set and test set are mutually disjoint. Test labels played no role in module construction, scaling, model selection or hyperparameter selection.
 
-A new route is useful only if the twenty additional qubits preserve new information. The proposal uses the extra width for stable gene modules or additional hash channels, not a simple stretching of the 40-qubit circuit. Four blocks of sixty qubits could, for example, carry 240 compact input channels instead of 160. A shallow interaction layer could then mix correlations between those modules.
+## The 60-qubit circuit
 
-The design limits remain deliberately strict:
+The sixty qubits form a logical `6×10` topology. The feature map uses four input blocks, a `sqrt(60)` multiplier, logical depth 20 and 134 two-qubit interactions. X, Y and Z measurements yield 627 ordered observables per cell.
 
-- no more than sixty physical qubits;
-- low circuit depth and hardware-friendly connectivity;
-- a small observable panel selected on training data only;
-- no use of the test set for feature, model or hyperparameter selection;
-- a shot-noise projection before hardware is considered.
+Three measurement circuits were built for each of 32 training and 32 test cells:
 
-More measurable correlations are not automatically better. With hundreds of possible observables and few training cells, the final classical classifier can easily learn accidents. The proposal therefore prefers a few dozen stable observables over every possible qubit pair.
+- 192 circuits;
+- 128 shots per circuit;
+- 24,576 shots in total;
+- backend `ibm_fez`;
+- Fire Opal action `2335848`.
 
-## A short go/no-go ladder
+The Fire Opal dashboard reported **26 quantum seconds** for this task. That is strikingly short for 192 circuits on sixty qubits. The archived `get_result` response did not contain this field, so we explicitly identify 26 seconds as the dashboard measurement.
 
-To limit classical preparation, the study has four sequential gates:
+## Training-only selection and blind test
 
-1. **Freeze the task.** Reuse PBMC68k, the existing labels and five preselected larger splits. Do not start another dataset search.
-2. **Compare representations.** Test only the present 40-qubit anchor and one new 60-qubit design locally against the existing linear and RBF frontier.
-3. **Project hardware effects.** Add 128-shot noise and a realistically limited readout. Stop if the advantage disappears.
-4. **Decide on Fire Opal.** Propose a small frozen hardware pilot only if the ideal 60-qubit route beats both classical references on at least four of five splits.
+Within the training set, cross-validation selected an RBF SVC for the quantum route with `C=10` and `gamma=0.1`. Mean training-only CV was 0.59375; the worst fold remained at 0.50000. The frozen route was then evaluated once on the 32 protected test cells.
 
-These gates do not prove quantum advantage. Their main purpose is to prevent quantum time being spent on a representation that is already uncompetitive locally.
+On that test, hardware scored 17/32, the linear baseline 16/32 and the RBF baseline 14/32. The one-cell lead over the strongest baseline is small, but for the first time the direction is positive on real hardware.
 
-## What a later hardware pilot would measure
+## Why the turnaround time is also interesting
 
-If the local gates ever pass, the first hardware question is modest: does the local 60-qubit signal remain visible after transpilation, noise and finite shots? The pilot need not yet be a definitive advantage test. Circuit, observables, classifier and test cells must nevertheless be frozen before submission. Reporting would then compare four levels: ideal quantum, projected shot noise, Fire Opal hardware and the frozen classical frontier.
+According to the Fire Opal dashboard, the quantum task itself took only 26 seconds. Submission to fully retrieved results took approximately 8 minutes and 33 seconds, including orchestration, compilation, queueing and retrieval. The local MPS check of exactly the same 60-qubit representation ran for 42 minutes and 57 seconds without converging: bond dimension 64 had completed, while at 128 only one of eight required parts had finished.
 
-Only a much larger independent blind test could then establish predictive advantage. A claim about computational or space advantage would additionally require separate resource accounting; higher accuracy alone would not prove it.
+This is a relevant practical indication: for generating these particular wide quantum features, hardware produced a complete result faster than our attempted classical MPS simulation.
 
-## Decision: document and postpone
+It is explicitly not an end-to-end time advantage over ordinary classical ML. The linear and RBF models can train directly on classically prepared data without simulating the 60-qubit circuit. The fair claim is narrower: **the quantum feature generator was executable, achieved the highest held-out point score and became available faster than our incomplete classical simulation of that same quantum representation**.
 
-A redesigned 60-qubit route may outperform our 40-qubit pilot because it can preserve more relevant gene information and interactions. The existing results nevertheless show that width alone is insufficient. The largest expected improvement must first come from representation and enough training data.
+## Statistical boundary
 
-The present decision is therefore: **record the proposal, but do not execute the study yet**. The route remains available for a later time when classical preparation effort and Fire Opal budget can be allocated deliberately.
+With 32 test cells, one prediction equals 3.125 percentage points. The exact two-sided McNemar p-value against the stronger linear baseline is 1.0. The 95% bootstrap interval for `hardware minus linear` ranges from -0.1875 to +0.25. A classical lead, a tie and a hardware lead all remain compatible with this small sample.
 
-## Sources and results
+We therefore report a **task-specific empirical indication of practical partial quantum advantage**, not proven general quantum advantage.
 
+## The next decision gate
+
+The next scientific step is not to spend more quantum time automatically. First, the design must be frozen and the complete classical frontier established for a larger 256/256 split. A large hardware phase would require 1,536 circuits at 128 shots and will receive separate approval only if its information value justifies the Fire Opal budget.
+
+## Sources and reproducibility
+
+- [60-qubit module pipeline](qiskit_qos_pbmc68k_q60_module_pipeline.py)
+- [Fire Opal pilot runner](qiskit_qos_pbmc68k_q60_module_fireopal_pilot.py)
+- [60-qubit runbook](Q60_MODULE_B4_RUNBOOK.md)
 - [QOS paper](https://arxiv.org/abs/2604.07639)
-- [Official QOS repository](https://github.com/haimengzhao/quantum-oracle-sketching)
-- [Our Qiskit/Fire Opal repository](https://github.com/BramDo/qlab-ml-adv-all-runners)
-- [Published 40-qubit result](https://edukaizen.nl/quantum-oracle-sketching-qml-gene-expression/result-hardware-versus-classical/)
+- [Complete repository](https://github.com/BramDo/qlab-ml-adv-all-runners)

@@ -1,4 +1,10 @@
-# The result: hardware 16, classical 17
+# The 40-qubit result: hardware 16, classical 17
+
+## Update of 21 July 2026: 60-qubit hardware finishes ahead of both baselines
+
+The new shallow 60-qubit route with label-free gene modules scored **17/32** on the same held-out test size, compared with **16/32** for the linear baseline and **14/32** for RBF. The Fire Opal dashboard reported only **26 quantum seconds**. The complete result was available after approximately 8 minutes and 33 seconds; a local MPS simulation of the same quantum representation had not converged after 42 minutes and 57 seconds. [Read the complete 60-qubit result in part 8](https://edukaizen.nl/quantum-oracle-sketching-qml-gene-expression/proposal-60-qubit-qml-follow-up-study/).
+
+The chapter below remains the historical, pre-frozen 40-qubit result.
 
 After days of data selection, representation tests, circuit validation, Fire Opal execution and local analysis, the fixed test reduces to one simple numerical difference:
 
@@ -80,5 +86,5 @@ In [part 7](https://edukaizen.nl/quantum-oracle-sketching-qml-gene-expression/ro
 
 ## Reproducibility
 
-- [Hardware analysis runner](https://github.com/BramDo/qlab-ml-adv-all-runners/blob/agent/add-q40-fire-opal-hardware-milestone/qiskit_qos_pbmc_q40_sqrtq_b4_hardware_analysis.py)
+- [Hardware analysis runner](https://github.com/BramDo/qlab-ml-adv-all-runners/blob/main/qiskit_qos_pbmc_q40_sqrtq_b4_hardware_analysis.py)
 - [GitHub pull request containing the complete runner and test suite](https://github.com/BramDo/qlab-ml-adv-all-runners/pull/1)

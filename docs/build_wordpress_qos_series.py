@@ -22,9 +22,9 @@ ARTICLES = [
     (3, "03_VAN_GENEXPRESSIE_NAAR_QUBITS.md", "pbmc68k-van-genexpressie-naar-qubits", "Van PBMC68k-genexpressie naar 40 qubits"),
     (4, "04_QOS_OP_ECHTE_HARDWARE.md", "qos-naar-40-qubit-hardware-fire-opal", "Van JAX naar een 40-qubit hardwarecircuit"),
     (5, "05_READOUT_EN_CLASSIFIER.md", "quantum-readout-405-observabelen-classifier", "405 observabelen en een lekvrije classifier"),
-    (6, "06_HET_HARDWARERESULTAAT.md", "resultaat-hardware-versus-klassiek", "Het resultaat: hardware 16, klassiek 17"),
+    (6, "06_HET_HARDWARERESULTAAT.md", "resultaat-hardware-versus-klassiek", "Het 40-qubitresultaat: hardware 16, klassiek 17"),
     (7, "07_WAT_NODIG_IS_VOOR_VOORDEEL.md", "route-naar-quantumvoordeel-qml", "Wat is nog nodig voor quantumvoordeel?"),
-    (8, "08_VOORSTEL_60Q_VERVOLGSTUDIE.md", "voorstel-60-qubit-qml-vervolgstudie", "Voorstel: een 60-qubit QML-vervolgstudie"),
+    (8, "08_VOORSTEL_60Q_VERVOLGSTUDIE.md", "voorstel-60-qubit-qml-vervolgstudie", "Het 60-qubitresultaat: hardware 17, lineair 16, RBF 14"),
 ]
 
 ARTICLES_EN = [
@@ -33,9 +33,9 @@ ARTICLES_EN = [
     (3, "03_FROM_GENE_EXPRESSION_TO_QUBITS.md", "pbmc68k-from-gene-expression-to-qubits", "From PBMC68k gene expression to 40 qubits"),
     (4, "04_FROM_JAX_TO_HARDWARE.md", "qos-to-40-qubit-hardware-fire-opal", "From JAX to a 40-qubit hardware circuit"),
     (5, "05_READOUT_AND_CLASSIFIER.md", "quantum-readout-405-observables-classifier", "405 observables and a leakage-free classifier"),
-    (6, "06_HARDWARE_RESULT.md", "result-hardware-versus-classical", "The result: hardware 16, classical 17"),
+    (6, "06_HARDWARE_RESULT.md", "result-hardware-versus-classical", "The 40-qubit result: hardware 16, classical 17"),
     (7, "07_ROUTE_TO_QUANTUM_ADVANTAGE.md", "route-to-quantum-advantage-qml", "What is still required for quantum advantage?"),
-    (8, "08_PROPOSAL_60Q_FOLLOW_UP.md", "proposal-60-qubit-qml-follow-up-study", "Proposal: a 60-qubit QML follow-up study"),
+    (8, "08_PROPOSAL_60Q_FOLLOW_UP.md", "proposal-60-qubit-qml-follow-up-study", "The 60-qubit result: hardware 17, linear 16, RBF 14"),
 ]
 
 
@@ -46,7 +46,7 @@ def public_url(slug: str, hub_slug: str = HUB_SLUG) -> str:
 def normalize_link(target: str) -> str:
     if target.startswith("http://") or target.startswith("https://"):
         return target
-    return f"{GITHUB_BASE}/blob/agent/add-q40-fire-opal-hardware-milestone/{target}"
+    return f"{GITHUB_BASE}/blob/main/{target}"
 
 
 def render_inline(text: str) -> str:
@@ -361,7 +361,7 @@ def main() -> None:
         hub_slug=HUB_SLUG_EN,
         articles=ARTICLES_EN,
         language="en",
-        hub_title="From gene expression to 40 qubits",
+        hub_title="From gene expression to 60 qubits",
     )
     build_combined_project_page()
 
