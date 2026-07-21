@@ -28,11 +28,13 @@ Forty or sixty qubits sound impressive, but width alone does not solve sample sc
 
 A sixty-qubit circuit can be kept shallower, but it still requires careful readout and batch design. The small sentinel was allowed as a feasibility test when the planned MPS convergence check could not be completed within the available time. A large hardware phase still requires training-only stability, a frozen design and separate approval.
 
-## 3. Move closer to the complete QOS algorithm
+## 3. Build an explicit bridge to the complete QOS algorithm
 
-The theoretical classification separation applies to an oracle-sketching and quantum-linear-algebra protocol with formal sample access. Our feature map uses four hashed blocks, short rotation layers and local Pauli readout. The next theoretical bridge must make explicit:
+The 4q flat-QOS pilot has now validated one genuine building block: samples construct the official phase sketch and interference makes that sketch measurable. That kernel is not yet connected to the PBMC68k classifier. Conversely, the 60q route uses real PBMC68k data, but it does not attempt to approximate a formal QOS oracle: it replaces that component with four blocks of classically computed rotation angles, short layers and local Pauli readout.
 
-- which part of the QOS oracle the circuit approximates;
+A testable next bridge could pad the sixty gene modules to 64 values, translate them training-only into a compact sample distribution, and process that through a 6q flat-QOS sketch. Only then should the work examine general real values, a reusable query oracle, QSVT and the decision function. This bridge must make explicit:
+
+- which part of the QOS oracle is implemented literally and which part is replaced;
 - how approximation error scales with blocks, shots and depth;
 - which QSVT or linear-solver steps are missing;
 - whether the 405-feature classifier approximates the same decision function as the theorem’s LS-SVM;

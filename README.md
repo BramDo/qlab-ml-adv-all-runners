@@ -18,6 +18,29 @@ What it does not demonstrate:
 
 The point is to make the paper's streaming-memory idea tangible in the existing qlab Qiskit venv.
 
+## Relationship to the QOS Paper
+
+This repository contains two distinct kinds of hardware experiment, and their
+relationship to the paper should not be conflated:
+
+- `qiskit_official_qos_flat_fireopal_pilot.py` is a **literal four-qubit port
+  of the official flat-QOS sampling-sketch primitive**. For `D=16` and `M=64`,
+  it constructs the sample-dependent phase diagonal used by
+  `q_state_sketch_flat`, then adds a final Hadamard transform so that the phase
+  sketch can be measured. On IBM Fez through Fire Opal, action `2334156`
+  returned a mean Hellinger fidelity of `0.990104` over 64 random kernels, plus
+  two controls.
+- The 40q and 60q PBMC68k circuits are **QOS-inspired NISQ feature maps**.
+  They use classically prepared rotation angles, shallow re-uploading layers
+  and Pauli readout. They do not literally implement the paper's streamed
+  sample oracle, reusable coherent query oracle, QSVT/linear solver, or exact
+  classical-shadow readout.
+
+The four-qubit result therefore validates a real QOS building block on
+hardware, but not the complete classifier or the paper's advantage theorem.
+The sixty-qubit result tests a useful real-data hardware adaptation, but it is
+not a literal QOS implementation.
+
 ## 60-Qubit Fire Opal Hardware Milestone
 
 The latest milestone, retrieved on 21 July 2026, is a real end-to-end run of a
@@ -25,6 +48,8 @@ new 60-qubit PBMC68k feature map on `ibm_fez` through Fire Opal. Unlike the
 earlier 60-qubit hash experiment, this route uses 60 label-free coexpression
 modules learned from a separate 512-cell pool. Four statistics per module are
 scaled on training rows only and encoded into a shallow `6 x 10` circuit.
+This is a QOS-inspired hardware surrogate, not a literal implementation of the
+paper's QOS oracle or QSVT pipeline.
 
 The frozen seed-11 sentinel used:
 

@@ -44,3 +44,17 @@ The two language hubs were subsequently combined on project page `498`. It
 contains styled Dutch and English choice buttons and both article lists. The
 standalone English index remains published for compatibility, but its former
 top-level menu branch `527`–`535` was removed. No article pages were deleted.
+
+On 21 July 2026, the complete bilingual series was updated in place once more
+to clarify its relationship to the QOS paper. The project pages and relevant
+theory, hardware, route and 60q chapters now distinguish:
+
+- the literal 4q flat-QOS sampling kernel (`D=16`, `M=64`, Fire Opal action
+  `2334156`, mean Hellinger fidelity `0.990104`);
+- the 40q/60q PBMC68k circuits as QOS-inspired NISQ feature maps, without a
+  literal sampling oracle, QSVT or exact classical-shadow readout;
+- the complete paper route, which has not been run end to end on hardware.
+
+All eighteen existing public URLs were then rechecked for HTTP status `200`,
+series navigation, and the new Dutch and English claim markers. No pages or
+slugs were added.

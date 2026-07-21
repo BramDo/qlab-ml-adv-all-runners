@@ -28,11 +28,13 @@ Veertig of zestig qubits klinkt indrukwekkend, maar breedte alleen lost samplear
 
 Een zestig-qubitcircuit kan minder diep worden gehouden, maar vraagt nog steeds een zorgvuldig readout- en batchontwerp. De kleine sentinel mocht als feasibility-test door toen de geplande MPS-convergentiecontrole niet binnen de beschikbare tijd kon worden voltooid. Voor een grote hardwarefase blijven training-only stabiliteit, een bevroren ontwerp en afzonderlijke toestemming verplicht.
 
-## 3. Dichter bij het volledige QOS-algoritme
+## 3. Bouw een expliciete brug naar het volledige QOS-algoritme
 
-De theoretische classificatiescheiding geldt voor een oracle-sketching- en quantum-lineair-algebraprotocol met formele sampletoegang. Onze featuremap gebruikt vier gehashte blokken, korte rotatielagen en lokale Pauli-readout. De volgende theoretische brug moet expliciet maken:
+De 4q flat-QOS-pilot heeft inmiddels één echte bouwsteen gevalideerd: samples bouwen de officiële fase-sketch en interferentie maakt die sketch meetbaar. Die kernel is echter nog niet gekoppeld aan de PBMC68k-classifier. Omgekeerd gebruikt de 60q-route echte PBMC68k-data, maar zij probeert geen formele QOS-oracle te benaderen: zij vervangt dat onderdeel door vier blokken klassiek berekende rotatiehoeken, korte lagen en lokale Pauli-readout.
 
-- welk deel van de QOS-oracle door het circuit wordt benaderd;
+Een controleerbare volgende brug zou de zestig genmodules eerst padding geven tot 64 waarden, training-only naar een compacte sampleverdeling vertalen en die via een 6q flat-QOS-sketch verwerken. Pas daarna kan worden onderzocht hoe algemene reële waarden, een herbruikbare query-oracle, QSVT en de beslisfunctie worden toegevoegd. Daarbij moet expliciet worden gemaakt:
+
+- welk deel van de QOS-oracle letterlijk is geïmplementeerd en welk deel is vervangen;
 - hoe de approximatiefout schaalt met blokken, shots en diepte;
 - welke QSVT- of lineaire-solverstappen ontbreken;
 - of de 405-featureclassifier dezelfde beslisfunctie benadert als de LS-SVM uit de theorem;

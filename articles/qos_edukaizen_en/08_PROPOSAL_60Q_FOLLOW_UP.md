@@ -12,6 +12,12 @@ The fixed held-out test produced the strongest hardware point result in this ser
 
 This is a positive result on two axes: on this test, the frozen hardware classifier finished ahead of both predeclared classical references, and quantum feature computation showed a clear local time separation from MPS. Because the test set is small and MPS did not converge, it is not a general or asymptotic quantum-advantage claim.
 
+## Relationship to the QOS paper
+
+The 60q pilot is **not a literal QOS implementation**. The sixty module values are computed classically and loaded as rotation angles in a shallow `RY/RZ/RZZ` feature map. The route does not contain the paper's random-sample-built query oracle, QSVT/linear solver, or exact classical-shadow readout.
+
+A literal QOS building block exists elsewhere in this project: the separate 4q flat-QOS toy model for $D=16$ and $M=64$ implements the official `q_state_sketch_flat` sampling kernel. Fire Opal action `2334156` reached mean Hellinger fidelity 0.990104 across 64 random kernels. That 4q result validates the sketch kernel, but not the complete classifier. The 60q result validates the wide real-data hardware adaptation, but not the formal oracle chain. Together they form a clear but still incomplete bridge to the paper.
+
 ## Why the first 60-qubit route failed
 
 Our earlier 60-qubit route obtained 15/32 on hardware, compared with 17/32 ideally and 19/32 classically. The extra qubits mainly carried more hashed input channels. That added width, but not necessarily more stable biological structure.

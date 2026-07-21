@@ -2,7 +2,13 @@
 
 De oorspronkelijke QOS-paper levert JAX-code en numerieke simulaties. Onze volgende vraag was eenvoudiger maar fysiek concreet: kunnen we een herkenbare, streamingachtige single-cell featuremap daadwerkelijk op veertig qubits uitvoeren en er genoeg informatie uit teruglezen voor een classifier?
 
-## Een hardwaregerichte vertaling
+## Eerst: een letterlijke QOS-bouwsteen op vier qubits
+
+Vóór de brede PBMC68k-route hebben we de officiële flat-QOS sampling-sketch apart naar Qiskit geport. Het 4q-toymodel gebruikt $D=16$ posities en $M=64$ willekeurige samples. De samples bouwen letterlijk dezelfde fasevector als `q_state_sketch_flat`; een extra Hadamardlaag zet de anders onzichtbare fasen om in meetbare interferentie.
+
+Op IBM Fez draaiden 64 willekeurige sketchcircuits plus twee controles via Fire Opal-action `2334156`. De gemiddelde Hellinger-fideliteit met de ideale distributies was 0,990104, de mediaan 0,991417 en het minimum 0,980411. Dit is een letterlijke flat-QOS-kern op hardware. Het is nog geen complete QOS-classifier: QSVT, de lineaire solver en de volledige readoutketen ontbreken.
+
+## Daarna: een hardwaregerichte PBMC68k-vertaling
 
 Het circuit verwerkt vier featureblokken in hetzelfde register. Een blok wordt met enkelqubitrotaties geüpload, waarna qubitparen met een vaste interactiestructuur worden gekoppeld. Na het vierde blok volgt een laatste rotatielaag.
 
@@ -14,7 +20,7 @@ Op logisch circuitniveau heeft iedere cel:
 - volledig numerieke parameters;
 - geen mid-circuitmetingen of resets.
 
-Dat is bewust ondiep. Het volledige QOS/QSVT-protocol uit de theorie vraagt complexere oracles en foutgecorrigeerde logische operaties. Onze variant onderzoekt de eerstvolgende experimentele grens: een fysieke quantumfeaturemap die breed genoeg is om klassiek lastiger te simuleren, maar ondiep genoeg om op huidige hardware te overleven.
+Dat is bewust ondiep. Het volledige QOS/QSVT-protocol uit de theorie vraagt complexere oracles en foutgecorrigeerde logische operaties. Anders dan de 4q-sketch hierboven is dit 40q-circuit **geen letterlijke QOS-implementatie**: de rotatiehoeken worden klassiek voorbereid en er is geen sample-voor-sample oracleconstructie. Deze variant onderzoekt de eerstvolgende experimentele grens: een fysieke quantumfeaturemap die breed genoeg is om klassiek lastiger te simuleren, maar ondiep genoeg om op huidige hardware te overleven.
 
 ## Waarom drie meetcircuits per cel?
 
@@ -70,7 +76,7 @@ In [deel 5](https://edukaizen.nl/quantum-oracle-sketching-qml-genexpressie/quant
 ## Bronnen
 
 - [Officiële QOS-repository: JAX-implementatie](https://github.com/haimengzhao/quantum-oracle-sketching)
+- [Onze letterlijke 4q flat-QOS-pilot](https://github.com/BramDo/qlab-ml-adv-all-runners/blob/main/qiskit_official_qos_flat_fireopal_pilot.py)
 - [Fire Opal](https://q-ctrl.com/fire-opal)
 - [Onze guarded hardwarepilot](https://github.com/BramDo/qlab-ml-adv-all-runners/blob/agent/add-q40-fire-opal-hardware-milestone/qiskit_qos_pbmc_q40_sqrtq_b4_fireopal_pilot.py)
 - [Eerdere celclassificatie met quantumkernels op IBM-hardware](https://www.nature.com/articles/s41598-023-38558-z)
-

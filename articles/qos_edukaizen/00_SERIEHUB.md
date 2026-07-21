@@ -2,7 +2,7 @@
 
 Quantum machine learning klinkt vaak alsof een quantumcomputer een complete database in één keer doorzoekt. Ons experiment doet iets preciezers en interessanters: het probeert **het celtype van één cel te voorspellen uit haar genexpressieprofiel**. De invoer is een lange, dunbezette vector met RNA-tellingen; de uitvoer is een van twee immuuncelklassen.
 
-Deze achtdelige reeks verbindt drie lagen die gemakkelijk door elkaar raken. De eerste laag is de theorie van *Quantum Oracle Sketching* (QOS), gepubliceerd in april 2026. Die theorie gaat over een klein quantummodel dat enorme klassieke datastromen verwerkt zonder de hele matrix te bewaren. De tweede laag is de officiële JAX-code en de numerieke PBMC68k-experimenten. De derde laag is onze eigen hardwarevertaling: eerst een 40-qubitpilot en daarna een opnieuw ontworpen 60-qubitroute met labelvrije genmodules. Beide circuits zijn werkelijk op IBM Fez uitgevoerd via Fire Opal.
+Deze achtdelige reeks verbindt vier lagen die gemakkelijk door elkaar raken. De eerste laag is de theorie van *Quantum Oracle Sketching* (QOS), gepubliceerd in april 2026. Die theorie gaat over een klein quantummodel dat enorme klassieke datastromen verwerkt zonder de hele matrix te bewaren. De tweede laag is de officiële JAX-code en de numerieke PBMC68k-experimenten. De derde laag is onze **letterlijke flat-QOS-sketch op vier qubits**: een afgebakende port van de officiële sampling-kern, fysiek uitgevoerd op IBM Fez. De vierde laag bestaat uit onze 40- en 60-qubit PBMC68k-routes. Die zijn QOS-geïnspireerde NISQ-featuremaps en nadrukkelijk geen letterlijke implementatie van het volledige QOS/QSVT-algoritme.
 
 De nieuwste 60-qubitrun is het sterkste resultaat in de reeks. Op de vooraf afgeschermde testset scoorde hardware 17/32, tegenover 16/32 voor de lineaire en 14/32 voor de RBF-baseline. Het Fire Opal-dashboard rapporteerde slechts 26 quantumseconden en de volledige hardwarefeature-uitvoer was na ongeveer 8 minuten en 33 seconden opgehaald. Onze klassieke MPS-poging had na 42 minuten en 57 seconden nog geen convergente referentie opgeleverd.
 
@@ -38,11 +38,21 @@ De nieuwste 60-qubitrun is het sterkste resultaat in de reeks. Op de vooraf afge
 | Klassieke MPS-poging | na 42 minuten 57 seconden zonder convergente referentie gestopt |
 | Lokale tijdseparatie voor dezelfde featuretarget | meer dan 99,1× op kerneltijd; meer dan 5,0× inclusief retrieval |
 
+## Welke onderdelen zijn letterlijk QOS?
+
+| Route | Relatie tot de QOS-paper |
+| --- | --- |
+| 4q flat-QOS-toy/pilot | Letterlijke port van de officiële `q_state_sketch_flat` sampling-kern voor $D=16$ en $M=64$; 66 circuits op IBM Fez, Fire Opal-action `2334156`; gemiddelde Hellinger-fideliteit 0,990104 over 64 willekeurige kernels |
+| 40q/60q PBMC68k | QOS-geïnspireerde hardware-featuremaps met klassiek berekende rotatiehoeken en Pauli-readout; geen letterlijke sampling-oracle, QSVT of classical-shadowketen |
+| Volledige paperroute | Streaming sampletoegang, oracle-opbouw, quantum lineaire algebra en gecontroleerde readout; niet end-to-end op hardware geïmplementeerd in dit project |
+
+De 4q-run laat dus zien dat een echte QOS-sketchbouwsteen op hardware werkt. De 60q-run laat iets anders zien: dat een brede, ondiepe en biologisch gestructureerde featuremap op echte PBMC68k-data uitvoerbaar is en lokaal een interessante timing en puntenscore bereikt. Geen van beide resultaten is op zichzelf een hardwarebewijs van theorem 3.
+
 ## Wat deze reeks wel en niet claimt
 
 De uitvoering laat zien dat de volledige route—van echte single-cell RNA-data, via labelvrij geleerde genmodules en een compacte quantumfeaturemap, naar gemeten hardwarefeatures en een vooraf vastgelegde classifier—technisch uitvoerbaar is. Bovendien had de 60-qubitroute op deze vaste testset de beste puntenscore van de drie vooraf gekozen modellen.
 
-Dat is binnen de gedeclareerde lokale resources een gemeten **time-to-feature-generation advantage**. De 26-seconden-quantumtaak is meer dan 99,1× sneller dan de na 2.577 seconden nog onvoltooide MPS-poging; zelfs de volledige 513-secondenroute tot retrieval is meer dan 5,0× sneller. De featuretarget was dezelfde, maar MPS convergeerde niet en leverde dus geen gematchte numerieke fout op. Het is daarom geen algemene of asymptotische quantumvoordeelclaim. De klassieke lineaire en RBF-classifiers zelf zijn goedkoop, de test bevat slechts 32 cellen en het onzekerheidsinterval is breed. De 26 quantumseconden komen uit het Fire Opal-dashboard; het gearchiveerde API-resultaat liet dat veld leeg. Ook is onze ondiepe featuremap een hardwaregerichte benadering, niet het volledige QOS/QSVT-algoritme.
+Dat is binnen de gedeclareerde lokale resources een gemeten **time-to-feature-generation advantage**. De 26-seconden-quantumtaak is meer dan 99,1× sneller dan de na 2.577 seconden nog onvoltooide MPS-poging; zelfs de volledige 513-secondenroute tot retrieval is meer dan 5,0× sneller. De featuretarget was dezelfde, maar MPS convergeerde niet en leverde dus geen gematchte numerieke fout op. Het is daarom geen algemene of asymptotische quantumvoordeelclaim. De klassieke lineaire en RBF-classifiers zelf zijn goedkoop, de test bevat slechts 32 cellen en het onzekerheidsinterval is breed. De 26 quantumseconden komen uit het Fire Opal-dashboard; het gearchiveerde API-resultaat liet dat veld leeg. Ook is de 60q-featuremap een hardwaregerichte QOS-geïnspireerde benadering, **geen letterlijke QOS-implementatie** en niet het volledige QOS/QSVT-algoritme.
 
 Juist daardoor is de reeks nuttig. Zij laat niet alleen zien hoe de theorie werkt, maar ook waar de moeilijke overgang naar echte hardware zit: datatoegang, circuitdiepte, readout, shotruis, generalisatie en een eerlijke klassieke vergelijking.
 

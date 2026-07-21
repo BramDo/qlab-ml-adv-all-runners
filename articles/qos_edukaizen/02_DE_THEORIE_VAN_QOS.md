@@ -52,16 +52,26 @@ Een opvallend onderdeel van de theorie is de kwadratische relatie tussen amplitu
 
 Daarna zijn QSVT en classical shadows nodig om nuttige functies van vectoren en matrices uit de sketch te berekenen en compact klassiek uit te lezen. Dit is veel meer dan “een datapunt in rotatiehoeken stoppen”. Het volledige theoretische protocol bestaat uit datatoegang, oracle-opbouw, quantum lineaire algebra en gecontroleerde readout.
 
-## De officiële code versus onze hardwarevertaling
+## Van officiële code naar twee verschillende hardwareroutes
 
 De [officiële repository](https://github.com/haimengzhao/quantum-oracle-sketching) bevat twee numerieke routes:
 
 - expliciete random sampling in `qos_sampling.py`;
 - een expected-unitary-route in `qos.py` voor efficiëntere benchmarking.
 
-Onze Qiskit-route is doelbewust anders. Wij bouwen een ondiepe, QOS-geïnspireerde featuremap die op huidige hardware past. Daardoor kunnen we de overgang van grote klassieke invoer naar een kleine quantummachine fysiek testen, maar we erven niet automatisch de volledige theorem-3-garantie.
+In de kleinste hardwareroute hebben we wél een onderdeel letterlijk geport: de officiële flat-QOS sampling-kern `q_state_sketch_flat`. Voor $D=16$, $M=64$ en vier qubits telt ieder willekeurig sample mee in een fase
 
-Die scheiding is de belangrijkste regel van de artikelenserie: **de theorie motiveert de route; het hardware-experiment test een beperkte implementatie ervan**.
+```math
+\phi_j=\frac{\pi D}{M}\sum_{t=1}^{M}\mathbf{1}[i_t=j]\frac{1-v_{i_t}}{2},
+\qquad
+U_{\mathrm{sketch}}=\sum_j e^{i\phi_j}|j\rangle\langle j|.
+```
+
+Na voorbereiding van $|+\rangle^{\otimes 4}$ past het circuit deze sample-afhankelijke diagonaal toe. Een laatste Hadamardlaag maakt het fasespectrum meetbaar. De Fire Opal-run op IBM Fez bestond uit 64 willekeurige kernels en twee controles; action `2334156` bereikte gemiddeld 0,990104 Hellinger-fideliteit. Dat is een fasegevoelig hardware-resultaat voor een echte QOS-bouwsteen, maar geen complete QML-classifier en geen advantagebewijs.
+
+Onze 40q- en 60q-PBMC68k-routes zijn doelbewust anders. Zij bouwen een ondiepe, QOS-geïnspireerde featuremap die op huidige hardware past, met klassiek berekende rotatiehoeken en lokale Pauli-readout. Ze bevatten geen letterlijke random-sampling-oracle, herbruikbare coherente query-oracle, QSVT/lineaire solver of exacte classical-shadowreadout. Daardoor kunnen we de overgang van grote klassieke invoer naar een kleine quantummachine fysiek testen, maar we erven niet automatisch de volledige theorem-3-garantie.
+
+Die scheiding is de belangrijkste regel van de artikelenserie: **de 4q flat-QOS-pilot implementeert één letterlijke sketch-kern; de 40q/60q PBMC68k-pilots zijn hardware-adaptaties en geen letterlijke implementatie van het volledige algoritme**.
 
 In [deel 3](https://edukaizen.nl/quantum-oracle-sketching-qml-genexpressie/pbmc68k-van-genexpressie-naar-qubits/) volgen we exact hoe 32.738 genen veranderen in vier blokken van veertig getallen.
 
@@ -70,4 +80,3 @@ In [deel 3](https://edukaizen.nl/quantum-oracle-sketching-qml-genexpressie/pbmc6
 - [QOS-paper, arXiv:2604.07639](https://arxiv.org/abs/2604.07639)
 - [Officiële QOS-code en real-data-experimenten](https://github.com/haimengzhao/quantum-oracle-sketching)
 - [Laatste gecontroleerde officiële commit](https://github.com/haimengzhao/quantum-oracle-sketching/commit/10c092cefcfdff9951bf5729bd2ffb4c25fe2254)
-

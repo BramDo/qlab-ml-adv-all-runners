@@ -52,16 +52,26 @@ A striking element of the theory is the quadratic relationship between amplitude
 
 QSVT and classical shadows are then needed to compute useful functions of vectors and matrices from the sketch and read them out compactly in classical form. This goes far beyond “putting a data point into rotation angles.” The complete theoretical protocol consists of data access, oracle construction, quantum linear algebra and controlled readout.
 
-## Official code versus our hardware translation
+## From official code to two different hardware routes
 
 The [official repository](https://github.com/haimengzhao/quantum-oracle-sketching) contains two numerical routes:
 
 - explicit random sampling in `qos_sampling.py`;
 - an expected-unitary route in `qos.py` for more efficient benchmarking.
 
-Our Qiskit route is deliberately different. We construct a shallow, QOS-inspired feature map that fits present hardware. This lets us physically test the transition from large classical input to a small quantum machine, but it does not automatically inherit the complete guarantee of Theorem 3.
+In the smallest hardware route we did port one component literally: the official flat-QOS sampling kernel `q_state_sketch_flat`. For $D=16$, $M=64$ and four qubits, each random sample contributes to a phase
 
-That distinction is the central rule of this article series: **the theory motivates the route; the hardware experiment tests a restricted implementation of it**.
+```math
+\phi_j=\frac{\pi D}{M}\sum_{t=1}^{M}\mathbf{1}[i_t=j]\frac{1-v_{i_t}}{2},
+\qquad
+U_{\mathrm{sketch}}=\sum_j e^{i\phi_j}|j\rangle\langle j|.
+```
+
+After preparing $|+\rangle^{\otimes 4}$, the circuit applies this sample-dependent diagonal. A final Hadamard layer makes the phase spectrum measurable. The Fire Opal run on IBM Fez contained 64 random kernels and two controls; action `2334156` reached mean Hellinger fidelity 0.990104. This is a phase-sensitive hardware result for a genuine QOS building block, but not a complete QML classifier or an advantage proof.
+
+Our 40q and 60q PBMC68k routes are deliberately different. They construct shallow QOS-inspired feature maps that fit present hardware, using classically computed rotation angles and local Pauli readout. They contain no literal random-sampling oracle, reusable coherent query oracle, QSVT/linear solver or exact classical-shadow readout. This lets us physically test the transition from large classical input to a small quantum machine, but it does not automatically inherit the complete guarantee of Theorem 3.
+
+That distinction is the central rule of this article series: **the 4q flat-QOS pilot implements one literal sketch kernel; the 40q/60q PBMC68k pilots are hardware adaptations, not literal implementations of the complete algorithm**.
 
 In [part 3](https://edukaizen.nl/quantum-oracle-sketching-qml-gene-expression/pbmc68k-from-gene-expression-to-qubits/) we follow exactly how 32,738 genes become four blocks of forty numbers.
 

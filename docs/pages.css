@@ -52,6 +52,16 @@ h2 { margin: 0; font-size: clamp(1.9rem, 4vw, 3.4rem); line-height: 1.08; letter
 .facts strong { color: var(--warm); font-size: 2.15rem; line-height: 1; }
 .facts span { margin-top: .65rem; color: var(--muted); }
 
+.lineage { margin: 7rem 0 0; }
+.lineage-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; border: 1px solid var(--line); border-radius: .8rem; overflow: hidden; background: var(--line); }
+.lineage-grid article { min-height: 280px; padding: 1.6rem; background: var(--surface); }
+.lineage-grid h3 { margin: 1.1rem 0 .8rem; font-size: 1.45rem; line-height: 1.15; }
+.lineage-grid p { margin: 0; color: var(--muted); }
+.lineage-grid strong { color: var(--ink); }
+.route-tag { display: inline-block; padding: .3rem .58rem; border: 1px solid var(--line); border-radius: 999px; color: var(--muted); font-size: .72rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+.route-tag.literal { color: #07110e; border-color: var(--quantum); background: var(--quantum); }
+.route-tag.inspired { color: var(--warm); }
+
 .comparison { display: grid; grid-template-columns: 1.05fr .95fr; gap: clamp(2rem, 6vw, 6rem); align-items: center; margin: 8rem 0; }
 .comparison p:not(.eyebrow) { color: var(--muted); }
 .timeline { display: grid; gap: 1.5rem; }
@@ -76,6 +86,9 @@ footer div { display: flex; gap: 1.25rem; }
   .score-grid { grid-template-columns: 1fr; margin-bottom: 5rem; }
   .score-card { min-height: 145px; }
   .facts { grid-template-columns: repeat(2, 1fr); }
+  .lineage { margin-top: 5rem; }
+  .lineage-grid { grid-template-columns: 1fr; }
+  .lineage-grid article { min-height: auto; }
   .comparison { grid-template-columns: 1fr; margin: 5rem 0; }
   footer { flex-direction: column; }
 }
