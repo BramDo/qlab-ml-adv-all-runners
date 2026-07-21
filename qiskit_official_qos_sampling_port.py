@@ -132,6 +132,64 @@ def build_flat_state_circuit_from_samples(
     return qc, diag
 
 
+def build_flat_interference_circuit_from_samples(
+    sampled_indices: np.ndarray,
+    sampled_values: np.ndarray,
+    dim: int,
+) -> tuple[QuantumCircuit, np.ndarray]:
+    """Build a phase-sensitive readout of the official flat QOS sketch.
+
+    The official flat-state kernel prepares ``D(phi) H^n |0>``. Direct
+    computational-basis measurement cannot see ``D(phi)`` because every
+    outcome remains uniform. Applying a final Hadamard transform exposes the
+    phase sketch as a measurable Walsh-Hadamard spectrum.
+    """
+
+    qc, diag = build_flat_state_circuit_from_samples(
+        sampled_indices, sampled_values, dim
+    )
+    qc.h(range(require_power_of_two(dim)))
+    return qc, diag
+
+
+def flat_interference_state_from_jax(
+    sampled_indices: np.ndarray,
+    sampled_values: np.ndarray,
+    dim: int,
+) -> np.ndarray:
+    """Return the phase-sensitive state from the official JAX flat sketch."""
+
+    jax_state = np.asarray(
+        qos_sampling.q_state_sketch_flat((sampled_indices, sampled_values), dim)
+    )
+    return (hadamard_for_dim(dim) @ jax_state) / np.sqrt(dim)
+
+
+def flat_interference_probabilities_from_samples(
+    sampled_indices: np.ndarray,
+    sampled_values: np.ndarray,
+    dim: int,
+) -> np.ndarray:
+    """Return the exact measurable distribution of the flat QOS sketch.
+
+    This is the analytic equivalent of executing
+    :func:`build_flat_interference_circuit_from_samples` without shot noise.
+    ``hadamard_for_dim`` is unnormalised, so the two normalised Hadamard
+    transforms contribute the overall ``1 / dim`` amplitude factor.
+    """
+
+    require_power_of_two(dim)
+    phase = flat_phase_from_samples(sampled_indices, sampled_values, dim)
+    amplitudes = (hadamard_for_dim(dim) @ np.exp(1j * phase)) / float(dim)
+    probabilities = np.abs(amplitudes) ** 2
+    total = float(np.sum(probabilities))
+    if not np.all(np.isfinite(probabilities)) or np.any(probabilities < 0.0):
+        raise ValueError("flat QOS probabilities must be finite and non-negative")
+    if abs(total - 1.0) > 1e-10:
+        raise ValueError(f"flat QOS probabilities are not normalized: {total}")
+    return probabilities.astype(np.float64, copy=False)
+
+
 def top_entries(vec: np.ndarray, top_k: int = 8) -> list[dict[str, Any]]:
     order = np.argsort(np.abs(vec))[::-1][:top_k]
     width = require_power_of_two(vec.shape[0])

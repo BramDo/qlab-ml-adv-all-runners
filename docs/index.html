@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A 60-qubit QOS-inspired PBMC68k hardware pilot on IBM Fez through Fire Opal.">
+  <title>60-qubit QML hardware milestone</title>
+  <link rel="stylesheet" href="pages.css">
+</head>
+<body>
+  <header class="hero">
+    <nav class="topbar" aria-label="Project links">
+      <a class="brand" href="https://github.com/BramDo/qlab-ml-adv-all-runners">QOS · PBMC68k</a>
+      <div class="toplinks">
+        <a href="https://edukaizen.nl/quantum-oracle-sketching-qml-genexpressie/">Edukaizen</a>
+        <a href="https://edukaizen.nl/pro-student-quantum-advantage-list/">Advantage List</a>
+        <a href="https://github.com/BramDo/qlab-ml-adv-all-runners">Code</a>
+      </div>
+    </nav>
+
+    <div class="language-switch" role="group" aria-label="Language / Taal">
+      <button type="button" data-language="nl" aria-pressed="true">Nederlands</button>
+      <button type="button" data-language="en" aria-pressed="false">English</button>
+    </div>
+
+    <section class="language-panel is-active" data-panel="nl">
+      <p class="eyebrow">Hardwaremijlpaal · 21 juli 2026</p>
+      <h1>Zestig qubits, lokale featuregeneratie-advantage</h1>
+      <p class="lede">Een ondiepe QOS-geïnspireerde featuremap voor echte PBMC68k-genexpressie draaide via Fire Opal op IBM Fez. Op de vaste testset eindigde hardware vóór beide vooraf gekozen klassieke baselines; het dashboard rapporteerde slechts 26 quantumseconden.</p>
+      <a class="primary-action" href="https://edukaizen.nl/quantum-oracle-sketching-qml-genexpressie/voorstel-60-qubit-qml-vervolgstudie/">Lees het volledige resultaat</a>
+    </section>
+
+    <section class="language-panel" data-panel="en" hidden>
+      <p class="eyebrow">Hardware milestone · 21 July 2026</p>
+      <h1>Sixty qubits, a local feature-generation advantage</h1>
+      <p class="lede">A shallow QOS-inspired feature map for real PBMC68k gene expression ran through Fire Opal on IBM Fez. On the fixed test, hardware finished ahead of both preselected classical baselines; the dashboard reported only 26 quantum seconds.</p>
+      <a class="primary-action" href="https://edukaizen.nl/quantum-oracle-sketching-qml-gene-expression/proposal-60-qubit-qml-follow-up-study/">Read the complete result</a>
+    </section>
+  </header>
+
+  <main>
+    <section class="score-grid" aria-label="Held-out balanced accuracy">
+      <article class="score-card quantum">
+        <span>60q hardware</span>
+        <strong>17/32</strong>
+        <small>0.53125 balanced accuracy</small>
+      </article>
+      <article class="score-card">
+        <span>Linear</span>
+        <strong>16/32</strong>
+        <small>0.50000 balanced accuracy</small>
+      </article>
+      <article class="score-card">
+        <span>RBF</span>
+        <strong>14/32</strong>
+        <small>0.43750 balanced accuracy</small>
+      </article>
+    </section>
+
+    <section class="language-panel content-panel is-active" data-panel="nl">
+      <div class="section-heading">
+        <p class="eyebrow">Wat er werkelijk draaide</p>
+        <h2>Van 32.738 genen naar 627 gemeten observabelen</h2>
+      </div>
+      <div class="facts">
+        <article><strong>60</strong><span>labelvrije coexpressiemodules</span></article>
+        <article><strong>6×10</strong><span>logische qubittopologie</span></article>
+        <article><strong>20</strong><span>logische circuitdiepte</span></article>
+        <article><strong>134</strong><span>tweequbitinteracties</span></article>
+        <article><strong>192</strong><span>circuits × 128 shots</span></article>
+        <article><strong>627</strong><span>X/Y/Z-observabelen per cel</span></article>
+      </div>
+
+      <div class="comparison">
+        <div>
+          <p class="eyebrow">Praktische timing</p>
+          <h2>De quantumtaak zelf: slechts 26 seconden</h2>
+          <p>Het Fire Opal-dashboard rapporteerde 0:26 quantumtijd; het complete resultaat was na circa 8:33 opgehaald. De lokale MPS-controle van dezelfde 60-qubitfeaturetarget was na 42:57 nog niet geconvergeerd. Dat geeft een lokale ondergrens van meer dan 99,1× op kerneltijd en meer dan 5,0× inclusief retrieval.</p>
+        </div>
+        <div class="timeline" aria-label="Timing comparison">
+          <div><span>Quantumtaak, dashboard</span><i style="--width:3%"></i><b>0:26</b></div>
+          <div><span>Fire Opal retrieval</span><i style="--width:20%"></i><b>8:33</b></div>
+          <div><span>MPS, onvoltooid</span><i style="--width:100%"></i><b>&gt;42:57</b></div>
+        </div>
+      </div>
+
+      <aside class="claim-boundary">
+        <h2>De eerlijke claim</h2>
+        <p>Dit is een taakgebonden lokale time-to-feature-generation advantage binnen de gedeclareerde resources, plus de hoogste held-out puntenscore. MPS convergeerde niet, dus de tijdverhouding is een ondergrens en geen gematchte numerieke-foutvergelijking. Met slechts 32 testcellen, McNemar <code>p=1,0</code> en een breed bootstrapinterval is het geen algemene of asymptotische quantum-advantageclaim.</p>
+      </aside>
+    </section>
+
+    <section class="language-panel content-panel" data-panel="en" hidden>
+      <div class="section-heading">
+        <p class="eyebrow">What actually ran</p>
+        <h2>From 32,738 genes to 627 measured observables</h2>
+      </div>
+      <div class="facts">
+        <article><strong>60</strong><span>label-free coexpression modules</span></article>
+        <article><strong>6×10</strong><span>logical qubit topology</span></article>
+        <article><strong>20</strong><span>logical circuit depth</span></article>
+        <article><strong>134</strong><span>two-qubit interactions</span></article>
+        <article><strong>192</strong><span>circuits × 128 shots</span></article>
+        <article><strong>627</strong><span>X/Y/Z observables per cell</span></article>
+      </div>
+
+      <div class="comparison">
+        <div>
+          <p class="eyebrow">Practical timing</p>
+          <h2>The quantum task itself: only 26 seconds</h2>
+          <p>The Fire Opal dashboard reported 0:26 of quantum time; the complete result was retrieved after about 8:33. The local MPS check of the same 60-qubit feature target had not converged after 42:57. This gives a local lower bound greater than 99.1x at kernel scope and greater than 5.0x including retrieval.</p>
+        </div>
+        <div class="timeline" aria-label="Timing comparison">
+          <div><span>Quantum task, dashboard</span><i style="--width:3%"></i><b>0:26</b></div>
+          <div><span>Fire Opal retrieval</span><i style="--width:20%"></i><b>8:33</b></div>
+          <div><span>MPS, incomplete</span><i style="--width:100%"></i><b>&gt;42:57</b></div>
+        </div>
+      </div>
+
+      <aside class="claim-boundary">
+        <h2>The fair claim</h2>
+        <p>This is a task-specific local time-to-feature-generation advantage under the declared resources, plus the highest held-out point score. MPS did not converge, so the timing ratio is a lower bound rather than a matched numerical-error comparison. With only 32 test cells, McNemar <code>p=1.0</code> and a wide bootstrap interval, it is not a general or asymptotic quantum-advantage claim.</p>
+      </aside>
+    </section>
+  </main>
+
+  <footer>
+    <p>PBMC68k · seed 11 · IBM Fez · Fire Opal action 2335848</p>
+    <div>
+      <a href="https://github.com/BramDo/qlab-ml-adv-all-runners/blob/main/Q60_MODULE_B4_RUNBOOK.md">Runbook</a>
+      <a href="https://arxiv.org/abs/2604.07639">QOS paper</a>
+      <a href="https://github.com/BramDo/qlab-ml-adv-all-runners">Source</a>
+    </div>
+  </footer>
+
+  <script>
+    const buttons = document.querySelectorAll('[data-language]');
+    const panels = document.querySelectorAll('[data-panel]');
+    function selectLanguage(language) {
+      document.documentElement.lang = language;
+      buttons.forEach((button) => {
+        button.setAttribute('aria-pressed', String(button.dataset.language === language));
+      });
+      panels.forEach((panel) => {
+        const active = panel.dataset.panel === language;
+        panel.hidden = !active;
+        panel.classList.toggle('is-active', active);
+      });
+      try { localStorage.setItem('qos-language', language); } catch (_) {}
+    }
+    buttons.forEach((button) => button.addEventListener('click', () => selectLanguage(button.dataset.language)));
+    let preferred = 'nl';
+    try { preferred = localStorage.getItem('qos-language') || (navigator.language.startsWith('nl') ? 'nl' : 'en'); } catch (_) {}
+    selectLanguage(preferred);
+  </script>
+</body>
+</html>
