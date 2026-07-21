@@ -12,6 +12,12 @@ De vaste held-out test gaf het beste hardwarepuntresultaat in deze reeks:
 
 Dit is een positief resultaat op twee assen: de bevroren hardwareclassifier eindigde op deze test vóór beide vooraf vastgelegde klassieke referenties, en de quantumfeatureberekening gaf lokaal een duidelijke tijdseparatie tegenover MPS. Door de kleine testset en de ontbrekende MPS-convergentie is het geen algemene of asymptotische quantum-advantageclaim.
 
+## Relatie tot de QOS-paper
+
+De 60q-pilot is **geen letterlijke QOS-implementatie**. De zestig modulewaarden worden klassiek berekend en als rotatiehoeken in een ondiepe `RY/RZ/RZZ`-featuremap geladen. De route bevat niet de willekeurige sample-opgebouwde query-oracle uit de paper, geen QSVT/lineaire solver en niet de exacte classical-shadowreadout.
+
+Een letterlijke QOS-bouwsteen staat elders in dit project: het afzonderlijke 4q flat-QOS-toymodel voor $D=16$ en $M=64$ implementeert de officiële `q_state_sketch_flat` sampling-kern. Fire Opal-action `2334156` behaalde voor 64 willekeurige kernels gemiddeld 0,990104 Hellinger-fideliteit. Dat 4q-resultaat valideert de sketch-kern, maar niet de volledige classifier. Het 60q-resultaat valideert de brede real-data hardware-adaptatie, maar niet de formele oracleketen. Samen vormen ze een duidelijke, nog onvolledige brug naar de paper.
+
 ## Waarom de eerste 60-qubitroute niet werkte
 
 Onze eerdere 60-qubitroute haalde 15/32 op hardware, tegenover 17/32 ideaal en 19/32 klassiek. De extra qubits droegen toen vooral meer gehashte invoerkanalen. Dat voegde breedte toe, maar niet noodzakelijk stabielere biologische structuur.

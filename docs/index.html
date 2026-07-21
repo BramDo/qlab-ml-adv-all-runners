@@ -71,6 +71,30 @@
         <article><strong>627</strong><span>X/Y/Z-observabelen per cel</span></article>
       </div>
 
+      <div class="lineage">
+        <div class="section-heading">
+          <p class="eyebrow">Twee experimenten, twee relaties tot QOS</p>
+          <h2>Letterlijke sketch-kern op 4q; QOS-geïnspireerde PBMC-route op 60q</h2>
+        </div>
+        <div class="lineage-grid">
+          <article>
+            <span class="route-tag literal">Letterlijk onderdeel</span>
+            <h3>4q flat-QOS-toymodel</h3>
+            <p>Een directe port van de officiële <code>q_state_sketch_flat</code> sampling-kern voor <code>D=16</code> en <code>M=64</code>. Fire Opal-action <code>2334156</code>: 66 circuits, gemiddelde Hellinger-fideliteit <strong>0,990104</strong> over 64 willekeurige kernels.</p>
+          </article>
+          <article>
+            <span class="route-tag inspired">Hardware-adaptatie</span>
+            <h3>60q PBMC68k-featuremap</h3>
+            <p>Een brede, ondiepe QOS-geïnspireerde NISQ-featuremap voor echte celdata. Dit is <strong>geen letterlijke QOS-implementatie</strong>: geen sample-opgebouwde query-oracle, QSVT of exacte classical-shadowreadout.</p>
+          </article>
+          <article>
+            <span class="route-tag missing">Nog niet uitgevoerd</span>
+            <h3>Volledige paperroute</h3>
+            <p>De end-to-endketen van streaming oracle-opbouw, quantum lineaire algebra en gecontroleerde readout is niet op hardware geïmplementeerd. Geen van de pilots bewijst daarom theorem 3.</p>
+          </article>
+        </div>
+      </div>
+
       <div class="comparison">
         <div>
           <p class="eyebrow">Praktische timing</p>
@@ -102,6 +126,30 @@
         <article><strong>134</strong><span>two-qubit interactions</span></article>
         <article><strong>192</strong><span>circuits × 128 shots</span></article>
         <article><strong>627</strong><span>X/Y/Z observables per cell</span></article>
+      </div>
+
+      <div class="lineage">
+        <div class="section-heading">
+          <p class="eyebrow">Two experiments, two relationships to QOS</p>
+          <h2>Literal sketch kernel on 4q; QOS-inspired PBMC route on 60q</h2>
+        </div>
+        <div class="lineage-grid">
+          <article>
+            <span class="route-tag literal">Literal component</span>
+            <h3>4q flat-QOS toy model</h3>
+            <p>A direct port of the official <code>q_state_sketch_flat</code> sampling kernel for <code>D=16</code> and <code>M=64</code>. Fire Opal action <code>2334156</code>: 66 circuits, mean Hellinger fidelity <strong>0.990104</strong> over 64 random kernels.</p>
+          </article>
+          <article>
+            <span class="route-tag inspired">Hardware adaptation</span>
+            <h3>60q PBMC68k feature map</h3>
+            <p>A wide, shallow QOS-inspired NISQ feature map for real cell data. This is <strong>not a literal QOS implementation</strong>: no sample-built query oracle, QSVT, or exact classical-shadow readout.</p>
+          </article>
+          <article>
+            <span class="route-tag missing">Not yet executed</span>
+            <h3>Complete paper route</h3>
+            <p>The end-to-end chain of streaming oracle construction, quantum linear algebra and controlled readout has not been implemented on hardware. Neither pilot therefore proves Theorem 3.</p>
+          </article>
+        </div>
       </div>
 
       <div class="comparison">

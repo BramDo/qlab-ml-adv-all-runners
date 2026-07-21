@@ -23,6 +23,10 @@ def test_series_sources_and_claim_boundary() -> None:
     assert "0,43750" in combined
     assert "26 quantumseconden" in combined
     assert "QOS-geïnspireerde" in combined
+    assert "letterlijke flat-QOS" in combined
+    assert "geen letterlijke QOS-implementatie" in combined
+    assert "2334156" in combined
+    assert "0,990104" in combined
     assert "genenzoekmachine" in combined
     assert "time-to-feature-generation advantage" in combined
     assert "99,1" in combined
@@ -30,6 +34,10 @@ def test_series_sources_and_claim_boundary() -> None:
     assert "17/32" in combined_english
     assert "0.43750" in combined_english
     assert "26 quantum seconds" in combined_english
+    assert "literal flat-QOS" in combined_english
+    assert "not a literal QOS implementation" in combined_english
+    assert "2334156" in combined_english
+    assert "0.990104" in combined_english
     assert "time-to-feature-generation advantage" in combined_english
     assert "99.1" in combined_english
     assert "no held-out predictive quantum advantage" in combined_english
@@ -99,4 +107,9 @@ def test_github_pages_landing_page_contains_bilingual_result() -> None:
     assert "99,1" in page
     assert "99.1" in page
     assert "2335848" in page
+    assert "4q flat-QOS" in page
+    assert "geen letterlijke QOS-implementatie" in page
+    assert "not a literal QOS implementation" in page
+    assert "2334156" in page
+    assert "0.990104" in page
     assert "@media (max-width: 720px)" in stylesheet

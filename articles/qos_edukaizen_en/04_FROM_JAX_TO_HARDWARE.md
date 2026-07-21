@@ -2,7 +2,13 @@
 
 The original QOS paper provides JAX code and numerical simulations. Our next question was simpler but physically concrete: can we execute a recognisable streaming-style single-cell feature map on forty qubits and retrieve enough information for a classifier?
 
-## A hardware-oriented translation
+## First: a literal QOS building block on four qubits
+
+Before the wide PBMC68k route, we ported the official flat-QOS sampling sketch separately to Qiskit. The 4q toy model uses $D=16$ positions and $M=64$ random samples. The samples build literally the same phase vector as `q_state_sketch_flat`; an additional Hadamard layer converts otherwise invisible phases into measurable interference.
+
+On IBM Fez, 64 random sketch circuits plus two controls ran through Fire Opal action `2334156`. Mean Hellinger fidelity with the ideal distributions was 0.990104, the median was 0.991417 and the minimum was 0.980411. This is a literal flat-QOS kernel on hardware. It is not yet a complete QOS classifier: QSVT, the linear solver and the complete readout chain are missing.
+
+## Then: a hardware-oriented PBMC68k translation
 
 The circuit processes four feature blocks in the same register. A block is uploaded through single-qubit rotations, after which qubit pairs are connected using a fixed interaction structure. A final rotation layer follows the fourth block.
 
@@ -14,7 +20,7 @@ At logical circuit level, each cell uses:
 - fully numerical parameters;
 - no mid-circuit measurements or resets.
 
-This is deliberately shallow. The complete theoretical QOS/QSVT protocol requires more complex oracles and error-corrected logical operations. Our variant investigates the next experimental boundary: a physical quantum feature map wide enough to be more difficult to simulate classically, yet shallow enough to survive on current hardware.
+This is deliberately shallow. The complete theoretical QOS/QSVT protocol requires more complex oracles and error-corrected logical operations. Unlike the 4q sketch above, this 40q circuit is **not a literal QOS implementation**: its rotation angles are prepared classically and there is no sample-by-sample oracle construction. This variant investigates the next experimental boundary: a physical quantum feature map wide enough to be more difficult to simulate classically, yet shallow enough to survive on current hardware.
 
 ## Why three measurement circuits per cell?
 
@@ -70,6 +76,7 @@ In [part 5](https://edukaizen.nl/quantum-oracle-sketching-qml-gene-expression/qu
 ## Sources
 
 - [Official QOS repository: JAX implementation](https://github.com/haimengzhao/quantum-oracle-sketching)
+- [Our literal 4q flat-QOS pilot](https://github.com/BramDo/qlab-ml-adv-all-runners/blob/main/qiskit_official_qos_flat_fireopal_pilot.py)
 - [Fire Opal](https://q-ctrl.com/fire-opal)
 - [Our guarded hardware pilot](https://github.com/BramDo/qlab-ml-adv-all-runners/blob/agent/add-q40-fire-opal-hardware-milestone/qiskit_qos_pbmc_q40_sqrtq_b4_fireopal_pilot.py)
 - [Earlier cell classification with quantum kernels on IBM hardware](https://www.nature.com/articles/s41598-023-38558-z)

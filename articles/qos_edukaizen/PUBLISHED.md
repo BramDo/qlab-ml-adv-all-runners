@@ -45,3 +45,17 @@ De projectpagina is daarna samengevoegd tot één tweetalige pagina met twee
 keuzeknoppen en beide artikellijsten. De losse Nederlandse artikelmenu-items
 `507`–`513` en `517` en de Engelse menutak `527`–`535` zijn verwijderd; de
 bijbehorende artikelpagina's zijn behouden.
+
+Op 21 juli 2026 is de volledige tweetalige reeks opnieuw in-place bijgewerkt om
+de relatie tot de QOS-paper preciezer te maken. De projectpagina's en de
+relevante theorie-, hardware-, route- en 60q-hoofdstukken onderscheiden nu:
+
+- de letterlijke 4q flat-QOS sampling-kern (`D=16`, `M=64`, Fire Opal-action
+  `2334156`, gemiddelde Hellinger-fideliteit `0,990104`);
+- de 40q/60q PBMC68k-circuits als QOS-geïnspireerde NISQ-featuremaps, zonder
+  letterlijke sampling-oracle, QSVT of exacte classical-shadowreadout;
+- de nog niet end-to-end op hardware uitgevoerde volledige paperroute.
+
+Alle achttien bestaande publieke URL's zijn daarna opnieuw met HTTP-status
+`200`, serienavigatie en de nieuwe Nederlandstalige en Engelstalige
+claimmarkeringen geverifieerd. Er zijn geen pagina's of slugs toegevoegd.

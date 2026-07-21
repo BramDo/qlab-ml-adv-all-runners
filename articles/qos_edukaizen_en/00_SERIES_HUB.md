@@ -2,7 +2,7 @@
 
 Quantum machine learning is often described as if a quantum computer searches an entire database at once. Our experiment does something more precise and more interesting: it attempts to **predict the cell type of a single cell from its gene-expression profile**. The input is a long, sparse vector of RNA counts; the output is one of two immune-cell classes.
 
-This eight-part series connects three layers that are easily confused. The first is the theory of *Quantum Oracle Sketching* (QOS), published in April 2026. That theory concerns a small quantum model processing massive classical data streams without retaining the entire matrix. The second layer is the official JAX code and its numerical PBMC68k experiments. The third is our own hardware translation: first a 40-qubit pilot, then a redesigned 60-qubit route based on label-free gene modules. Both circuits were actually executed on IBM Fez through Fire Opal.
+This eight-part series connects four layers that are easily confused. The first is the theory of *Quantum Oracle Sketching* (QOS), published in April 2026. That theory concerns a small quantum model processing massive classical data streams without retaining the entire matrix. The second layer is the official JAX code and its numerical PBMC68k experiments. The third is our **literal flat-QOS sketch on four qubits**: a bounded port of the official sampling kernel, physically executed on IBM Fez. The fourth consists of our 40- and 60-qubit PBMC68k routes. Those are QOS-inspired NISQ feature maps, explicitly not literal implementations of the complete QOS/QSVT algorithm.
 
 The new 60-qubit run is the strongest result in the series. On the predeclared held-out test, hardware scored 17/32, compared with 16/32 for the linear and 14/32 for the RBF baseline. The Fire Opal dashboard reported only 26 quantum seconds, and the complete hardware feature output was retrieved after about 8 minutes 33 seconds. Our classical MPS attempt had not produced a converged reference after 42 minutes 57 seconds.
 
@@ -38,11 +38,21 @@ The new 60-qubit run is the strongest result in the series. On the predeclared h
 | Classical MPS attempt | stopped after 42 minutes 57 seconds without a converged reference |
 | Local time separation for the same feature target | greater than 99.1x at kernel scope; greater than 5.0x including retrieval |
 
+## Which components are literal QOS?
+
+| Route | Relationship to the QOS paper |
+| --- | --- |
+| 4q flat-QOS toy/pilot | Literal port of the official `q_state_sketch_flat` sampling kernel for $D=16$ and $M=64$; 66 circuits on IBM Fez, Fire Opal action `2334156`; mean Hellinger fidelity 0.990104 over 64 random kernels |
+| 40q/60q PBMC68k | QOS-inspired hardware feature maps using classically computed rotation angles and Pauli readout; no literal sampling oracle, QSVT or classical-shadow chain |
+| Complete paper route | Streaming sample access, oracle construction, quantum linear algebra and controlled readout; not implemented end to end on hardware in this project |
+
+The 4q run therefore shows that a genuine QOS sketch building block works on hardware. The 60q run shows something different: a wide, shallow and biologically structured feature map for real PBMC68k data is executable and reaches an interesting local timing and point score. Neither result by itself is a hardware proof of Theorem 3.
+
 ## What this series does and does not claim
 
 The execution shows that the complete route—from real single-cell RNA data, through label-free gene modules and a compact quantum feature map, to measured hardware features and a predeclared classifier—is technically executable. The 60-qubit route also had the best held-out point score of the three preselected models.
 
-Under the declared local resources, this is a measured **time-to-feature-generation advantage**. The 26-second quantum task is more than 99.1x faster than the MPS attempt that remained incomplete after 2,577 seconds; even the complete 513-second route through retrieval is more than 5.0x faster. The feature target was the same, but MPS did not converge and therefore produced no matched numerical error. This is not a general or asymptotic quantum-advantage claim. The linear and RBF classifiers themselves remain inexpensive, the test contains only 32 cells, and the uncertainty interval is wide. The 26 quantum seconds come from the Fire Opal dashboard; the archived API result left that field empty. Our shallow feature map is also a hardware-oriented approximation rather than the complete QOS/QSVT algorithm.
+Under the declared local resources, this is a measured **time-to-feature-generation advantage**. The 26-second quantum task is more than 99.1x faster than the MPS attempt that remained incomplete after 2,577 seconds; even the complete 513-second route through retrieval is more than 5.0x faster. The feature target was the same, but MPS did not converge and therefore produced no matched numerical error. This is not a general or asymptotic quantum-advantage claim. The linear and RBF classifiers themselves remain inexpensive, the test contains only 32 cells, and the uncertainty interval is wide. The 26 quantum seconds come from the Fire Opal dashboard; the archived API result left that field empty. The 60q feature map is a hardware-oriented QOS-inspired adaptation, **not a literal QOS implementation**, and not the complete QOS/QSVT algorithm.
 
 That is exactly why the series is useful. It explains not only how the theory works, but also where the difficult transition to real hardware lies: data access, circuit depth, readout, shot noise, generalisation, and a fair classical comparison.
 
