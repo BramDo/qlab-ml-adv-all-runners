@@ -4,6 +4,8 @@ Dit is een beginnershandleiding voor een kleine maar complete quantum-machine-le
 
 De bijbehorende, opgemaakte versie staat in [qml-van-umi-naar-circuit.docx](qml-van-umi-naar-circuit.docx).
 
+De online versie staat als extra hoofdstuk in de [Edukaizen QML-reeks](https://edukaizen.nl/quantum-oracle-sketching-qml-genexpressie/qml-beginnershandleiding-umi-naar-4-qubit-circuit/).
+
 > **Claimgrens:** dit is een educatief vier-qubit simulatormodel. Het reproduceert niet het volledige Quantum Oracle Sketching-algoritme en toont geen quantumvoordeel.
 
 ## 1. Wat is de taak?

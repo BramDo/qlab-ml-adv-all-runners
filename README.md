@@ -150,6 +150,9 @@ statevector probabilities, Z/ZZ features, classifier math and reproducibility
 commands. The guide also distinguishes this educational PBMC feature map from
 the separate literal flat-QOS sampling-kernel pilot.
 
+The guide is also published as an additional chapter on
+[Edukaizen](https://edukaizen.nl/quantum-oracle-sketching-qml-genexpressie/qml-beginnershandleiding-umi-naar-4-qubit-circuit/).
+
 ## Memory Accounting
 
 Accuracy is not the only metric here. For the paper-style claim, the relevant quantity is often model/workspace size.

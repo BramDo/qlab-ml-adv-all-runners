@@ -25,6 +25,7 @@ ARTICLES = [
     (6, "06_HET_HARDWARERESULTAAT.md", "resultaat-hardware-versus-klassiek", "Het 40-qubitresultaat: hardware 16, klassiek 17"),
     (7, "07_WAT_NODIG_IS_VOOR_VOORDEEL.md", "route-naar-quantumvoordeel-qml", "Wat is nog nodig voor quantumvoordeel?"),
     (8, "08_VOORSTEL_60Q_VERVOLGSTUDIE.md", "voorstel-60-qubit-qml-vervolgstudie", "Het 60-qubitresultaat: hardware 17, lineair 16, RBF 14"),
+    (9, "09_BEGINNERSHANDLEIDING_4Q.md", "qml-beginnershandleiding-umi-naar-4-qubit-circuit", "Beginnershandleiding QML: van UMI-telling naar een 4-qubitcircuit"),
 ]
 
 ARTICLES_EN = [
@@ -47,6 +48,26 @@ def normalize_link(target: str) -> str:
     if target.startswith("http://") or target.startswith("https://"):
         return target
     return f"{GITHUB_BASE}/blob/main/{target}"
+
+
+def normalize_image(target: str) -> str:
+    if target.startswith("http://") or target.startswith("https://"):
+        return target
+    return (
+        "https://raw.githubusercontent.com/BramDo/"
+        f"qlab-ml-adv-all-runners/main/{target}"
+    )
+
+
+def render_image(alt: str, target: str) -> str:
+    source = html.escape(normalize_image(target), quote=True)
+    caption = html.escape(alt)
+    return (
+        '<figure class="qos-guide-figure" style="margin:1.5rem 0;">'
+        f'<img src="{source}" alt="{caption}" loading="lazy" '
+        'style="display:block;max-width:100%;height:auto;margin:0 auto;">'
+        f"<figcaption>{caption}</figcaption></figure>\n"
+    )
 
 
 def render_inline(text: str) -> str:
@@ -118,6 +139,11 @@ def render_markdown(lines: list[str], *, skip_h1: bool = True) -> str:
     while i < len(lines):
         stripped = lines[i].strip()
         if not stripped:
+            i += 1
+            continue
+        image = re.fullmatch(r"!\[([^\]]*)\]\(([^)]+)\)", stripped)
+        if image:
+            out.append(render_image(image.group(1), image.group(2)))
             i += 1
             continue
         if stripped.startswith("```"):
@@ -205,10 +231,16 @@ def nav_html(part: int | None, language: str) -> str:
         )
     else:
         links.append(f'<strong>{"English" if english else "Nederlands"}</strong>')
-        links.append(
-            f'<a href="{public_url(other_articles[part - 1][2], other_hub_slug)}">'
-            f'{"Nederlands" if english else "English"}</a>'
-        )
+        if part <= len(other_articles):
+            links.append(
+                f'<a href="{public_url(other_articles[part - 1][2], other_hub_slug)}">'
+                f'{"Nederlands" if english else "English"}</a>'
+            )
+        else:
+            links.append(
+                f'<a href="{SITE}/{other_hub_slug}/">'
+                f'{"Nederlandse serie" if english else "English series"}</a>'
+            )
         links.append(
             f'<a href="{SITE}/{HUB_SLUG}/">'
             f'{"Project page" if english else "Projectpagina"}</a>'
