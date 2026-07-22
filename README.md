@@ -119,6 +119,40 @@ and `articles/qos_edukaizen_en/`.
 
 The synthetic datasets are deliberately block-structured: the raw feature dimension can be much larger than the qubit count, but the useful signal lives in a small number of coarse modes. That keeps the toy honest to the "small machine on large classical data" story without pretending to prove the paper's separation.
 
+## Four-Qubit PBMC68k Educational Simulator
+
+`qiskit_qos_pbmc68k_q4_educational.py` is the smallest real-data introduction
+to the workflow. It selects just 16 training and 16 held-out PBMC68k cells,
+chooses four variable genes from the training counts without labels, and maps
+one gene value to each qubit. One shallow entangling ring is simulated with
+Qiskit Aer. Four `Z` and four neighbouring `ZZ` expectation values form the
+input to a logistic-regression head.
+
+Run it in the established WSL Qiskit environment:
+
+```bash
+/home/bram/.venvs/qiskit/bin/python \
+  qiskit_qos_pbmc68k_q4_educational.py \
+  --shots 512 \
+  --json-out output/pbmc68k_q4_educational.json
+```
+
+The script prints the selected genes, the complete four-qubit circuit, the
+held-out score of the quantum features, and a classical comparison using the
+same four genes. It is deliberately an educational simulator example rather
+than a QOS reproduction or a quantum-advantage experiment.
+
+The complete Dutch beginner guide is available as both
+[Markdown](docs/beginner/README.md) and a downloadable
+[DOCX document](docs/beginner/qml-van-umi-naar-circuit.docx). It includes UMI
+counting, one real cell's values, the circuit drawing, the 16 x 16 unitary,
+statevector probabilities, Z/ZZ features, classifier math and reproducibility
+commands. The guide also distinguishes this educational PBMC feature map from
+the separate literal flat-QOS sampling-kernel pilot.
+
+The guide is also published as an additional chapter on
+[Edukaizen](https://edukaizen.nl/quantum-oracle-sketching-qml-genexpressie/qml-beginnershandleiding-umi-naar-4-qubit-circuit/).
+
 ## Memory Accounting
 
 Accuracy is not the only metric here. For the paper-style claim, the relevant quantity is often model/workspace size.

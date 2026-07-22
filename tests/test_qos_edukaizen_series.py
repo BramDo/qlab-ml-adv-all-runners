@@ -9,7 +9,7 @@ import docs.build_wordpress_qos_series as series
 def test_series_sources_and_claim_boundary() -> None:
     sources = sorted(series.SOURCE_DIR.glob("[0-9][0-9]_*.md"))
     english_sources = sorted(series.SOURCE_DIR_EN.glob("[0-9][0-9]_*.md"))
-    assert len(sources) == 9
+    assert len(sources) == 10
     assert len(english_sources) == 9
     combined = "\n".join(path.read_text(encoding="utf-8") for path in sources)
     combined_english = "\n".join(
@@ -43,7 +43,7 @@ def test_series_sources_and_claim_boundary() -> None:
     assert "no held-out predictive quantum advantage" in combined_english
 
 
-def test_builder_produces_hub_and_eight_navigable_articles(tmp_path: Path) -> None:
+def test_builder_produces_hub_and_navigable_articles(tmp_path: Path) -> None:
     original_out = series.OUT
     original_out_en = series.OUT_EN
     try:
@@ -61,7 +61,7 @@ def test_builder_produces_hub_and_eight_navigable_articles(tmp_path: Path) -> No
     )
     assert manifest["hub"]["slug"] == "quantum-oracle-sketching-qml-genexpressie"
     assert manifest_en["hub"]["slug"] == "quantum-oracle-sketching-qml-gene-expression"
-    assert len(manifest["articles"]) == 8
+    assert len(manifest["articles"]) == 9
     assert len(manifest_en["articles"]) == 8
     hub = (tmp_path / "nl" / "series_page.html").read_text(encoding="utf-8")
     hub_en = (tmp_path / "en" / "series_page.html").read_text(encoding="utf-8")
@@ -71,27 +71,35 @@ def test_builder_produces_hub_and_eight_navigable_articles(tmp_path: Path) -> No
     assert "quantum-oracle-sketching-qml-gene-expression" in hub
     assert "qos-series-nav" in hub_en
     assert "quantum-oracle-sketching-qml-genexpressie" in hub_en
-    for index in range(1, 9):
+    for index in range(1, 10):
         article = (tmp_path / "nl" / "articles" / f"{index:02d}.html").read_text(
             encoding="utf-8"
         )
+        assert article.count("qos-series-nav") == 2
+        assert "<strong>Nederlands</strong>" in article
+        assert ">Projectpagina</a>" in article
+        assert "https://arxiv.org/abs/2604.07639" in article
+        assert "](" not in article
+        assert "</strong>*" not in article
+    for index in range(1, 9):
         article_en = (
             tmp_path / "en" / "articles" / f"{index:02d}.html"
         ).read_text(
             encoding="utf-8"
         )
-        assert article.count("qos-series-nav") == 2
         assert article_en.count("qos-series-nav") == 2
-        assert "<strong>Nederlands</strong>" in article
-        assert ">Projectpagina</a>" in article
         assert "<strong>English</strong>" in article_en
         assert ">Project page</a>" in article_en
-        assert "https://arxiv.org/abs/2604.07639" in article
         assert "https://arxiv.org/abs/2604.07639" in article_en
-        assert "](" not in article
         assert "](" not in article_en
-        assert "</strong>*" not in article
         assert "</strong>*" not in article_en
+
+    beginner = (tmp_path / "nl" / "articles" / "09.html").read_text(
+        encoding="utf-8"
+    )
+    assert "English series" in beginner
+    assert "raw.githubusercontent.com/BramDo/qlab-ml-adv-all-runners/main/" in beginner
+    assert beginner.count('<figure class="qos-guide-figure"') >= 4
 
 
 def test_github_pages_landing_page_contains_bilingual_result() -> None:

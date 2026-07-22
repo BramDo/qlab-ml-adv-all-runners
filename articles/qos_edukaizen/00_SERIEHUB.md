@@ -16,6 +16,7 @@ De nieuwste 60-qubitrun is het sterkste resultaat in de reeks. Op de vooraf afge
 6. [Het 40-qubitresultaat: hardware 16, klassiek 17](https://edukaizen.nl/quantum-oracle-sketching-qml-genexpressie/resultaat-hardware-versus-klassiek/)
 7. [Wat is nog nodig voor quantumvoordeel?](https://edukaizen.nl/quantum-oracle-sketching-qml-genexpressie/route-naar-quantumvoordeel-qml/)
 8. [Het 60-qubitresultaat: hardware 17, lineair 16, RBF 14](https://edukaizen.nl/quantum-oracle-sketching-qml-genexpressie/voorstel-60-qubit-qml-vervolgstudie/)
+9. [Beginnershandleiding QML: van UMI-telling naar een 4-qubitcircuit](https://edukaizen.nl/quantum-oracle-sketching-qml-genexpressie/qml-beginnershandleiding-umi-naar-4-qubit-circuit/)
 
 ## Het experiment in één tabel
 

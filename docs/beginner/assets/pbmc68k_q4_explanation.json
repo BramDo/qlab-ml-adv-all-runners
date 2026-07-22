@@ -1,0 +1,139 @@
+{
+  "dataset": {
+    "name": "pbmc68k",
+    "cells": 68579,
+    "genes": 32738,
+    "binary_pair_cells": 9248,
+    "matrix_url": "https://cf.10xgenomics.com/samples/cell-exp/1.1.0/fresh_68k_pbmc_donor_a/fresh_68k_pbmc_donor_a_filtered_gene_bc_matrices.tar.gz",
+    "annotation_url": "https://raw.githubusercontent.com/10XGenomics/single-cell-3prime-paper/master/pbmc68k_analysis/68k_pbmc_barcodes_annotation.tsv"
+  },
+  "selected_genes": [
+    {
+      "name": "IER2",
+      "index": 29942,
+      "training_variance": 2.196545041783114,
+      "training_detection_fraction": 0.625,
+      "training_mean": 1.7248269495145168,
+      "training_std": 1.4820745736241185
+    },
+    {
+      "name": "ACTG1",
+      "index": 27826,
+      "training_variance": 1.897018516551566,
+      "training_detection_fraction": 0.75,
+      "training_mean": 2.2611616668792647,
+      "training_std": 1.3773229528877995
+    },
+    {
+      "name": "LIMD2",
+      "index": 27494,
+      "training_variance": 1.8333500626931807,
+      "training_detection_fraction": 0.5625,
+      "training_mean": 1.427313015441389,
+      "training_std": 1.354012578484107
+    },
+    {
+      "name": "GLTSCR2",
+      "index": 30871,
+      "training_variance": 1.8214987583568636,
+      "training_detection_fraction": 0.75,
+      "training_mean": 2.266141683382714,
+      "training_std": 1.349629118816301
+    }
+  ],
+  "first_real_training_cell": {
+    "pair_row": 645,
+    "label": "CD4+/CD45RO+ Memory",
+    "library_umi": 2010,
+    "raw_umi": {
+      "IER2": 0,
+      "ACTG1": 3,
+      "LIMD2": 1,
+      "GLTSCR2": 2
+    },
+    "normalized_log1p": {
+      "IER2": 0.0,
+      "ACTG1": 2.7679136319107873,
+      "LIMD2": 1.7876049140209078,
+      "GLTSCR2": 2.393362173467386
+    },
+    "z_score": {
+      "IER2": -1.1637922815832376,
+      "ACTG1": 0.3679253031898061,
+      "LIMD2": 0.2660919878476208,
+      "GLTSCR2": 0.09426329671684264
+    },
+    "rotation_radians": {
+      "IER2": -1.2187204273754677,
+      "ACTG1": 0.3852904765236307,
+      "LIMD2": 0.2786508780670633,
+      "GLTSCR2": 0.09871229348959588
+    },
+    "shot_features_512": {
+      "Z0": 0.9140625,
+      "Z1": 0.30078125,
+      "Z2": 0.28125,
+      "Z3": 0.28125,
+      "Z0Z1": 0.30859375,
+      "Z1Z2": 0.96484375,
+      "Z2Z3": 1.0,
+      "Z3Z0": 0.328125
+    },
+    "exact_features": {
+      "Z0": 0.886607277599438,
+      "Z1": 0.31956612827571235,
+      "Z2": 0.3072396321690632,
+      "Z3": 0.30574395781921543,
+      "Z0Z1": 0.32993146355186903,
+      "Z1Z2": 0.9614274010416581,
+      "Z2Z3": 0.995131896431172,
+      "Z3Z0": 0.3448471104895982
+    },
+    "state_norm": 1.0000000000000002,
+    "largest_output_probabilities": [
+      {
+        "basis": "|0000>",
+        "probability": 0.6337361300513553
+      },
+      {
+        "basis": "|1110>",
+        "probability": 0.308729560075518
+      },
+      {
+        "basis": "|1111>",
+        "probability": 0.02411371552724957
+      },
+      {
+        "basis": "|1101>",
+        "probability": 0.012462785814504704
+      },
+      {
+        "basis": "|0001>",
+        "probability": 0.011747186933954148
+      },
+      {
+        "basis": "|0011>",
+        "probability": 0.006071344522389228
+      }
+    ]
+  },
+  "matrix": {
+    "shape": [
+      16,
+      16
+    ],
+    "basis_order": "|q3 q2 q1 q0>",
+    "max_imaginary_absolute": 0.0,
+    "unitarity_error_frobenius": 1.1146239544990205e-15
+  },
+  "artifacts": {
+    "data_preview_csv": "output/pbmc68k_q4_explainer/pbmc68k_q4_data_preview.csv",
+    "statevector_csv": "output/pbmc68k_q4_explainer/pbmc68k_q4_first_cell_statevector.csv",
+    "unitary_real_csv": "output/pbmc68k_q4_explainer/pbmc68k_q4_first_cell_unitary_real.csv",
+    "unitary_imag_csv": "output/pbmc68k_q4_explainer/pbmc68k_q4_first_cell_unitary_imag.csv",
+    "circuit_png": "output/pbmc68k_q4_explainer/pbmc68k_q4_first_cell_circuit.png",
+    "unitary_magnitude_png": "output/pbmc68k_q4_explainer/pbmc68k_q4_first_cell_unitary_magnitude.png",
+    "circuit_text": "output/pbmc68k_q4_explainer/pbmc68k_q4_first_cell_circuit.txt"
+  },
+  "claim_boundary": "Educational four-qubit simulator demo only: it does not reproduce full QOS and it makes no quantum-advantage claim."
+}
