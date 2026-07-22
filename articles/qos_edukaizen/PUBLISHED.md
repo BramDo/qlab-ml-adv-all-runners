@@ -74,3 +74,11 @@ linken naar het nieuwe hoofdstuk. Hoofdmenu-item `614` hangt onder `QOS QML`
 MathJax-formules en vijf GitHub-afbeeldingen zijn publiek met HTTP-status `200`
 gecontroleerd. De broncode, DOCX, WordPress-bron en het LinkedIn-artikel zijn
 via GitHub-PR `#3` opgenomen in `main` met mergecommit `4c1e50c`.
+
+Na een visuele melding op 22 juli zijn ook de formuleblokken van de Nederlandse
+en Engelse QOS-theoriepagina opnieuw opgebouwd. De WordPress-renderer bewaart
+LaTeX-commando's nu expliciet en schrijft ieder displayblok op één regel, zodat
+`wpautop` geen HTML-regelafbrekingen midden in MathJax-formules meer invoegt.
+De theoriepagina's en het nieuwe beginnershoofdstuk zijn daarna live
+gecontroleerd op `\\mathbb`, `\\operatorname`, `\\frac`, `\\sum`,
+`\\langle` en geldige MathJax-markers.

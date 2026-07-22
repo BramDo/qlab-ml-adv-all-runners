@@ -100,6 +100,17 @@ def test_builder_produces_hub_and_navigable_articles(tmp_path: Path) -> None:
     assert "English series" in beginner
     assert "raw.githubusercontent.com/BramDo/qlab-ml-adv-all-runners/main/" in beginner
     assert beginner.count('<figure class="qos-guide-figure"') >= 4
+    assert '[latex syntax="display"]\n' not in beginner
+    assert "<br" not in beginner
+
+    theory = (tmp_path / "en" / "articles" / "02.html").read_text(
+        encoding="utf-8"
+    )
+    assert "[latex]X \\in \\mathbb{R}^{N \\times D}[/latex]" in theory
+    assert "[latex]x^{\\prime}[/latex]" in theory
+    assert '[latex syntax="display"]w = \\operatorname*{argmin}' in theory
+    assert '[latex syntax="display"]\\phi_j=' in theory
+    assert '[latex syntax="display"]\n' not in theory
 
 
 def test_github_pages_landing_page_contains_bilingual_result() -> None:

@@ -156,10 +156,11 @@ def render_markdown(lines: list[str], *, skip_h1: bool = True) -> str:
             if i < len(lines):
                 i += 1
             if language == "math":
+                expression = " ".join(line.strip() for line in block if line.strip())
                 out.append(
-                    '[latex syntax="display"]\n'
-                    + html.escape("\n".join(block))
-                    + "\n[/latex]\n"
+                    '[latex syntax="display"]'
+                    + html.escape(expression)
+                    + "[/latex]\n"
                 )
             else:
                 out.append(

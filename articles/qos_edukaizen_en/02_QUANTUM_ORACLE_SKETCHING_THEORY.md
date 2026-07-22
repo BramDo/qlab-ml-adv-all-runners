@@ -28,7 +28,7 @@ For binary classification, the paper writes the training data as a sparse matrix
 w = \operatorname*{argmin}_{w}\;\lVert Xw-y\rVert_2^2 + \lambda\lVert w\rVert_2^2.
 ```
 
-A new feature vector $x'$ receives label $\operatorname{sign}(x' \cdot w)$. QOS constructs quantum oracles with which a quantum linear-algebra algorithm can approximate the relevant decision information without storing the complete $D$-dimensional parameter space classically.
+A new feature vector $x^{\prime}$ receives label $\operatorname{sign}(x^{\prime} \cdot w)$. QOS constructs quantum oracles with which a quantum linear-algebra algorithm can approximate the relevant decision information without storing the complete $D$-dimensional parameter space classically.
 
 Under the formal assumptions of the model, Theorem 3 states that a quantum machine of size `poly(log D)` can solve the classification task with approximately linearly many samples in $N$, whereas a classical machine of size $O(D^{0.99})$ cannot. The dynamic variant adds a separation in sample efficiency when the data stream changes but the decision rule remains approximately constant.
 
