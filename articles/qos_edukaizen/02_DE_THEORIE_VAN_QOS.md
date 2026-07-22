@@ -28,7 +28,7 @@ Voor binaire classificatie schrijft de paper de trainingdata als een sparse matr
 w = \operatorname*{argmin}_{w}\;\lVert Xw-y\rVert_2^2 + \lambda\lVert w\rVert_2^2.
 ```
 
-Een nieuwe featurevector $x'$ krijgt het label $\operatorname{sign}(x' \cdot w)$. QOS bouwt de quantumoracles waarmee een quantum lineair-algebra-algoritme de relevante beslisinformatie kan benaderen zonder de volledige $D$-dimensionale parameterwereld klassiek op te slaan.
+Een nieuwe featurevector $x^{\prime}$ krijgt het label $\operatorname{sign}(x^{\prime} \cdot w)$. QOS bouwt de quantumoracles waarmee een quantum lineair-algebra-algoritme de relevante beslisinformatie kan benaderen zonder de volledige $D$-dimensionale parameterwereld klassiek op te slaan.
 
 Theorem 3 van de paper stelt, onder de formele voorwaarden van het model, dat een quantummachine van grootte `poly(log D)` de classificatietaak kan oplossen met ongeveer lineair veel samples in $N$, terwijl een klassieke machine met grootte $O(D^{0.99})$ dat niet kan. De dynamische variant voegt een scheiding in sample-efficiëntie toe wanneer de datastroom verandert maar de beslisregel ongeveer gelijk blijft.
 

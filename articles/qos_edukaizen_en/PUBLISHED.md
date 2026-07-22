@@ -58,3 +58,10 @@ theory, hardware, route and 60q chapters now distinguish:
 All eighteen existing public URLs were then rechecked for HTTP status `200`,
 series navigation, and the new Dutch and English claim markers. No pages or
 slugs were added.
+
+On 22 July 2026, the Dutch and English theory formulas were rebuilt after a
+visual rendering report. The WordPress renderer now preserves LaTeX commands
+and emits each display block on one line, preventing `wpautop` from inserting
+HTML line breaks inside MathJax expressions. The theory pages and new Dutch
+beginner chapter were then checked live for the expected commands and MathJax
+markers.
