@@ -2,14 +2,16 @@
 
 Gepubliceerd op 20 juli 2026 als een pagina-hub met acht onderliggende
 artikelen. Op 21 juli 2026 zijn de bestaande pagina's in-place bijgewerkt met
-het uitgevoerde 60-qubitresultaat; er zijn geen duplicaten aangemaakt:
+het uitgevoerde 60-qubitresultaat. Op 22 juli is een negende, educatief
+4-qubithoofdstuk toegevoegd; er zijn geen bestaande pagina's gedupliceerd:
 
 - Gecombineerde projectpagina: https://edukaizen.nl/quantum-oracle-sketching-qml-genexpressie/
 - Engelse spiegel: https://edukaizen.nl/quantum-oracle-sketching-qml-gene-expression/
 - WordPress-hubpagina: `498`
-- WordPress-artikelpagina's: `499` tot en met `505`, plus `516`
+- WordPress-artikelpagina's: `499` tot en met `505`, plus `516` en `610`
 - Hoofdmenu-item `QOS QML`: `506`
 - Taalkeuzes onder het menu-item: `Nederlands` (`563`) en `English` (`564`)
+- Extra menu-link `Beginnershandleiding 4q`: `614`
 
 De artikelen staan in deze volgorde:
 
@@ -21,6 +23,7 @@ De artikelen staan in deze volgorde:
 6. [Het 40-qubitresultaat: hardware 16, klassiek 17](https://edukaizen.nl/quantum-oracle-sketching-qml-genexpressie/resultaat-hardware-versus-klassiek/) — pagina `505`
 7. [Wat is nog nodig voor quantumvoordeel?](https://edukaizen.nl/quantum-oracle-sketching-qml-genexpressie/route-naar-quantumvoordeel-qml/) — pagina `502`
 8. [Het 60-qubitresultaat: hardware 17, lineair 16, RBF 14](https://edukaizen.nl/quantum-oracle-sketching-qml-genexpressie/voorstel-60-qubit-qml-vervolgstudie/) — pagina `516`
+9. [Beginnershandleiding QML: van UMI-telling naar een 4-qubitcircuit](https://edukaizen.nl/quantum-oracle-sketching-qml-genexpressie/qml-beginnershandleiding-umi-naar-4-qubit-circuit/) — pagina `610`
 
 Na publicatie zijn alle negen publieke URL's met HTTP-status `200` gecontroleerd.
 De seriemarkeringen, vorige/volgende-navigatie, de kerngetallen `16/32` en
@@ -59,3 +62,15 @@ relevante theorie-, hardware-, route- en 60q-hoofdstukken onderscheiden nu:
 Alle achttien bestaande publieke URL's zijn daarna opnieuw met HTTP-status
 `200`, serienavigatie en de nieuwe Nederlandstalige en Engelstalige
 claimmarkeringen geverifieerd. Er zijn geen pagina's of slugs toegevoegd.
+
+Op 22 juli 2026 is de beginnershandleiding als hoofdstuk 9 gepubliceerd. De
+pagina volgt één echte PBMC68k-cel van UMI-telling naar vier rotatiehoeken, een
+4-qubitcircuit, een `16 x 16` unitaire matrix, acht Z/ZZ-features en een
+klassieke classifier. Het resultaat `7/16` tegenover `9/16` voor dezelfde vier
+klassieke genfeatures wordt expliciet als onderwijsresultaat zonder
+advantageclaim vermeld. De gecombineerde QML-projectpagina en hoofdstuk 8
+linken naar het nieuwe hoofdstuk. Hoofdmenu-item `614` hangt onder `QOS QML`
+(`506`). De pagina, hub, voorgaande-hoofdstuklink, het homepage-menu, twaalf
+MathJax-formules en vijf GitHub-afbeeldingen zijn publiek met HTTP-status `200`
+gecontroleerd. De broncode, DOCX, WordPress-bron en het LinkedIn-artikel zijn
+via GitHub-PR `#3` opgenomen in `main` met mergecommit `4c1e50c`.
