@@ -18,6 +18,12 @@ Untitled*.ipynb
 output/wordpress_qos_series/
 output/wordpress_qos_series_en/
 output/pytest-*/
+output/pbmc68k_q4_explainer/
+output/pbmc68k_q4_explainer_publish_check/
+output/doc/
+output/*.php
+paper/build/
+tmp/
 
 # Generated run artifacts
 *.json
@@ -34,4 +40,3 @@ tmp_*
 # Local export clutter
 repomix-*
 *.xml
-

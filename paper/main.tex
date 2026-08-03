@@ -1,0 +1,175 @@
+\documentclass[11pt]{article}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{microtype}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+
+\title{Bounded IBM-Hardware Quantum Sketching for a Real Single-Cell Binary Classification Task}
+\author{Lenna}
+\date{April 16, 2026}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This manuscript builds on the earlier machine-learning track in this project and on the existing JAX-based official Quantum Oracle Sketching reference route. Our contribution here is the Qiskit side, and it proceeds in two explicit steps. First, we establish a compatible Qiskit route at the kernel and bounded-classifier level against the official JAX implementation, using paper-compatible Qiskit gates and bounded real-data bridge experiments rather than immediate hardware claims. Second, we push that route onto a real IBM quantum computer in a payload-safe bounded regime. The concrete downstream task is a real binary classification problem derived from PBMC68k single-cell RNA-sequencing data: distinguish \texttt{CD4+/CD25 T Reg} from \texttt{CD4+/CD45RO+ Memory} cells after hashed pairwise-interaction preprocessing. The present evidence is intentionally bounded: the hardware route uses a small sketch/readout path with two measured feature mappings and is compared only against matched hashed classical baselines on the same split. Within that regime we obtain three current reference points. At $q=10$, quantum and classical baselines are tied at balanced accuracy $0.50$. At $q=20$, a single bounded hardware run reaches quantum balanced accuracy $0.625$ versus $0.25$ for both hashed classical baselines. At $q=40$, the first strong run reached $0.75$ versus $0.375$, but repeated $16/16$ trials on a stabilized hardware chain yield a mean balanced accuracy of $0.50$ for quantum versus $0.46875$ for ridge and $0.50$ for linear SVC. The resulting claim is therefore not a general quantum advantage claim, but a bounded hardware result showing that the Qiskit route can stay competitive with matched hashed classical baselines while sitting next to a large avoided dense pairwise encoder proxy of $159.70\,\mathrm{GB}$ at $q=40$.
+\end{abstract}
+
+\section{Introduction}
+
+Quantum machine learning claims are often undermined by two avoidable problems: the classical baseline is not matched to the quantum pipeline, or the hardware route is so fragile that the final result is dominated by infrastructure rather than model behavior. Our goal in this work is narrower and more disciplined. We do not attempt a general quantum advantage claim. Instead, we ask whether a Qiskit implementation inspired by Quantum Oracle Sketching (QOS) can produce bounded, reproducible IBM-hardware evidence on a real binary classification subproblem while keeping both the hardware path and the classical comparison honest \cite{officialqos2026,gilyen2019qsvt,schuld2019qml}.
+
+This manuscript should also be read in the context of the broader project history. It builds on an earlier ML-oriented line in the same workspace, but the present paper is not just another local benchmark note. It is the Qiskit follow-on to an already existing JAX-based paper route. That distinction matters because the Qiskit story has to be staged. The official JAX route remains the reference implementation for the paper kernels and real-dataset curves; the Qiskit route must first prove compatibility before any hardware claim is taken seriously.
+
+The present source problem comes from PBMC68k single-cell RNA sequencing \cite{zheng2017massively,stuart2019singlecell}. The selected binary task is biologically concrete: given one cell's gene-expression profile, predict whether it belongs to \texttt{CD4+/CD25 T Reg} or \texttt{CD4+/CD45RO+ Memory}. In our implementation, the host expands each cell into a large hashed gene-pair interaction space and then compresses that signal into a small $q$-dimensional encoded representation before the quantum sketch/readout path. This setup is useful because it separates two questions that are often conflated. The first is an \emph{accuracy} question: does the bounded quantum route compete with matched hashed classical baselines? The second is a \emph{memory-geometry} question: what dense pairwise classical representation is being avoided by the sketching route?
+
+The Qiskit route itself was built in two steps. Step 1 was an intermediate compatibility stage: kernel-level parity against the official \texttt{official\_qos/qos\_sampling.py} machinery, followed by bounded bridge and classifier-proof experiments on real data. This was done with paper-compatible Qiskit gate constructions, but it was not yet a claim about a real IBM quantum computer. Step 2 was the later hardware stage: once the bounded route was technically healthy and the payload path was understood well enough, the same Qiskit line was run on a real IBM device in a constrained hardware-feasible regime. That two-step structure is part of the contribution and should not be collapsed into a single undifferentiated ``Qiskit result''.
+
+The answer to the first question is mixed but still informative. On the current bounded hardware path, $q=10$ is neutral, $q=20$ gives the strongest single bounded win, and $q=40$ becomes competitive but not yet stable enough for a broad superiority claim. The answer to the second question is cleaner: the ambient dense pairwise model proxy is already $3.99\,\mathrm{GB}$ and the avoided dense encoder grows linearly with $q$, reaching $159.70\,\mathrm{GB}$ at $q=40$. This is the right scale on which to discuss the sketching story, provided one does not confuse that dense reference with the actual RAM footprint of the compact hashed classical baselines.
+
+\section{Task and Bounded Comparison Protocol}
+
+\subsection{Binary learning problem}
+
+The source data are single-cell transcriptomic profiles. One training example is
+\begin{equation}
+x_{\mathrm{cell}} \in \mathbb{R}^{G}, \qquad y_{\mathrm{cell}} \in \{0,1\},
+\end{equation}
+where $G$ is the number of genes and the label indicates whether the cell is a regulatory T cell or a CD45RO-positive memory T cell. The practical learning problem is therefore simple to state:
+\begin{quote}
+input = one cell's gene-expression profile; \\
+label = which of the two selected cell types it belongs to.
+\end{quote}
+
+The implementation does not feed the raw expression vector directly into a quantum circuit. Instead, it uses a host-side pairwise feature expansion followed by a compact encoded representation and then a bounded quantum sketch/readout stage.
+
+\subsection{What is and is not being compared}
+
+The comparison in this paper is intentionally bounded.
+
+\begin{enumerate}
+\item Quantum is compared only against \emph{matched hashed classical baselines} on the same encoded split.
+\item Memory claims are reported separately from accuracy claims.
+\item Hardware claims are restricted to the currently working payload-safe IBM route.
+\end{enumerate}
+
+This means the paper does \emph{not} claim a general advantage over all classical methods, nor does it claim that the classical baselines actually allocate the full dense pairwise encoder matrix in RAM. The dense pairwise encoder size is reported as an avoided reference quantity.
+
+\subsection{Two-step Qiskit validation path}
+
+The present manuscript follows a two-step validation path.
+
+\paragraph{Step 1: Qiskit compatibility stage.}
+The first task was to show that the Qiskit implementation can faithfully reproduce the official kernel behavior and then remain useful inside bounded real-data bridge experiments. In project terms, this meant kernel-level parity against the official JAX sampling code, followed by bounded classifier-facing bridge proofs on datasets such as Splice, PBMC, IMDb, and 20 Newsgroups. This step is crucial because it establishes that the Qiskit route is not an arbitrary reimplementation but a controlled compatibility layer with paper-aligned gates and bounded downstream tasks.
+
+\paragraph{Step 2: real IBM hardware stage.}
+Only after that compatibility stage do we move to a true IBM quantum computer. Even there the route remains deliberately bounded: very small per-submit payloads, explicit readout mitigation, and a payload-safe hardware chain. This is the level on which the current PBMC hardware evidence should be interpreted.
+
+\subsection{Human-readable simulator companion: IMDb sentiment}
+
+For non-specialist readers, single-cell data are scientifically important but not immediately intuitive. The project therefore already contains a more recognizable step-1 companion example on full binary IMDb sentiment. That simulator-side example is useful for communication because the task is easy to understand: classify a movie review as negative or positive from its text, using the same bounded Qiskit bridge logic against the official JAX route.
+
+The strongest current small-bridge IMDb point occurs at bridge width $d=8$. On a balanced $256/256$ train/test split at \texttt{min\_df=2}, the bounded quantum-feature classifier reaches accuracy $0.58203125$, while the best raw selected-feature baseline on the same $8$-feature slice reaches $0.5703125$. The selected words are also human-readable: \texttt{bad}, \texttt{great}, \texttt{love}, \texttt{movie}, and \texttt{waste} appear directly in the learned slice. This is exactly the kind of intermediate result that is easy to explain publicly: the Qiskit route can already do something nontrivial on a familiar task before one asks the reader to follow the more technical PBMC hardware story.
+
+At the same time, the IMDb companion should remain a companion, not the main claim. On a wider bridge such as $d=32$, the quantum side drops below the best raw baseline. That is scientifically useful because it shows the step-1 route is real but bounded: Qiskit compatibility plus simulator success on a familiar task is possible, yet performance is still sensitive to the chosen bridge width and feature view.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.92\linewidth]{assets/qiskit_imdb_binary_classification_panel.png}
+\caption{IMDb binary-classification panel in the visual lineage of the original paper figures. The gray and blue curves are the official full-route sparse/QRAM and streaming references at varying \texttt{min\_df}. The green and orange points are the bounded Qiskit IMDb bridge sweep at fixed \texttt{min\_df=2} over bridge widths $d \in \{8,16,32,64,128\}$, comparing the raw selected-feature baseline with the bounded Qiskit quantum-feature classifier. This figure is a step-1 compatibility/bridge result, not an IBM hardware claim.}
+\label{fig:imdb-qiskit-binary}
+\end{figure}
+
+\subsection{Bounded hardware route}
+
+The current stable hardware route at $q=40$ uses:
+\begin{itemize}
+\item backend \texttt{ibm\_fez},
+\item \texttt{layout\_strategy = none},
+\item \texttt{runtime\_submit\_batch\_size = 1},
+\item \texttt{feature\_mapping\_limit = 2},
+\item readout mitigation, dynamical decoupling (\texttt{XY4}), and gate twirling.
+\end{itemize}
+
+This route matters because a newer quality-chain transpilation path repeatedly failed on the first real sketch submit, whereas the legacy-style bounded route completed end-to-end and allowed repeated hardware experiments.
+
+\section{Results}
+
+\subsection{Bounded hardware table}
+
+Table~\ref{tab:bounded-results} summarizes the current bounded hardware evidence. The $q=10$ and $q=20$ rows are single-run points on smaller splits. The $q=40$ row is the mean over two repeated $16/16$ hardware runs on the stabilized chain and is therefore the fairest current estimate of the large-$q$ behavior.
+
+\begin{table}[t]
+\centering
+\caption{Bounded IBM hardware results on the PBMC68k pairwise binary task. The q40 row is the mean over two repeated 16/16 runs; the q10 and q20 rows are single-run reference points.}
+\label{tab:bounded-results}
+\small
+\begin{tabular}{@{}lcccccc@{}}
+\toprule
+$q$ & Split & Quantum bal acc & Ridge bal acc & SVC bal acc & Avoided dense encoder & Quantum sketch \\
+\midrule
+10 & $4/4$ & 0.5000 & 0.5000 & 0.5000 & 39.93 GB & 152 B \\
+20 & $8/8$ & 0.6250 & 0.2500 & 0.2500 & 79.85 GB & 312 B \\
+40 & mean of 2x16/16 & 0.5000 & 0.46875 & 0.5000 & 159.70 GB & 632 B \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The immediate interpretation is straightforward. First, the strongest single bounded point is still $q=20$, where quantum exceeds both hashed classical baselines on the tested split. Second, that point is not yet repeat-stabilized. Third, once we move to repeated $q=40$ hardware runs on the stabilized chain, the headline becomes much more conservative: quantum is competitive, but not clearly superior. That is exactly why the present manuscript is written as a bounded hardware paper rather than an advantage paper.
+
+\subsection{Repeated q40 trials}
+
+The repeated $q=40$ trials are especially instructive because they separate runtime fragility from model behavior. On the stabilized hardware path, the runtime itself is now healthy. However, the predictive result still varies across seeds and mitigation settings. A representative $16/16$ repeat produced quantum balanced accuracy $0.5625$ against ridge $0.50$ and linear SVC $0.5625$. A second $16/16$ repeat produced $0.4375$ for all three models. Averaging those two runs yields the more honest row reported in Table~\ref{tab:bounded-results}: quantum $0.50$, ridge $0.46875$, and linear SVC $0.50$.
+
+This is a useful result even though it is less dramatic than the initial strong $q=40$ run. It shows that the current hardware route can support repeated experiments, and it narrows the current claim to the right level: the bounded quantum route is competitive on real hardware, but its performance is not yet stable enough to support a strong superiority statement.
+
+\subsection{Memory interpretation}
+
+The dense classical weight proxy is already $3.99\,\mathrm{GB}$ across the present PBMC pairwise route. More importantly, the avoided dense encoder matrix scales linearly with $q$:
+\begin{equation}
+39.93\,\mathrm{GB} \; (q=10), \qquad
+79.85\,\mathrm{GB} \; (q=20), \qquad
+159.70\,\mathrm{GB} \; (q=40).
+\end{equation}
+
+These numbers should be read carefully. They are not claims about the actual RAM used by the matched hashed classical baselines in Table~\ref{tab:bounded-results}. They are claims about the dense pairwise representation that the sketching route avoids materializing. This distinction is essential. The accuracy comparison is against compact hashed classical baselines; the memory comparison is against the avoided dense pairwise geometry.
+
+\section{Discussion}
+
+The main practical takeaway is modest but real. For a biologist facing a standard production single-cell classification task, a classical workflow remains more mature and easier to deploy. The present results do not overturn that. What they do show is that, on a carefully bounded subproblem with a large pairwise interaction geometry, a small quantum sketching route can remain competitive with matched hashed classical baselines on real IBM hardware. That is enough to justify continued work, but not enough to justify overclaiming.
+
+The two-step framing is therefore not just historical bookkeeping. It is the right scientific framing. Step 1 answers the compatibility question: can the paper-route logic be expressed faithfully enough in Qiskit to produce bounded real-data results? Step 2 answers the hardware question: can that bounded Qiskit route survive contact with a real IBM quantum computer and still produce meaningful classification evidence? The current answer to both questions is yes, but only under disciplined bounded conditions.
+
+The present bounded hardware route also exposes a second lesson: infrastructure discipline matters as much as model design. The $q=40$ path only became repeatable after constraining the transpilation and payload route. That observation is not incidental. It is part of the scientific result, because any serious hardware-learning paper must distinguish model effects from runtime-path effects.
+
+The most defensible next step is therefore not an immediate push to larger $q$, but a stabilization program:
+\begin{enumerate}
+\item repeat the bounded $q=20$ hardware route under the same discipline,
+\item increase the sample budget before widening the feature-mapping payload,
+\item only then revisit whether a stronger bounded advantage claim is justified.
+\end{enumerate}
+
+\section{Conclusion}
+
+We have presented a bounded IBM-hardware study of a QOS-inspired quantum sketching pipeline on a real PBMC68k binary classification task. The present evidence supports three claim-level conclusions.
+
+\begin{enumerate}
+\item A payload-safe bounded hardware route exists and is repeatable on IBM hardware.
+\item Within that bounded route, quantum is competitive with matched hashed classical baselines and gives the strongest single bounded point at $q=20$.
+\item The current repeated $q=40$ evidence supports a bounded competitiveness claim, not a general quantum advantage claim.
+\end{enumerate}
+
+That is already a useful milestone. It moves the project from one-off hardware anecdotes to a disciplined bounded-hardware comparison with explicit memory geometry and explicit claim limits.
+
+\bibliographystyle{unsrtnat}
+\bibliography{references}
+
+\end{document}

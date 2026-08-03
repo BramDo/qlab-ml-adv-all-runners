@@ -1,0 +1,88 @@
+/*
+ * Edukaizen / Newspaperly: show the three global Top Widget images as one
+ * rotating header image once the theme stacks those widgets on small screens.
+ * Published as WordPress custom_css post 565 on 2026-07-20.
+ */
+@media screen and (max-width: 900px) {
+  .header-widgets-wrapper {
+    position: relative;
+    display: block;
+    float: none;
+    width: 100%;
+    height: clamp(190px, 56vw, 360px);
+    padding: 0;
+    overflow: hidden;
+    background: #fff;
+  }
+
+  .header-widgets-wrapper > .header-widgets-three {
+    position: absolute;
+    inset: 0;
+    display: block;
+    float: none;
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .header-widgets-wrapper .header-widget,
+  .header-widgets-wrapper .wp-block-image {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  .header-widgets-wrapper .wp-block-image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .header-widgets-wrapper > .header-widgets-left {
+    animation: edukaizen-header-slide-one 18s infinite;
+  }
+
+  .header-widgets-wrapper > .header-widgets-middle {
+    animation: edukaizen-header-slide-two 18s infinite;
+  }
+
+  .header-widgets-wrapper > .header-widgets-right {
+    animation: edukaizen-header-slide-three 18s infinite;
+  }
+}
+
+@keyframes edukaizen-header-slide-one {
+  0%, 30% { opacity: 1; }
+  36%, 96% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes edukaizen-header-slide-two {
+  0%, 30% { opacity: 0; }
+  36%, 63% { opacity: 1; }
+  69%, 100% { opacity: 0; }
+}
+
+@keyframes edukaizen-header-slide-three {
+  0%, 63% { opacity: 0; }
+  69%, 96% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@media screen and (max-width: 900px) and (prefers-reduced-motion: reduce) {
+  .header-widgets-wrapper > .header-widgets-three {
+    display: none;
+    animation: none;
+  }
+
+  .header-widgets-wrapper > .header-widgets-left {
+    display: block;
+    opacity: 1;
+  }
+}
