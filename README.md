@@ -1,5 +1,10 @@
 # ML Adv Toy: Qiskit QOS Surrogate
 
+New to the repository? Start with the Dutch
+[installation and run guide](BEGINNERSHANDLEIDING_INSTALLEREN_EN_RUNNEN.md).
+It installs an isolated environment and runs the local four-qubit PBMC68k
+educational simulator without IBM or Fire Opal credentials.
+
 This folder contains a small Qiskit toy model for the ideas in arXiv:2604.07639, not a reproduction of the full paper implementation.
 
 What it demonstrates:
